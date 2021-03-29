@@ -20,7 +20,10 @@ e o módulo **musikiAPI** que será a API REST responsável por fazer a comunica
 
 Segue abaixo os passos a serem seguidos para a montagem do ambiente de desenvolvimento. Para alguns itens coloquei links relacionados que talvez ajude caso exista dificuldade na resolução do passo xD. 
 
-### 0. Clone o projeto
+### 0. Instalar o Git
+
+
+#### 0.1 Clone o projeto
 #### Links de apoio
 - https://gitlab.com/help/ssh/README#locating-an-existing-ssh-key-pair 
 
