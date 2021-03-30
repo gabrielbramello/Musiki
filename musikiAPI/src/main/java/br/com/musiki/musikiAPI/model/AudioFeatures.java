@@ -1,19 +1,31 @@
 package br.com.musiki.musikiAPI.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+@Entity
 public class AudioFeatures {
+	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	private Double acousticness;
 	private Double danceability;
+	@OneToOne(mappedBy = "audioFeatures")
 	private Track track;
 	private Double energy;
 	private Double instrumentalness;
+	@ManyToOne
 	private Key key;
 	private Double liveness;
 	private Double loudness;
 	private String scaleMode;
 	private Double speechiness;
 	private Double tempo;
-	private String timeSignature;
+	@ManyToOne
+	private TimeSignature timeSignature;
 	private Double happiness;
 	public Long getId() {
 		return id;
@@ -87,10 +99,11 @@ public class AudioFeatures {
 	public void setTempo(Double tempo) {
 		this.tempo = tempo;
 	}
-	public String getTimeSignature() {
+	
+	public TimeSignature getTimeSignature() {
 		return timeSignature;
 	}
-	public void setTimeSignature(String timeSignature) {
+	public void setTimeSignature(TimeSignature timeSignature) {
 		this.timeSignature = timeSignature;
 	}
 	public Double getHappiness() {

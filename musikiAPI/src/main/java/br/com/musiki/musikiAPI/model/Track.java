@@ -1,15 +1,24 @@
 package br.com.musiki.musikiAPI.model;
 
-import java.util.List;
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+@Entity
 public class Track {
+	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
+	@ManyToOne
 	private Album album;
-	private List<Artist> artists;
 	private Long duration;
 	private String name;
 	private Integer popularity;
+	@OneToOne
 	private AudioFeatures audioFeatures;
+	private String featArtistisNames;
+	
 	public Long getId() {
 		return id;
 	}
@@ -21,12 +30,6 @@ public class Track {
 	}
 	public void setAlbum(Album album) {
 		this.album = album;
-	}
-	public List<Artist> getArtists() {
-		return artists;
-	}
-	public void setArtists(List<Artist> artists) {
-		this.artists = artists;
 	}
 	public Long getDuration() {
 		return duration;
@@ -51,6 +54,12 @@ public class Track {
 	}
 	public void setAudioFeatures(AudioFeatures audioFeatures) {
 		this.audioFeatures = audioFeatures;
+	}
+	public String getFeatArtistisNames() {
+		return featArtistisNames;
+	}
+	public void setFeatArtistisNames(String featArtistisNames) {
+		this.featArtistisNames = featArtistisNames;
 	}
 	
 	

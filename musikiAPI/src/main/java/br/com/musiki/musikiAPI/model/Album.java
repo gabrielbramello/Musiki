@@ -3,26 +3,55 @@ package br.com.musiki.musikiAPI.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+@Entity
 public class Album {
+	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private Long id;
 	private String type;
-	private List<Artist> artists;
+	@ManyToOne
+	private Artist artist;
+	@ManyToMany
+	@JoinTable(name = "album_genre", 
+				joinColumns = @JoinColumn(name = "album_id"), 
+				inverseJoinColumns = @JoinColumn(name = "genre_id"))
 	private List<Genres> genres;
 	private String label;
 	private String name;
 	private Integer popularity;
 	private Date releaseDate;
+	@OneToMany(mappedBy = "album")
 	private List<Track> tracks;
+	private String featArtistsNames;
+	
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getType() {
 		return type;
 	}
 	public void setType(String type) {
 		this.type = type;
 	}
-	public List<Artist> getArtists() {
-		return artists;
+	
+	public Artist getArtist() {
+		return artist;
 	}
-	public void setArtists(List<Artist> artists) {
-		this.artists = artists;
+	public void setArtist(Artist artists) {
+		this.artist = artists;
 	}
 	public List<Genres> getGenres() {
 		return genres;
@@ -59,6 +88,12 @@ public class Album {
 	}
 	public void setTracks(List<Track> tracks) {
 		this.tracks = tracks;
+	}
+	public String getFeatArtistName() {
+		return featArtistsNames;
+	}
+	public void setFeatArtistName(String featArtistName) {
+		this.featArtistsNames = featArtistName;
 	}
 	
 	
