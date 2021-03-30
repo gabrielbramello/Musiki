@@ -2,11 +2,18 @@ package br.com.musiki.musikiAPI.model;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+@Entity
 public class Artist {
+	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
-	private List<Genres> genres;
 	private String name;
 	private Integer popularity;
+	@OneToMany(mappedBy = "artist")
 	private List<Album> albuns;
 	
 	
@@ -15,12 +22,6 @@ public class Artist {
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	public List<Genres> getGenres() {
-		return genres;
-	}
-	public void setGenres(List<Genres> genres) {
-		this.genres = genres;
 	}
 	public String getName() {
 		return name;
