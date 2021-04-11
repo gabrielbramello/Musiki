@@ -20,8 +20,8 @@ public class ClientCredentialAuth {
 	@Autowired
 	public Properties properties;
 	
-	private static final String clientId = "a8c008ec33274427b7f9fb61d854e967";
-	private static final String clientSecret = "89d1ea0114d64cb6ab249f6630f1ac04";
+	private static final String clientId = "";
+	private static final String clientSecret = "";
 	
 	//private String clientId = properties.getSpotifyApi().getClientId();
 	//qprivate String clientSecret = properties.getSpotifyApi().getClientSecret();
