@@ -15,13 +15,13 @@ import br.com.musiki.musikiAPI.services.spotify.authorization.ClientCredentialAu
 public class SearchAlbum {
 	
 	public Paging<AlbumSimplified> getAlbum(String q) throws ParseException, SpotifyWebApiException, IOException {
-		ClientCredentialAuth clientCredentialAuth = new ClientCredentialAuth();
-		SpotifyApi spotifyApi = clientCredentialAuth.getSpotifyApiWithToken();
-		SearchAlbumsRequest searchAlbumsRequest = spotifyApi.searchAlbums(q).build();
-		Paging<AlbumSimplified> albumSimplifiedPaging = searchAlbumsRequest.execute();
-		System.out.println("Total: " + albumSimplifiedPaging.getTotal());
-		System.out.println("Total: " + albumSimplifiedPaging.getItems()[0]);
+//		ClientCredentialAuth clientCredentialAuth = new ClientCredentialAuth();
+//		SpotifyApi spotifyApi = clientCredentialAuth.getSpotifyApiWithToken();
+//		SearchAlbumsRequest searchAlbumsRequest = spotifyApi.searchAlbums(q).build();
+//		Paging<AlbumSimplified> albumSimplifiedPaging = searchAlbumsRequest.execute();
+//		System.out.println("Total: " + albumSimplifiedPaging.getTotal());
+//		System.out.println("Total: " + albumSimplifiedPaging.getItems()[0]);
 		
-		return albumSimplifiedPaging;
+		return null;
 	}
 }

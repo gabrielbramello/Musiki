@@ -1,9 +1,14 @@
 package br.com.musiki.musikiAPI.configuration;
 
-public class SpotifyApi {
-	public String clientId;
-	public String clientSecret;
-	
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class PropertiesConfig {
+	@Value("${spotifyapi.clientId}")
+	private String clientId;
+	@Value("${spotifyapi.clientSecret}")
+	private String clientSecret;
 	public String getClientId() {
 		return clientId;
 	}
@@ -16,6 +21,7 @@ public class SpotifyApi {
 	public void setClientSecret(String clientSecret) {
 		this.clientSecret = clientSecret;
 	}
+	
 	
 	
 }

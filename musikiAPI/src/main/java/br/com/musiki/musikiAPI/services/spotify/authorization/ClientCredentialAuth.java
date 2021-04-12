@@ -1,30 +1,33 @@
 package br.com.musiki.musikiAPI.services.spotify.authorization;
 
-import com.wrapper.spotify.SpotifyApi;
-import com.wrapper.spotify.exceptions.SpotifyWebApiException;
-import com.wrapper.spotify.model_objects.credentials.ClientCredentials;
-import com.wrapper.spotify.requests.authorization.client_credentials.ClientCredentialsRequest;
-
-import br.com.musiki.musikiAPI.configuration.Properties;
-
-import org.apache.hc.core5.http.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.io.IOException;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
+import org.apache.hc.core5.http.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.wrapper.spotify.SpotifyApi;
+import com.wrapper.spotify.exceptions.SpotifyWebApiException;
+import com.wrapper.spotify.model_objects.credentials.ClientCredentials;
+import com.wrapper.spotify.requests.authorization.client_credentials.ClientCredentialsRequest;
+
+import br.com.musiki.musikiAPI.configuration.PropertiesConfig;
+
 public class ClientCredentialAuth {
 
+	private String clientId;
+	private String clientSecret;
+	
 	@Autowired
-	public Properties properties;
-	
-	private static final String clientId = "";
-	private static final String clientSecret = "";
-	
-	//private String clientId = properties.getSpotifyApi().getClientId();
-	//qprivate String clientSecret = properties.getSpotifyApi().getClientSecret();
+	public ClientCredentialAuth(PropertiesConfig properties) {
+		
+		this.clientId = properties.getClientId();
+		this.clientSecret = properties.getClientSecret();
+		System.out.println("SpotifyApi ClientId: "+properties.getClientId());
+		System.out.println("SpotifyApi ClientSecret: "+properties.getClientSecret());
+	}
 
 	private SpotifyApi clientCredentials_Sync() throws IOException, SpotifyWebApiException, ParseException {
 		
@@ -70,10 +73,7 @@ public class ClientCredentialAuth {
 		}
 	}
 	
-	public SpotifyApi getSpotifyApiWithToken() throws IOException, SpotifyWebApiException, ParseException{
-	//	System.out.println(properties.getSpotifyApi().getClientId());
-	//	System.out.println(properties.getSpotifyApi().getClientSecret());
-		
+	public SpotifyApi getSpotifyApiWithToken() throws IOException, SpotifyWebApiException, ParseException{	
 		return clientCredentials_Sync();
 	}
 
