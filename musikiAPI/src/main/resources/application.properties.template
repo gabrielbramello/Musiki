@@ -1,0 +1,22 @@
+##Template of application.properties. Use this for create application.properties with the correct properties.
+##Template do atquivo application.propperties. Use ele para criar o arquivo application.propperties com as propiedades corretas.
+
+## default connection pool
+spring.datasource.hikari.connectionTimeout=20000
+spring.datasource.hikari.maximumPoolSize=5
+
+## PostgreSQL
+spring.datasource.url=jdbc:postgresql://localhost:5432/musikiDB
+spring.datasource.username=postgres
+spring.datasource.password=postgres
+
+##jpa
+#drop n create table again, good for testing, comment this in production
+spring.jpa.hibernate.ddl-auto=update
+
+##SpotifyApi
+##Generate clientId and clientServer on  https://developer.spotify.com/my-applications
+spotifyapi.clientId=testeclienteid
+spotifyapi.clientSecret=testeclientsecret
+
+
