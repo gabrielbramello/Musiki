@@ -7,12 +7,16 @@ import javax.persistence.Id;
 
 @Entity
 public class Key {
-	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+	
+	@Id 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
+	
 	private String label;
 	private String description;
 	private String equivalentKey;
 	private Integer pitch;
+	
 	public Long getId() {
 		return id;
 	}
@@ -42,10 +46,5 @@ public class Key {
 	}
 	public void setPitch(Integer pitch) {
 		this.pitch = pitch;
-	}
-	
-	
-	
-	
-	
+	}	
 }

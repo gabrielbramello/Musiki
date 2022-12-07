@@ -6,12 +6,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+
 @Entity
 public class Track {
-	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+	
+	@Id 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
+	
 	@ManyToMany(mappedBy = "tracks") 
 	private Album album;
+	
 	private Long duration;
 	private Boolean explicit;
 	private String spotifyApiId;
@@ -21,19 +26,23 @@ public class Track {
 	private Float danceability;
 	private Float energy;
 	private Float instrumentalness;
+	
 	@ManyToOne
 	private Key key;
+	
 	private Float loudness;
 	private Integer mode;
 	private Float speechiness;
 	private Float tempo;
+	
 	@ManyToOne
 	private TimeSignature timeSignature;
+	
 	private String spotifytrackHref;
 	private String spotifyUri;
+	
 	@ManyToOne
 	private Valence valence;
-	
 	
 	public Long getId() {
 		return id;
@@ -155,8 +164,4 @@ public class Track {
 	public void setValence(Valence valence) {
 		this.valence = valence;
 	}
-	
-	
-	
-	
 }

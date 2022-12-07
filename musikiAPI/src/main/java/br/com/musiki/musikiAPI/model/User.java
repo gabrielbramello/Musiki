@@ -5,23 +5,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 
 @Entity
-@SequenceGenerator(name = "seq_user", sequenceName = "seq_user", allocationSize = 1, initialValue = 5)
 public class User {
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY,generator="seq_user")
+	@Id 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
+	
 	private String name;
 	private String login;
 	private String password;
 	private String email;
 	private Image image;
+	
 	@ManyToOne
 	private AcessGroup acessGroup;
-	
 	
 	public Long getId() {
 		return id;
@@ -65,7 +64,4 @@ public class User {
 	public void setAcessGroup(AcessGroup acessGroup) {
 		this.acessGroup = acessGroup;
 	}
-	
-	
-
 }

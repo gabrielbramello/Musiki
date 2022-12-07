@@ -10,15 +10,18 @@ import javax.persistence.ManyToMany;
 
 @Entity
 public class Genre {
-	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+	
+	@Id 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
+	
 	private String description;
+	
 	@ManyToMany(mappedBy = "genres")
 	private List<Album> albuns;
 	
 	@ManyToMany(mappedBy = "genres")
 	private List<Artist> artists;
-	
 	
 	public Long getId() {
 		return id;
@@ -38,8 +41,4 @@ public class Genre {
 	public void setAlbuns(List<Album> albuns) {
 		this.albuns = albuns;
 	}
-	
-	
-	
-	
 }

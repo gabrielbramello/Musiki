@@ -15,7 +15,9 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Album {
-	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+	
+	@Id 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
 	private Integer totalTracks;
@@ -32,8 +34,8 @@ public class Album {
 	@JoinTable(name = "album_artist", 
 				joinColumns = @JoinColumn(name = "album_id"), 
 				inverseJoinColumns = @JoinColumn(name = "artist_id"))
+	
 	private List<Artist> artists;
-
 	private String name;
 	private Integer popularity;
 	private Date releaseDate;
@@ -43,7 +45,6 @@ public class Album {
 				joinColumns = @JoinColumn(name = "album_id"), 
 				inverseJoinColumns = @JoinColumn(name = "track_id"))
 	private List<Track> tracks;
-	
 	private String uriSpotify;
 	
 	public Long getId() {
@@ -76,7 +77,6 @@ public class Album {
 	public void setAlbumType(AlbumType albumType) {
 		this.albumType = albumType;
 	}
-
 	public List<Image> getImages() {
 		return images;
 	}
@@ -119,11 +119,4 @@ public class Album {
 	public void setUriSpotify(String uriSpotify) {
 		this.uriSpotify = uriSpotify;
 	}
-	
-	
-
-	
-	
-	
-	
 }

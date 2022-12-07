@@ -12,8 +12,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 @Entity
 public class Artist {
-	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+	
+	@Id 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
+	
 	private Long totalFollowers;
 	private String spotifyApiId;
 	private String name;
@@ -30,6 +33,7 @@ public class Artist {
 	@JoinTable(name = "artist_genre", 
 		joinColumns = @JoinColumn(name = "artist_id"), 
 		inverseJoinColumns = @JoinColumn(name = "genre_id"))
+	
 	private Genre genre;
 	
 	public Long getId() {
@@ -87,8 +91,4 @@ public class Artist {
 	public void setAlbuns(List<Album> albuns) {
 		this.albuns = albuns;
 	}
-	
-	
-	
-	
 }

@@ -3,16 +3,21 @@ package br.com.musiki.musikiAPI.model;
 import java.sql.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
 public class Comment {
 
-	@Id
+	@Id 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
+	
 	private String title;
 	private String content;
+	
 	@ManyToOne
 	private User user;
 	private Date date;
@@ -47,7 +52,4 @@ public class Comment {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
-	
-	
 }

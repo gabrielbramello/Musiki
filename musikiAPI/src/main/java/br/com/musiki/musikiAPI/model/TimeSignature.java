@@ -7,8 +7,11 @@ import javax.persistence.Id;
 
 @Entity
 public class TimeSignature {
-	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+	
+	@Id 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
+	
 	private Integer denominator;
 	private Integer numerator;
 	
@@ -30,7 +33,4 @@ public class TimeSignature {
 	public void setNumerator(Integer numerator) {
 		this.numerator = numerator;
 	}
-	
-	
-	
 }
