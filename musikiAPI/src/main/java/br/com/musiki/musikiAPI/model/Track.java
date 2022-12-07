@@ -4,20 +4,36 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 @Entity
 public class Track {
 	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
-	@ManyToOne
+	@ManyToMany(mappedBy = "tracks") 
 	private Album album;
 	private Long duration;
+	private Boolean explicit;
+	private String spotifyApiId;
 	private String name;
 	private Integer popularity;
-	@OneToOne
-	private AudioFeatures audioFeatures;
-	private String featArtistisNames;
+	private Float acousticness;
+	private Float danceability;
+	private Float energy;
+	private Float instrumentalness;
+	@ManyToOne
+	private Key key;
+	private Float loudness;
+	private Integer mode;
+	private Float speechiness;
+	private Float tempo;
+	@ManyToOne
+	private TimeSignature timeSignature;
+	private String spotifytrackHref;
+	private String spotifyUri;
+	@ManyToOne
+	private Valence valence;
+	
 	
 	public Long getId() {
 		return id;
@@ -37,6 +53,18 @@ public class Track {
 	public void setDuration(Long duration) {
 		this.duration = duration;
 	}
+	public Boolean getExplicit() {
+		return explicit;
+	}
+	public void setExplicit(Boolean explicit) {
+		this.explicit = explicit;
+	}
+	public String getSpotifyApiId() {
+		return spotifyApiId;
+	}
+	public void setSpotifyApiId(String spotifyApiId) {
+		this.spotifyApiId = spotifyApiId;
+	}
 	public String getName() {
 		return name;
 	}
@@ -49,18 +77,86 @@ public class Track {
 	public void setPopularity(Integer popularity) {
 		this.popularity = popularity;
 	}
-	public AudioFeatures getAudioFeatures() {
-		return audioFeatures;
+	public Float getAcousticness() {
+		return acousticness;
 	}
-	public void setAudioFeatures(AudioFeatures audioFeatures) {
-		this.audioFeatures = audioFeatures;
+	public void setAcousticness(Float acousticness) {
+		this.acousticness = acousticness;
 	}
-	public String getFeatArtistisNames() {
-		return featArtistisNames;
+	public Float getDanceability() {
+		return danceability;
 	}
-	public void setFeatArtistisNames(String featArtistisNames) {
-		this.featArtistisNames = featArtistisNames;
+	public void setDanceability(Float danceability) {
+		this.danceability = danceability;
 	}
+	public Float getEnergy() {
+		return energy;
+	}
+	public void setEnergy(Float energy) {
+		this.energy = energy;
+	}
+	public Float getInstrumentalness() {
+		return instrumentalness;
+	}
+	public void setInstrumentalness(Float instrumentalness) {
+		this.instrumentalness = instrumentalness;
+	}
+	public Key getKey() {
+		return key;
+	}
+	public void setKey(Key key) {
+		this.key = key;
+	}
+	public Float getLoudness() {
+		return loudness;
+	}
+	public void setLoudness(Float loudness) {
+		this.loudness = loudness;
+	}
+	public Integer getMode() {
+		return mode;
+	}
+	public void setMode(Integer mode) {
+		this.mode = mode;
+	}
+	public Float getSpeechiness() {
+		return speechiness;
+	}
+	public void setSpeechiness(Float speechiness) {
+		this.speechiness = speechiness;
+	}
+	public Float getTempo() {
+		return tempo;
+	}
+	public void setTempo(Float tempo) {
+		this.tempo = tempo;
+	}
+	public TimeSignature getTimeSignature() {
+		return timeSignature;
+	}
+	public void setTimeSignature(TimeSignature timeSignature) {
+		this.timeSignature = timeSignature;
+	}
+	public String getSpotifytrackHref() {
+		return spotifytrackHref;
+	}
+	public void setSpotifytrackHref(String spotifytrackHref) {
+		this.spotifytrackHref = spotifytrackHref;
+	}
+	public String getSpotifyUri() {
+		return spotifyUri;
+	}
+	public void setSpotifyUri(String spotifyUri) {
+		this.spotifyUri = spotifyUri;
+	}
+	public Valence getValence() {
+		return valence;
+	}
+	public void setValence(Valence valence) {
+		this.valence = valence;
+	}
+	
+	
 	
 	
 }

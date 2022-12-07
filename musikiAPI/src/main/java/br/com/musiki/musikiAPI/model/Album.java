@@ -17,22 +17,34 @@ import javax.persistence.OneToMany;
 public class Album {
 	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
-	private String type;
+	
+	private Integer totalTracks;
+	private String href;
+	private String spotifyApiId;
+	
 	@ManyToOne
-	private Artist artist;
+	private AlbumType albumType;
+	
+	@OneToMany
+	private List<Image> images;
+	
 	@ManyToMany
-	@JoinTable(name = "album_genre", 
+	@JoinTable(name = "album_artist", 
 				joinColumns = @JoinColumn(name = "album_id"), 
-				inverseJoinColumns = @JoinColumn(name = "genre_id"))
-	private List<Genres> genres;
-	private String label;
+				inverseJoinColumns = @JoinColumn(name = "artist_id"))
+	private List<Artist> artists;
+
 	private String name;
 	private Integer popularity;
 	private Date releaseDate;
-	@OneToMany(mappedBy = "album")
-	private List<Track> tracks;
-	private String featArtistsNames;
 	
+	@ManyToMany
+	@JoinTable(name = "album_track", 
+				joinColumns = @JoinColumn(name = "album_id"), 
+				inverseJoinColumns = @JoinColumn(name = "track_id"))
+	private List<Track> tracks;
+	
+	private String uriSpotify;
 	
 	public Long getId() {
 		return id;
@@ -40,30 +52,42 @@ public class Album {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getType() {
-		return type;
+	public Integer getTotalTracks() {
+		return totalTracks;
 	}
-	public void setType(String type) {
-		this.type = type;
+	public void setTotalTracks(Integer totalTracks) {
+		this.totalTracks = totalTracks;
 	}
-	
-	public Artist getArtist() {
-		return artist;
+	public String getHref() {
+		return href;
 	}
-	public void setArtist(Artist artists) {
-		this.artist = artists;
+	public void setHref(String href) {
+		this.href = href;
 	}
-	public List<Genres> getGenres() {
-		return genres;
+	public String getSpotifyApiId() {
+		return spotifyApiId;
 	}
-	public void setGenres(List<Genres> genres) {
-		this.genres = genres;
+	public void setSpotifyApiId(String spotifyApiId) {
+		this.spotifyApiId = spotifyApiId;
 	}
-	public String getLabel() {
-		return label;
+	public AlbumType getAlbumType() {
+		return albumType;
 	}
-	public void setLabel(String label) {
-		this.label = label;
+	public void setAlbumType(AlbumType albumType) {
+		this.albumType = albumType;
+	}
+
+	public List<Image> getImages() {
+		return images;
+	}
+	public void setImages(List<Image> images) {
+		this.images = images;
+	}
+	public List<Artist> getArtists() {
+		return artists;
+	}
+	public void setArtists(List<Artist> artists) {
+		this.artists = artists;
 	}
 	public String getName() {
 		return name;
@@ -89,12 +113,15 @@ public class Album {
 	public void setTracks(List<Track> tracks) {
 		this.tracks = tracks;
 	}
-	public String getFeatArtistName() {
-		return featArtistsNames;
+	public String getUriSpotify() {
+		return uriSpotify;
 	}
-	public void setFeatArtistName(String featArtistName) {
-		this.featArtistsNames = featArtistName;
+	public void setUriSpotify(String uriSpotify) {
+		this.uriSpotify = uriSpotify;
 	}
+	
+	
+
 	
 	
 	

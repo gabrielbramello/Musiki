@@ -1,29 +1,30 @@
 package br.com.musiki.musikiAPI.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
-public class Key {
+public class Genre {
 	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
-	private String label;
 	private String description;
-	private String equivalentKey;
-	private Integer pitch;
+	@ManyToMany(mappedBy = "genres")
+	private List<Album> albuns;
+	
+	@ManyToMany(mappedBy = "genres")
+	private List<Artist> artists;
+	
+	
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	public String getLabel() {
-		return label;
-	}
-	public void setLabel(String label) {
-		this.label = label;
 	}
 	public String getDescription() {
 		return description;
@@ -31,19 +32,12 @@ public class Key {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getEquivalentKey() {
-		return equivalentKey;
+	public List<Album> getAlbuns() {
+		return albuns;
 	}
-	public void setEquivalentKey(String equivalentKey) {
-		this.equivalentKey = equivalentKey;
+	public void setAlbuns(List<Album> albuns) {
+		this.albuns = albuns;
 	}
-	public Integer getPitch() {
-		return pitch;
-	}
-	public void setPitch(Integer pitch) {
-		this.pitch = pitch;
-	}
-	
 	
 	
 	
