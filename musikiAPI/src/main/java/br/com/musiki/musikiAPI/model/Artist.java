@@ -30,7 +30,7 @@ public class Artist {
 	@JoinTable(name = "artist_genre", 
 		joinColumns = @JoinColumn(name = "artist_id"), 
 		inverseJoinColumns = @JoinColumn(name = "genre_id"))
-	private Genre genre;
+	private List<Genre> genres;
 	
 	public Long getId() {
 		return id;

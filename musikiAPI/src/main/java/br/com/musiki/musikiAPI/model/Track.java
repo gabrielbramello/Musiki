@@ -1,5 +1,7 @@
 package br.com.musiki.musikiAPI.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +13,7 @@ public class Track {
 	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	@ManyToMany(mappedBy = "tracks") 
-	private Album album;
+	private List<Album> album;
 	private Long duration;
 	private Boolean explicit;
 	private String spotifyApiId;
@@ -41,10 +43,11 @@ public class Track {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Album getAlbum() {
+	
+	public List<Album> getAlbum() {
 		return album;
 	}
-	public void setAlbum(Album album) {
+	public void setAlbum(List<Album> album) {
 		this.album = album;
 	}
 	public Long getDuration() {

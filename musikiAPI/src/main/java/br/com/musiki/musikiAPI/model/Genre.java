@@ -13,8 +13,6 @@ public class Genre {
 	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	private String description;
-	@ManyToMany(mappedBy = "genres")
-	private List<Album> albuns;
 	
 	@ManyToMany(mappedBy = "genres")
 	private List<Artist> artists;
@@ -32,13 +30,6 @@ public class Genre {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public List<Album> getAlbuns() {
-		return albuns;
-	}
-	public void setAlbuns(List<Album> albuns) {
-		this.albuns = albuns;
-	}
-	
 	
 	
 	

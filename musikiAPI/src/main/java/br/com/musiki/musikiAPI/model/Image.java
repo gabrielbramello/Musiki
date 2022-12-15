@@ -1,13 +1,15 @@
 package br.com.musiki.musikiAPI.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
 public class Image {
 
-	@Id
+	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	private String url;
 	private Integer height;
@@ -20,7 +22,7 @@ public class Image {
 	private Album album;
 	
 	@ManyToOne
-	private User user;
+	private UserSamm user;
 	
 	public Long getId() {
 		return id;
@@ -58,10 +60,10 @@ public class Image {
 	public void setAlbum(Album album) {
 		this.album = album;
 	}
-	public User getUser() {
+	public UserSamm getUser() {
 		return user;
 	}
-	public void setUser(User user) {
+	public void setUser(UserSamm user) {
 		this.user = user;
 	}
 	

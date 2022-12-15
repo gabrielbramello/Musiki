@@ -1,5 +1,6 @@
 package br.com.musiki.musikiAPI.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,11 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-@SequenceGenerator(name = "seq_acess_group", sequenceName = "seq_acess_group", allocationSize = 1, initialValue = 5)
+@SequenceGenerator(name = "acess_group_sequence", sequenceName = "acess_group_seq", initialValue = 1, allocationSize = 1)
 public class AcessGroup {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY,generator="seq_acess_group")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="acess_group_sequence")
+	@Column(name="id", nullable = false, updatable = false)
 	private Long id;
 	private String description;
 	

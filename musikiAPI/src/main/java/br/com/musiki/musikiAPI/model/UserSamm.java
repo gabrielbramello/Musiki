@@ -1,24 +1,29 @@
 package br.com.musiki.musikiAPI.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-@SequenceGenerator(name = "seq_user", sequenceName = "seq_user", allocationSize = 1, initialValue = 5)
-public class User {
+public class UserSamm {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY,generator="seq_user")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "user_samm_sequence")
+	@SequenceGenerator(name="user_samm_sequence", sequenceName="user_samm_seq")
 	private Long id;
 	private String name;
 	private String login;
 	private String password;
 	private String email;
-	private Image image;
+	
+	@OneToMany
+	private List<Image> images;
 	@ManyToOne
 	private AcessGroup acessGroup;
 	
@@ -53,11 +58,12 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Image getImage() {
-		return image;
+
+	public List<Image> getImages() {
+		return images;
 	}
-	public void setImage(Image image) {
-		this.image = image;
+	public void setImage(List<Image> image) {
+		this.images = image;
 	}
 	public AcessGroup getAcessGroup() {
 		return acessGroup;

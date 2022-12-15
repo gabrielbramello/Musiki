@@ -14,7 +14,7 @@ public class Comment {
 	private String title;
 	private String content;
 	@ManyToOne
-	private User user;
+	private UserSamm user;
 	private Date date;
 	
 	public Long getId() {
@@ -35,10 +35,10 @@ public class Comment {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public User getUser() {
+	public UserSamm getUser() {
 		return user;
 	}
-	public void setUser(User user) {
+	public void setUser(UserSamm user) {
 		this.user = user;
 	}
 	public Date getDate() {
