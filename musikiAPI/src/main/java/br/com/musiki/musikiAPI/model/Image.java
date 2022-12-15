@@ -11,6 +11,7 @@ public class Image {
 
 	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
+	
 	private String url;
 	private Integer height;
 	private Integer width;
@@ -66,6 +67,4 @@ public class Image {
 	public void setUser(UserSamm user) {
 		this.user = user;
 	}
-	
-	
 }

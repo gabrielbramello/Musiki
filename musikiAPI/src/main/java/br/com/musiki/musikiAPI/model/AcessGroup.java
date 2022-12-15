@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 
 @Entity
 @SequenceGenerator(name = "acess_group_sequence", sequenceName = "acess_group_seq", initialValue = 1, allocationSize = 1)
@@ -29,8 +28,4 @@ public class AcessGroup {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	
-	
-	
 }

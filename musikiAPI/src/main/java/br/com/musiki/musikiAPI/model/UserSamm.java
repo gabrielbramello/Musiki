@@ -17,6 +17,7 @@ public class UserSamm {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "user_samm_sequence")
 	@SequenceGenerator(name="user_samm_sequence", sequenceName="user_samm_seq")
 	private Long id;
+	
 	private String name;
 	private String login;
 	private String password;
@@ -26,7 +27,6 @@ public class UserSamm {
 	private List<Image> images;
 	@ManyToOne
 	private AcessGroup acessGroup;
-	
 	
 	public Long getId() {
 		return id;
@@ -71,7 +71,4 @@ public class UserSamm {
 	public void setAcessGroup(AcessGroup acessGroup) {
 		this.acessGroup = acessGroup;
 	}
-	
-	
-
 }
