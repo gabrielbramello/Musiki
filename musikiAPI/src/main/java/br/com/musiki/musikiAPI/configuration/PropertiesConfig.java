@@ -21,7 +21,4 @@ public class PropertiesConfig {
 	public void setClientSecret(String clientSecret) {
 		this.clientSecret = clientSecret;
 	}
-	
-	
-	
 }

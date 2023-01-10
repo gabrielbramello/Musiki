@@ -2,6 +2,7 @@ package br.com.musiki.musikiAPI.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,18 +14,28 @@ import javax.persistence.SequenceGenerator;
 @Entity
 public class UserSamm {
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "user_samm_sequence")
-	@SequenceGenerator(name="user_samm_sequence", sequenceName="user_samm_seq")
-	private Long id;
-	
+    @Id
+    @GeneratedValue(generator = "user_samm_sequence", strategy = GenerationType.AUTO)
+    @SequenceGenerator(name="user_samm_sequence",sequenceName="user_samm_seq",initialValue = 1,allocationSize=1)
+    private Long id;
 	private String name;
 	private String login;
 	private String password;
 	private String email;
+
+	/*
+	 * @Column( name = "id_user_samm", unique = true, updatable=false, nullable =
+	 * false)
+	 * 
+	 * @Id
+	 * 
+	 * @GeneratedValue( generator = "user_samm_sequence",
+	 * strategy=GenerationType.SEQUENCE )
+	 */
 	
 	@OneToMany
 	private List<Image> images;
+	
 	@ManyToOne
 	private AcessGroup acessGroup;
 	

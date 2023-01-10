@@ -32,17 +32,10 @@ public class Genre {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-<<<<<<< HEAD
-	
-	
-	
-}
-=======
-	public List<Album> getAlbuns() {
-		return albuns;
+	public List<Artist> getArtists() {
+		return artists;
 	}
-	public void setAlbuns(List<Album> albuns) {
-		this.albuns = albuns;
+	public void setArtists(List<Artist> artists) {
+		this.artists = artists;
 	}
 }
->>>>>>> 8f454ea2789e14abf706d7b0e88cc72038a355f7
