@@ -5,13 +5,12 @@ import java.io.IOException;
 import org.apache.hc.core5.http.ParseException;
 import org.springframework.stereotype.Component;
 
-import com.wrapper.spotify.enums.ModelObjectType;
-import com.wrapper.spotify.exceptions.SpotifyWebApiException;
-import com.wrapper.spotify.model_objects.special.SearchResult;
-import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
-import com.wrapper.spotify.requests.data.search.SearchItemRequest;
-
 import br.com.musiki.musikiAPI.services.spotify.authorization.ClientCredentialAuth;
+import se.michaelthelin.spotify.enums.ModelObjectType;
+import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
+import se.michaelthelin.spotify.model_objects.special.SearchResult;
+import se.michaelthelin.spotify.model_objects.specification.AlbumSimplified;
+import se.michaelthelin.spotify.requests.data.search.SearchItemRequest;
 
 @Component
 public class SearchItem extends ApiSpotify{

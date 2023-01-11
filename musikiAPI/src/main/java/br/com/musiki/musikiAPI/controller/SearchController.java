@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
 
 import br.com.musiki.musikiAPI.services.spotify.api.SearchItem;
+import se.michaelthelin.spotify.model_objects.specification.AlbumSimplified;
 
 @RestController
 public class SearchController {

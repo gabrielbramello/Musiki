@@ -3,10 +3,10 @@ package br.com.musiki.musikiAPI.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
-import com.wrapper.spotify.model_objects.specification.Paging;
 
 import br.com.musiki.musikiAPI.services.spotify.api.SearchAlbum;
+import se.michaelthelin.spotify.model_objects.specification.AlbumSimplified;
+import se.michaelthelin.spotify.model_objects.specification.Paging;
 
 @RestController
 public class HelloController {
