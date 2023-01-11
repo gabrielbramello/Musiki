@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL:'localhost:8080/api'
+    baseURL:'http://localhost:8081/api',
+    mode:'cors'
 });
 
 export default api;

@@ -7,15 +7,17 @@ import api from "../../api/api";
 function SearchBar({ placeholder }) {
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState("");
-  const [data, setData] = useState[];
+  const [data, setData] = useState([]);
 
   const handleFilter = (event) => {
     const searchWord = event.target.value;
     setWordEntered(searchWord);
 
-    api.get('/api/spotify/search/artist/' + wordEntered)
+    api.get('/spotify/search/artist/' + wordEntered)
       .then(response => setData(response.data))
+      console.log(data)
     const newFilter = data.filter((value) => {
+      console.log(value.name)
       return value.name.toLowerCase().includes(searchWord.toLowerCase());
     });
 
@@ -52,7 +54,7 @@ function SearchBar({ placeholder }) {
         <div className="dataResult">
           {filteredData.slice(0, 15).map((value, key) => {
             return (
-              <a className="dataItem" href={value.link} target="_blank">
+              <a key={key} className="dataItem" href={value.link} target="_blank">
                 <p>{value.title} </p>
               </a>
             );
