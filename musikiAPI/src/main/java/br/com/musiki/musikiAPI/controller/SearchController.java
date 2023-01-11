@@ -15,12 +15,12 @@ public class SearchController {
 	@Autowired
 	private SearchItem searchItem;
 	
-	@RequestMapping("/api/spotify/album/{album}")
+	@RequestMapping("/api/spotify/search/album/{album}")
 	public AlbumSimplified searchAlbumFromSpotifyApi(@PathVariable String album) {
 		return searchItem.searchAlbum(album);
 	}
 	
-	@RequestMapping("/api/spotify/artist/{artist}")
+	@RequestMapping("/api/spotify/search/artist/{artist}")
 	public Artist searchArtistFromSpotifyApi(@PathVariable String artist) {
 		return searchItem.searchArtist(artist);
 	}
