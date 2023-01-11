@@ -1,16 +1,22 @@
 import React, { useState } from "react";
 import "./SearchBar.css";
 import 'primeicons/primeicons.css';
+import api from "../../api/api";
 
-function SearchBar({ placeholder, data }) {
+
+function SearchBar({ placeholder }) {
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState("");
+  const [data, setData] = useState[];
 
   const handleFilter = (event) => {
     const searchWord = event.target.value;
     setWordEntered(searchWord);
+
+    api.get('/api/spotify/search/artist/' + wordEntered)
+      .then(response => setData(response.data))
     const newFilter = data.filter((value) => {
-      return value.title.toLowerCase().includes(searchWord.toLowerCase());
+      return value.name.toLowerCase().includes(searchWord.toLowerCase());
     });
 
     if (searchWord === "") {

@@ -1,6 +1,8 @@
 package br.com.musiki.musikiAPI.services.spotify.api;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.hc.core5.http.ParseException;
 import org.springframework.stereotype.Component;
@@ -49,15 +51,17 @@ public class SearchItem extends ApiSpotify{
 		}
 	}
 	
-	public Artist searchArtist(String artist) {
+	public List<Artist> searchArtist(String artist) {
 		try {
 			SearchItemRequest searchItemRequest = spotifyApi.searchItem(artist, ModelObjectType.ARTIST.getType())
 					.limit(10)
 					.build();
 			SearchResult searchResult = searchItemRequest.execute();
 			
-			Artist artistSimplified = searchResult.getArtists().getItems()[0];
-			return artistSimplified;
+			Artist[] artistSimplified = searchResult.getArtists().getItems();
+			
+			List<Artist> artistsList = Arrays.asList(artistSimplified);
+			return artistsList;
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
