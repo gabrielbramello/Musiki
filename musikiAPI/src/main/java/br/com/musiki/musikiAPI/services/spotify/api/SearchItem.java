@@ -10,6 +10,8 @@ import se.michaelthelin.spotify.enums.ModelObjectType;
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
 import se.michaelthelin.spotify.model_objects.special.SearchResult;
 import se.michaelthelin.spotify.model_objects.specification.AlbumSimplified;
+import se.michaelthelin.spotify.model_objects.specification.Artist;
+import se.michaelthelin.spotify.model_objects.specification.ArtistSimplified;
 import se.michaelthelin.spotify.requests.data.search.SearchItemRequest;
 
 @Component
@@ -37,20 +39,29 @@ public class SearchItem extends ApiSpotify{
 	
 	public void searchTrack(String track) {
 		try {
-			SearchItemRequest searchItemRequest = spotifyApi.searchItem(track, ModelObjectType.TRACK.getType()).build();
+			SearchItemRequest searchItemRequest = spotifyApi.searchItem(track, ModelObjectType.TRACK.getType())
+					.limit(10)
+					.build();
 			SearchResult searchResult = searchItemRequest.execute();
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void searchArtist(String artist) {
+	public Artist searchArtist(String artist) {
 		try {
-			SearchItemRequest searchItemRequest = spotifyApi.searchItem(artist, ModelObjectType.ARTIST.getType()).build();
+			SearchItemRequest searchItemRequest = spotifyApi.searchItem(artist, ModelObjectType.ARTIST.getType())
+					.limit(10)
+					.build();
 			SearchResult searchResult = searchItemRequest.execute();
+			
+			Artist artistSimplified = searchResult.getArtists().getItems()[0];
+			return artistSimplified;
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
 	public void searchPlaylist(String playlist) {
