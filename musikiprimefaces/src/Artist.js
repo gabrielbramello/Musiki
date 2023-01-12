@@ -5,9 +5,8 @@ import "primeicons/primeicons.css";                                //icons
 import Menu from './components/menu/Menu';
 import SearchBar from './components/menu/SearchBar';
 import "./App.css";
-import { Link } from 'react-router-dom';
 
-export default function App() {
+export default function Artist() {
 
   return (
 <div>
@@ -15,8 +14,7 @@ export default function App() {
       <Menu></Menu>
     </div>
     <div className="App">
-      <SearchBar placeholder="O que deseja descobrir hoje?"></SearchBar>
-      {/*<p><Link to="/artistas">Mudar de Pagina</Link></p>*/}
+      <SearchBar placeholder="Digite o nome de um artista..."></SearchBar>
     </div>
 </div>
   )

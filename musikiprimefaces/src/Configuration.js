@@ -5,19 +5,14 @@ import "primeicons/primeicons.css";                                //icons
 import Menu from './components/menu/Menu';
 import SearchBar from './components/menu/SearchBar';
 import "./App.css";
-import { Link } from 'react-router-dom';
 
-export default function App() {
+export default function Configuration() {
 
   return (
-<div>
-  <div>
+    <div>
       <Menu></Menu>
+      <h2>Pagina de Configuração</h2>
+      <h3>Pagina em construção...</h3>
     </div>
-    <div className="App">
-      <SearchBar placeholder="O que deseja descobrir hoje?"></SearchBar>
-      {/*<p><Link to="/artistas">Mudar de Pagina</Link></p>*/}
-    </div>
-</div>
   )
 }

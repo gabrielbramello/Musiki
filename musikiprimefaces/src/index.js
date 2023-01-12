@@ -3,11 +3,26 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Artist from './Artist';
+import Album from './Album';
+import UserPage from './UserPage';
+import Configuration from './Configuration';
+import Music from './Music';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" exact={true} element={<App />} />
+        <Route path="/artistas" element={<Artist />} />
+        <Route path="/albums" element={<Album />} />
+        <Route path="/musicas" element={<Music />} />
+        <Route path="/paginadousuario" element={<UserPage />} />
+        <Route path="/configuracoes" element={<Configuration />} />
+      </Routes>
+    </ BrowserRouter>
   </React.StrictMode>
 );
 
