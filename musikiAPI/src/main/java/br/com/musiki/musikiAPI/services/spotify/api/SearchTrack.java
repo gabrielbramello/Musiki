@@ -7,30 +7,32 @@ import org.springframework.stereotype.Component;
 
 import br.com.musiki.musikiAPI.services.spotify.authorization.ClientCredentialAuth;
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
-import se.michaelthelin.spotify.model_objects.specification.Album;
-import se.michaelthelin.spotify.requests.data.albums.GetAlbumRequest;
+import se.michaelthelin.spotify.model_objects.specification.Track;
+import se.michaelthelin.spotify.requests.data.tracks.GetTrackRequest;
+
 
 @Component
-public class SearchAlbum extends ApiSpotify {
+public class SearchTrack extends ApiSpotify {
 	
-	public SearchAlbum(ClientCredentialAuth clientCredentialAuth)
+	public SearchTrack(ClientCredentialAuth clientCredentialAuth)
 			throws ParseException, SpotifyWebApiException, IOException {
 		super(clientCredentialAuth);
 	}
 	
-	public Album searchAlbumById(String id) {
+	public Track searchTrackById(String id) {
 		try {
-			GetAlbumRequest getAlbumRequest = spotifyApi.getAlbum(id)
+			GetTrackRequest getTrackRequest = spotifyApi.getTrack(id)
 				    .build();
 			
-			Album album = getAlbumRequest.execute();
+			Track track = getTrackRequest.execute();
 			
-			return album;
+			return track;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		return null;
+		
 	}
 }

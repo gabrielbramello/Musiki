@@ -13,7 +13,7 @@ import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
 import se.michaelthelin.spotify.model_objects.special.SearchResult;
 import se.michaelthelin.spotify.model_objects.specification.AlbumSimplified;
 import se.michaelthelin.spotify.model_objects.specification.Artist;
-import se.michaelthelin.spotify.model_objects.specification.ArtistSimplified;
+import se.michaelthelin.spotify.model_objects.specification.Track;
 import se.michaelthelin.spotify.requests.data.search.SearchItemRequest;
 
 @Component
@@ -29,9 +29,13 @@ public class SearchItem extends ApiSpotify{
 			SearchItemRequest searchItemRequest = spotifyApi.searchItem(album, ModelObjectType.ALBUM.getType())
 													.limit(10)
 													.build();
+			
 			SearchResult searchResult = searchItemRequest.execute();
+			
 			AlbumSimplified albumSimplifed = searchResult.getAlbums().getItems()[0]; 
+			
 			return albumSimplifed;
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
@@ -39,16 +43,23 @@ public class SearchItem extends ApiSpotify{
 		
 	}
 	
-	public void searchTrack(String track) {
+	public List<Track> searchTrack(String track) {
 		try {
 			SearchItemRequest searchItemRequest = spotifyApi.searchItem(track, ModelObjectType.TRACK.getType())
 					.limit(10)
 					.build();
 			SearchResult searchResult = searchItemRequest.execute();
 			
+			Track [] tracks = searchResult.getTracks().getItems();
+			
+			List<Track> trackList = Arrays.asList(tracks);
+			
+			return trackList;
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
 	public List<Artist> searchArtist(String artist) {
@@ -68,31 +79,6 @@ public class SearchItem extends ApiSpotify{
 		return null;
 	}
 	
-	public void searchPlaylist(String playlist) {
-		try {
-			SearchItemRequest searchItemRequest = spotifyApi.searchItem(playlist, ModelObjectType.PLAYLIST.getType()).build();
-			SearchResult searchResult = searchItemRequest.execute();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void searchShow(String show) {
-		try {
-			SearchItemRequest searchItemRequest = spotifyApi.searchItem(show, ModelObjectType.SHOW.getType()).build();
-			SearchResult searchResult = searchItemRequest.execute();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-	public void searchEpisode(String episode) {
-		try {
-			SearchItemRequest searchItemRequest = spotifyApi.searchItem(episode, ModelObjectType.EPISODE.getType()).build();
-			SearchResult searchResult = searchItemRequest.execute();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
 //	public static void searchItem_Sync() {
 //		try {
 //			final SearchResult searchResult = searchItemRequest.execute();
