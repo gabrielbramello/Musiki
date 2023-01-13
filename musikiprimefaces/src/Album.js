@@ -8,13 +8,20 @@ import "./App.css";
 
 export default function Album() {
 
+  var artistsExternalUrls
+  var artistsName
+  var externalUrls
+  var images
+  var name
+  var releaseDate
+
   return (
 <div>
   <div>
       <Menu></Menu>
     </div>
     <div className="App">
-      <SearchBar placeholder="Digite o nome de um album..."></SearchBar>
+      <SearchBar placeholder="Digite o nome de um album..." source={'/spotify/search/album/'}></SearchBar>
     </div>
 </div>
   )

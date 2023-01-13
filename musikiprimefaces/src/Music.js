@@ -14,7 +14,7 @@ export default function Music() {
       <Menu></Menu>
     </div>
     <div className="App">
-      <SearchBar placeholder="Digite o nome de uma musica..."></SearchBar>
+      <SearchBar placeholder="Digite o nome de uma musica..." source={'spotify/search/track/'}></SearchBar>
     </div>
 </div>
   )
