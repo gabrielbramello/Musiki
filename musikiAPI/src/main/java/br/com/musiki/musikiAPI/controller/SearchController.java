@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.musiki.musikiAPI.services.spotify.api.SearchItem;
 import se.michaelthelin.spotify.model_objects.specification.AlbumSimplified;
 import se.michaelthelin.spotify.model_objects.specification.Artist;
+import se.michaelthelin.spotify.model_objects.specification.Track;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -27,5 +28,10 @@ public class SearchController {
 	@RequestMapping("/api/spotify/search/artist/{artist}")
 	public List<Artist> searchArtistFromSpotifyApi(@PathVariable String artist) {
 		return searchItem.searchArtist(artist);
+	}
+	
+	@RequestMapping("/api/spotify/search/track/{track}")
+	public List<Track> searchTrackFromSpotifyApi(@PathVariable String track) {
+		return searchItem.searchTrack(track);
 	}
 }

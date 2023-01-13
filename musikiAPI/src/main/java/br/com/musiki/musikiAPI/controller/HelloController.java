@@ -8,7 +8,7 @@ import br.com.musiki.musikiAPI.services.spotify.api.SearchAlbum;
 import se.michaelthelin.spotify.model_objects.specification.AlbumSimplified;
 import se.michaelthelin.spotify.model_objects.specification.Paging;
 
-@RestController
+/*@RestController
 public class HelloController {
 
 	@RequestMapping("/")
@@ -19,7 +19,7 @@ public class HelloController {
 	@RequestMapping("/teste")
 	public String teste() {
 		try {
-			SearchAlbum searchAlbum = new SearchAlbum();
+			SearchAlbum searchAlbum = new SearchAlbum(null);
 			Paging<AlbumSimplified> albumSimplifiedPaging = searchAlbum.getAlbum("Abba");
 			System.out.println("Total: " + albumSimplifiedPaging.getTotal());
 			return "Deu bom";
@@ -29,4 +29,4 @@ public class HelloController {
 		}
 		
 	}
-}
+}*/
