@@ -16,9 +16,9 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" exact={true} element={<App />} />
-        <Route path="/artistas" element={<Artist />} />
-        <Route path="/albums" element={<Album />} />
-        <Route path="/musicas" element={<Music />} />
+        <Route path="/artist/:artistId" element={<Artist />}/>
+        <Route path="/album" element={<Album />} />
+        <Route path="/track" element={<Music />} />
         <Route path="/paginadousuario" element={<UserPage />} />
         <Route path="/configuracoes" element={<Configuration />} />
       </Routes>

@@ -1,12 +1,14 @@
 package br.com.musiki.musikiAPI.services.spotify.api;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.apache.hc.core5.http.ParseException;
 import org.springframework.stereotype.Component;
 
+import br.com.musiki.musikiAPI.dto.SearchDTO;
 import br.com.musiki.musikiAPI.services.spotify.authorization.ClientCredentialAuth;
 import se.michaelthelin.spotify.enums.ModelObjectType;
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
@@ -24,17 +26,55 @@ public class SearchItem extends ApiSpotify{
 		super(clientCredentialAuth);
 	}
 	 
-	public AlbumSimplified searchAlbum(String album) {
+	public List<SearchDTO> search(String query) {
+		
+		List<SearchDTO> searchDTOList = new ArrayList<SearchDTO>();
+		try {
+			
+			List<AlbumSimplified> albumList = searchAlbum(query);
+			
+			for (AlbumSimplified albumSimplified : albumList) {
+				SearchDTO searchDTO = new SearchDTO(albumSimplified);
+				searchDTOList.add(searchDTO);
+			}
+			
+			List<Artist> artistList = searchArtist(query);
+			
+			for (Artist artist : artistList) {
+				SearchDTO searchDTO = new SearchDTO(artist);
+				searchDTOList.add(searchDTO);
+			}
+			
+			List<Track> trackList = searchTrack(query); 
+			
+			for (Track track : trackList) {
+				SearchDTO searchDTO = new SearchDTO(track);
+				searchDTOList.add(searchDTO);
+			}
+			
+			
+			return searchDTOList;
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	
+	public List<AlbumSimplified> searchAlbum(String album) {
 		try {
 			SearchItemRequest searchItemRequest = spotifyApi.searchItem(album, ModelObjectType.ALBUM.getType())
-													.limit(10)
+													.limit(3)
 													.build();
 			
 			SearchResult searchResult = searchItemRequest.execute();
 			
-			AlbumSimplified albumSimplifed = searchResult.getAlbums().getItems()[0]; 
+			AlbumSimplified[] albumsSimplifed = searchResult.getAlbums().getItems(); 
 			
-			return albumSimplifed;
+			List<AlbumSimplified> albumList = Arrays.asList(albumsSimplifed);
+			
+			return albumList;
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -46,7 +86,7 @@ public class SearchItem extends ApiSpotify{
 	public List<Track> searchTrack(String track) {
 		try {
 			SearchItemRequest searchItemRequest = spotifyApi.searchItem(track, ModelObjectType.TRACK.getType())
-					.limit(10)
+					.limit(3)
 					.build();
 			SearchResult searchResult = searchItemRequest.execute();
 			
@@ -65,7 +105,7 @@ public class SearchItem extends ApiSpotify{
 	public List<Artist> searchArtist(String artist) {
 		try {
 			SearchItemRequest searchItemRequest = spotifyApi.searchItem(artist, ModelObjectType.ARTIST.getType())
-					.limit(10)
+					.limit(3)
 					.build();
 			SearchResult searchResult = searchItemRequest.execute();
 			
@@ -79,35 +119,4 @@ public class SearchItem extends ApiSpotify{
 		return null;
 	}
 	
-//	public static void searchItem_Sync() {
-//		try {
-//			final SearchResult searchResult = searchItemRequest.execute();
-//
-//			System.out.println("Total tracks: " + searchResult.getTracks().getTotal());
-//		} catch (IOException | SpotifyWebApiException | ParseException e) {
-//			System.out.println("Error: " + e.getMessage());
-//		}
-//	}
-//
-//	public static void searchItem_Async() {
-//		try {
-//			final CompletableFuture<SearchResult> searchResultFuture = searchItemRequest.executeAsync();
-//
-//			// Thread free to do other tasks...
-//
-//			// Example Only. Never block in production code.
-//			final SearchResult searchResult = searchResultFuture.join();
-//
-//			System.out.println("Total tracks: " + searchResult.getTracks().getTotal());
-//		} catch (CompletionException e) {
-//			System.out.println("Error: " + e.getCause().getMessage());
-//		} catch (CancellationException e) {
-//			System.out.println("Async operation cancelled.");
-//		}
-//	}
-//
-//	public static void main(String[] args) {
-//		searchItem_Sync();
-//		searchItem_Async();
-//	}
 }

@@ -17,26 +17,25 @@ function SearchBar({ placeholder }) {
     const searchWord = event.target.value;
     setWordEntered(searchWord);
 
-    api.get('/spotify/search/artist/' + wordEntered)
+    api.get('/spotify/search/' + wordEntered)
       .then(response => setData(response.data))
-      console.log(data)
+      .catch(error => console.log(error.message))
+      console.log(data);
 
   const newFilter = data.filter((value) => {
 
     if (value.type === "ALBUM") {
-      sourceUrl = '/spotify/search/album/'
+      sourceUrl = '/spotify/album/'
       paginaDestino = "/albums"
     }
     if (value.type === "ARTIST")  {
-      sourceUrl = '/spotify/search/artist/'
+      sourceUrl = '/spotify/artist/'
       paginaDestino = "/artistas"
     }
     if(value.type === "TRACK") {
-      sourceUrl = '/spotify/search/track/'
+      sourceUrl = '/spotify/track/'
       paginaDestino = "/musicas"
     }
-      console.log(value.name)
-      console.log(value.id)
       return value.name.toLowerCase().includes(searchWord.toLowerCase());
     });
 
@@ -73,10 +72,11 @@ function SearchBar({ placeholder }) {
       {filteredData.length != 0 && (
         <div className="dataResult">
           {filteredData.slice(0, 15).map((value, key) => {
+            console.log(value)
             return (
-              <a key={key} className="dataItem" href={'/artistas'} id={value.id} onClick={id = data.id}>
-                <p>{value.name}<Link to='/artistas'></Link></p>
-              </a>
+              <Link className="dataItem" key={key} to= { `${value.type}/${value.id}`}>
+                <p>{`${value.name} - (${value.type})`}</p>
+              </Link>
             );
           })}
         </div>

@@ -16,6 +16,9 @@ public class ArtistController {
 	
 	@RequestMapping("/api/spotify/artist/{id}")
 	public Artist searchArtistFromSpotifyApi(@PathVariable String id) {
-		return searchArtist.searchArtistById(id);
+		
+		Artist artist = searchArtist.searchArtistById(id); 
+		
+		return artist;
 	}
 }
