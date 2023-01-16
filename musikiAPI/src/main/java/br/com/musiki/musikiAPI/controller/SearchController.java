@@ -21,7 +21,6 @@ public class SearchController {
 	@Autowired
 	private SearchItem searchItem;
 	
-	
 	@RequestMapping("/api/spotify/search/{query}")
 	public List<SearchDTO> searchFromSpotifyApi(@PathVariable String query) {
 		return searchItem.search(query);
