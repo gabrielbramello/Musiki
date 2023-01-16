@@ -17,8 +17,8 @@ root.render(
       <Routes>
         <Route path="/" exact={true} element={<App />} />
         <Route path="/artist/:artistId" element={<Artist />}/>
-        <Route path="/album" element={<Album />} />
-        <Route path="/track" element={<Music />} />
+        <Route path="/album/:albumId" element={<Album />} />
+        <Route path="/track/:trackId" element={<Music />} />
         <Route path="/paginadousuario" element={<UserPage />} />
         <Route path="/configuracoes" element={<Configuration />} />
       </Routes>
