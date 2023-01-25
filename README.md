@@ -3,12 +3,12 @@
 ## Sobre
 O projeto Musiki é um sistema agregador de informações e curiosidade sobre bandas, álbuns e músicas. O sistema inicialmente utilizará a API do Spotify como fonte de informações, mas poderá utilizar outras fontes futuramente (outras APIs, banco de dados próprio e etc).
 
-O projeto inicialmente possuirá dois módulos, o módulo **musikiReact** responsável pelo front-end
+O projeto inicialmente possuirá dois módulos, o módulo **musikiprimefaces** responsável pelo front-end
 e o módulo **musikiAPI** que será a API REST responsável por fazer a comunicação com o musikiReact e com as outras APIs.
 
 ## Módulos
 
-### MusikiReact
+### Musikiprimefaces
 
 ### MusikiAPI
 
@@ -21,7 +21,6 @@ e o módulo **musikiAPI** que será a API REST responsável por fazer a comunica
 Segue abaixo os passos a serem seguidos para a montagem do ambiente de desenvolvimento. Para alguns itens coloquei links relacionados que talvez ajude caso exista dificuldade na resolução do passo xD. 
 
 ### 0. Instalar o Git
-
 
 #### 0.1 Clone o projeto
 #### Links de apoio
