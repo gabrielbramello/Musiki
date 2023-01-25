@@ -36,9 +36,9 @@ export default function Menu() {
         }
     ];
 
-    const start = <img alt="logo" height= "40px" width= "50px" src={logo}></img>
+    const start = <img alt="logo" height= "80vh" width= "120vw" src={logo}></img>
 
     return (
-                <Menubar style={{ height: "50px"}} model={items} start={start} />
+                <Menubar style={{ height: "10vh"}} model={items} start={start} />
     )
 }

@@ -38,7 +38,7 @@ const SimpleCard = (props) => {
 
     return (
         <div>
-            <Card className="card" title={props.title} style={{ width: props.width, marginBottom: props.bottom, height: "100px" }}>
+            <Card className="card" title={props.title} style={{ width: props.width, marginBottom: props.bottom, height: "100px", margin: '40px' }}>
                 {renderContent(props.content, props.isRating)}
             </Card>
         </div>
