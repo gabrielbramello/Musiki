@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./SearchBar.css";
 import 'primeicons/primeicons.css';
-import api from "../../api/api";
+import axios from "../../apis/api";
 import { Link } from "react-router-dom";
 
 
@@ -10,32 +10,18 @@ function SearchBar({ placeholder }) {
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState("");
   const [data, setData] = useState([]);
-  let sourceUrl = ''
-  let paginaDestino = ''
 
   const handleFilter = (event) => {
     const searchWord = event.target.value;
     setWordEntered(searchWord);
 
-    api.get('/spotify/search/' + wordEntered)
+    axios.get('/spotify/search/' + wordEntered)
       .then(response => setData(response.data))
       .catch(error => console.log(error.message))
       console.log(data);
 
   const newFilter = data.filter((value) => {
 
-    if (value.type === "ALBUM") {
-      sourceUrl = '/spotify/album/'
-      paginaDestino = "/albums"
-    }
-    if (value.type === "ARTIST")  {
-      sourceUrl = '/spotify/artist/'
-      paginaDestino = "/artistas"
-    }
-    if(value.type === "TRACK") {
-      sourceUrl = '/spotify/track/'
-      paginaDestino = "/musicas"
-    }
       return value.name.toLowerCase().includes(searchWord.toLowerCase());
     });
 

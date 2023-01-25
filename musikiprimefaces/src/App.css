@@ -1,15 +1,61 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap");
+
 .App {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height:621px ;
   display: flex;
   align-items: center;
   flex-direction: column;
   font-family: "Nunito", sans-serif;
   background-image: linear-gradient(90deg, #410076, #8820dd);
-  text-align:center;
+  text-align: center;
 }
+
 body {
   padding: 0;
   margin: 0;
+}
+img {
+  border-radius: 15px;
+  max-width: 500px;
+  max-height: 400px;
+}
+
+#coverSettings {
+  border-width: 3px;
+  border-style: inset;
+  border-color: #583673;
+  border-radius: 15px;
+  border: #900a46;
+  margin-right: 950px;
+  margin-top: 70px;
+}
+
+#itemsSettings {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  justify-content: space-around;
+  margin-left: 20cm;
+}
+
+.AppAlbum {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+  font-family: "Nunito", sans-serif;
+  background-image: linear-gradient(90deg, #5b16b0, #22c6d8);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.card .p-card-title{
+  font-size: large;
+}
+
+.p-card .p-card-content{
+  padding: 0;
 }

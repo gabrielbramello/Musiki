@@ -15,7 +15,7 @@ export default function App() {
       <Menu></Menu>
     </div>
     <div className="App">
-      <SearchBar placeholder="O que deseja descobrir hoje?" source={'/spotify/search/track/'}></SearchBar>
+      <SearchBar placeholder="O que deseja descobrir hoje?"></SearchBar>
     </div>
 </div>
 
