@@ -2,7 +2,8 @@
 
 .App {
   width: 100%;
-  min-height:621px ;
+  height:100% ;
+  position: absolute;
   display: flex;
   align-items: center;
   flex-direction: column;
