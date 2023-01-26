@@ -1,23 +1,26 @@
-import React, { useState } from 'react';
-import "primereact/resources/themes/mdc-light-deeppurple/theme.css";  //theme
-import "primereact/resources/primereact.min.css";                  //core css
-import "primeicons/primeicons.css";                                //icons
-import Menu from './components/menu/Menu';
-import SearchBar from './components/menu/SearchBar';
-import "./App.css";
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home/Home';
+import Artist from './pages/Artist/Artist';
+import Album from './pages/Album/Album';
+import Track from './pages/Track/Track';
+import UserPage from './pages/UserPage/UserPage';
+import Configuration from './pages/Config/Configuration';
 
 export default function App() {
 
   return (
 
-<div>
-  <div>
-      <Menu></Menu>
-    </div>
-    <div className="App">
-      <SearchBar placeholder="O que deseja descobrir hoje?"></SearchBar>
-    </div>
-</div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" exact={true} element={<Home />} />
+          <Route path="/artist/:artistId" element={<Artist />} />
+          <Route path="/album/:albumId" element={<Album />} />
+          <Route path="/track/:trackId" element={<Track />} />
+          <Route path="/paginadousuario" element={<UserPage />} />
+          <Route path="/configuracoes" element={<Configuration />} />
+        </Routes>
+      </ BrowserRouter>
 
   )
 }
