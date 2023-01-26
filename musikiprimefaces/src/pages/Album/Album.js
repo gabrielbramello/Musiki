@@ -88,7 +88,7 @@ const Album = () => {
 					</div>
 				</div>
 				<div>
-					<CardWithList title="Data de Lançamento:" width="30rem" bottom="2em" content={data.tracks && data.tracks.items} />
+					<CardWithList title="Detalhes do Disco:" width="30rem" bottom="2em" content={data.tracks && data.tracks.items} />
 				</div>
 			</div>
 

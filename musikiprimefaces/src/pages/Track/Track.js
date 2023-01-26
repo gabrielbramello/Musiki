@@ -86,6 +86,7 @@ export default function Track() {
         </div>
         <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap' }}>
           <SimpleCard title="Nome da Faixa:" width="12rem" bottom="2em" content={data.name} isRating={false}></SimpleCard>
+          <SimpleCard title="Nome do(a) Artista:" width="12rem" bottom="2em" content={data.artists[0].name} isRating={false}></SimpleCard>
           <SimpleCard title="Duração da Faixa:" width="12rem" bottom="2em" content={convertMilliseconds(data.durationMs)} isRating={false}></SimpleCard>
           <SimpleCard title="Nome do Album:" width="12rem" bottom="2em" content={capitalizeEachWord(data.album.name)} isRating={false}></SimpleCard>
           <SimpleCard title="Links:" width="12rem" bottom="2em" content={createLink(data, "Spotify")} isRating={false}></SimpleCard>
