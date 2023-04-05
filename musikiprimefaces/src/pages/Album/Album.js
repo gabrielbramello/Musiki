@@ -87,7 +87,7 @@ const Album = () => {
 						<div>
 							<SimpleCard title="Gravadora:" width="12rem" bottom="2em" content={data.label} isRating={false}></SimpleCard>
 							<SimpleCard title="Popularidade:" width="12rem" bottom="2em" content={data.popularity} isRating={true}></SimpleCard>
-							<SimpleCard title="Data de Lançamento:" width="12rem" bottom="2em" content={changeDateFormat(data.releaseDate)} isRating={false}></SimpleCard>
+							{/* <SimpleCard title="Data de Lançamento:" width="12rem" bottom="2em" content={changeDateFormat(data.releaseDate)} isRating={false}></SimpleCard> */}
 						</div>
 					</div>
 					<div>

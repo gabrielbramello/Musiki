@@ -2,6 +2,7 @@ package br.com.musiki.musikiAPI.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,9 +14,10 @@ import javax.persistence.SequenceGenerator;
 @Entity
 public class UserSamm {
 	
-    @Id
-    @GeneratedValue(generator = "user_samm_sequence", strategy = GenerationType.AUTO)
-    @SequenceGenerator(name="user_samm_sequence",sequenceName="user_samm_seq",initialValue = 1,allocationSize=1)
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_samm_generator")
+    @SequenceGenerator(name="user_samm_generator",sequenceName="user_samm_seq",initialValue = 1,allocationSize=1)
+	@Column(name = "id", updatable = false, nullable = false, columnDefinition = "serial")
     private Long id;
 	private String name;
 	private String login;
