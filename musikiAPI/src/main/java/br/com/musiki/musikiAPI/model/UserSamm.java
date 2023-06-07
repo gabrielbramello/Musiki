@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import br.com.musiki.musikiAPI.dto.UserSammDTO;
+
 @Entity
 public class UserSamm {
 	
@@ -23,16 +25,16 @@ public class UserSamm {
 	private String login;
 	private String password;
 	private String email;
-
-	/*
-	 * @Column( name = "id_user_samm", unique = true, updatable=false, nullable =
-	 * false)
-	 * 
-	 * @Id
-	 * 
-	 * @GeneratedValue( generator = "user_samm_sequence",
-	 * strategy=GenerationType.SEQUENCE )
-	 */
+	
+	public UserSamm() {}
+	
+	public UserSamm(UserSammDTO userSamm){
+		this.id = userSamm.getId();
+		this.name = userSamm.getName();
+		this.login = userSamm.getLogin();
+		this.password = userSamm.getPassword();
+		this.email = userSamm.getEmail();
+	}
 	
 	@OneToMany
 	private List<Image> images;
