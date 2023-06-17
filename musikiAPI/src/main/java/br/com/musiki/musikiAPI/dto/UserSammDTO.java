@@ -4,7 +4,6 @@ import br.com.musiki.musikiAPI.model.UserSamm;
 
 public class UserSammDTO {
 
-    private Long id;
 	private String name;
 	private String login;
 	private String password;
@@ -14,19 +13,12 @@ public class UserSammDTO {
 	public UserSammDTO() {}
 	
 	public UserSammDTO(UserSamm userSamm){
-		this.id = userSamm.getId();
 		this.name = userSamm.getName();
 		this.login = userSamm.getLogin();
 		this.password = userSamm.getPassword();
 		this.email = userSamm.getEmail();
 	}
 	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
 	public String getName() {
 		return name;
 	}

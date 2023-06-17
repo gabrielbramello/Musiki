@@ -29,7 +29,6 @@ public class UserSamm {
 	public UserSamm() {}
 	
 	public UserSamm(UserSammDTO userSamm){
-		this.id = userSamm.getId();
 		this.name = userSamm.getName();
 		this.login = userSamm.getLogin();
 		this.password = userSamm.getPassword();
