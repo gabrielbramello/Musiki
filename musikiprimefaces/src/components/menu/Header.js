@@ -49,6 +49,13 @@ export default function Header() {
             command: (event) => {
                 window.location = "/configuracoes";
             }
+        },
+        {
+            label: 'Login',
+            icon: 'pi pi-fw pi-cog',
+            command: (event) => {
+                window.location = "/login";
+            }
         }
     ];
 
