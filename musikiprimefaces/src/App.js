@@ -6,6 +6,7 @@ import Album from './pages/Album/Album';
 import Track from './pages/Track/Track';
 import UserPage from './pages/UserPage/UserPage';
 import Configuration from './pages/Config/Configuration';
+import LoginPage from './pages/Login/Login';
 
 export default function App() {
 
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="/track/:trackId" element={<Track />} />
           <Route path="/paginadousuario" element={<UserPage />} />
           <Route path="/configuracoes" element={<Configuration />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </ BrowserRouter>
 
