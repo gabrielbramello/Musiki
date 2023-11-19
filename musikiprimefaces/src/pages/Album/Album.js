@@ -53,13 +53,13 @@ const Album = () => {
             <Header />
 			<div style={{ background: 'linear-gradient(90deg, rgba(91,22,176,1) 22%, rgba(34,198,216,1) 66%)', minHeight: '90vh', display: 'flex', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
 				<div style={{ margin: '50px' }}>
-					<img alt="alternatetext" src={((data.images && data.images[1]) && data.images[1].url) ?? ''} style={{ minHeight: '320px', minWidth: '320px' }}></img>
+					<img alt="Sem foto Disponível" src={((data.images && data.images[1]) && data.images[1].url) ?? ''} style={{ minHeight: '320px', minWidth: '320px' }}></img>
 				</div>
 				<div style={{ textAlign: 'center',display: 'flex', flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap', margin: '50px' }}>
 					<div>
-						<SimpleCard title="Nome do(a) Artista:" width="12rem" bottom="2em" content={((data.artists && data.artists[0]) && data.artists[0].name) ?? ''} isRating={false}></SimpleCard>
+						<SimpleCard title="Nome do(a) Artista:" width="12rem" bottom="2em" content={((data.artists && data.artists[0]) && data.artists[0].name) ?? 'Não Classificado'} isRating={false}></SimpleCard>
 						<SimpleCard title="Nome do Album:" width="12rem" bottom="2em" content={data.name} isRating={false}></SimpleCard>
-						<SimpleCard title="Numero de Faixas:" width="12rem" bottom="2em" content={data.tracks.total ?? ''} isRating={false}></SimpleCard>
+						<SimpleCard title="Numero de Faixas:" width="12rem" bottom="2em" content={data.tracks.total ?? 'Não Classificado'} isRating={false}></SimpleCard>
 					</div>
 					<div>
 						<SimpleCard title="Gravadora:" width="12rem" bottom="2em" content={data.label} isRating={false}></SimpleCard>
@@ -68,7 +68,7 @@ const Album = () => {
 					</div>
 				</div>
 				<div>
-					<CardWithList title="Detalhes do Disco:" width="30rem" bottom="2em" content={data.tracks.items ?? ''} />
+					<CardWithList title="Detalhes do Disco:" width="30rem" bottom="2em" content={data.tracks.items ?? 'Não Classificado'} />
 				</div>
 			</div>
 
