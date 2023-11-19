@@ -64,25 +64,6 @@ export default function Track() {
     }
   }
 
-  function changeDateFormat(dateString) {
-		// Use o método split() para dividir a string da data em ano, mês e dia
-		const dateArr = dateString.split("-");
-		// Verifica se o formato é válido (yyyy-mm-dd)
-		if (dateArr.length !== 3) {
-		  return "Formato de data inválido!";
-		}
-		// Adiciona zeros a esquerda para os dias e meses com menos de 2 dígitos
-		const day = dateArr[2].padStart(2, "0");
-		const month = dateArr[1].padStart(2, "0");
-		const year = dateArr[0];
-		// Junta as partes da data no formato correto (dd-mm-yyyy)
-		const newDateFormat = `${day}-${month}-${year}`;
-		return newDateFormat;
-	  }
-
-
-  console.log(data)
-
   return (
     <div>
       <div>
