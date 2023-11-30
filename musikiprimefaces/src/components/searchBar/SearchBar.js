@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./SearchBar.css";
 import 'primeicons/primeicons.css';
 import axios from "../../apis/api";
@@ -11,18 +11,27 @@ function SearchBar({ placeholder }) {
   const [wordEntered, setWordEntered] = useState("");
   const [data, setData] = useState([]);
 
+  useEffect(() => {
+    let isMounted = true;
+    axios.get('/spotify/search/' + wordEntered)
+      .then(response => {
+        if (isMounted) {
+          setData(response.data);
+        }
+      })
+      .catch(error => console.log(error.message));
+
+    return () => {
+      isMounted = false;
+    };
+  }, [wordEntered]);
+
   const handleFilter = (event) => {
-    const searchWord = event.target.value;
+    const searchWord = event.target.value.toLowerCase();
     setWordEntered(searchWord);
 
-    axios.get('/spotify/search/' + wordEntered)
-      .then(response => setData(response.data))
-      .catch(error => console.log(error.message))
-      console.log(data);
-
   const newFilter = data.filter((value) => {
-
-      return value.name.toLowerCase().includes(searchWord.toLowerCase());
+      return value.name.toLowerCase().includes(searchWord);
     });
 
     if (searchWord === "") {
@@ -55,10 +64,9 @@ function SearchBar({ placeholder }) {
           )}
         </div>
       </div>
-      {filteredData.length != 0 && (
+      {filteredData.length !== 0 && (
         <div className="dataResult">
           {filteredData.slice(0, 15).map((value, key) => {
-            console.log(value)
             return (
               <Link className="dataItem" key={key} to= { `${value.type}/${value.id}`}>
                 <p>{`${value.name} - (${value.type})`}</p>

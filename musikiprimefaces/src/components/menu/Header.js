@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import "primereact/resources/themes/mdc-light-deeppurple/theme.css";  //theme
 import "primereact/resources/primereact.min.css";                  //core css
 import "primeicons/primeicons.css";                                //icons
@@ -16,21 +16,21 @@ export default function Header() {
             }
         },
         {
-            label: 'Artistas',
+            label: 'Artista',
             icon: 'pi pi-fw pi-at',
             command: (event) => {
                 window.location = "/artist/74XFHRwlV6OrjEM0A2NCMF";
             }
         },
         {
-            label: 'Albums',
+            label: 'Album',
             icon: 'pi pi-fw pi-book',
             command: (event) => {
                 window.location = "/album/4sgYpkIASM1jVlNC8Wp9oF";
             }
         },
         {
-            label: 'Musicas',
+            label: 'Musica',
             icon: 'pi pi-fw pi-volume-up',
             command: (event) => {
                 window.location = "/track/6SpLc7EXZIPpy0sVko0aoU";
@@ -48,6 +48,13 @@ export default function Header() {
             icon: 'pi pi-fw pi-cog',
             command: (event) => {
                 window.location = "/configuracoes";
+            }
+        },
+        {
+            label: 'Login',
+            icon: 'pi pi-fw pi-cog',
+            command: (event) => {
+                window.location = "/login";
             }
         }
     ];

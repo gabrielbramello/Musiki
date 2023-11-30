@@ -5,18 +5,20 @@ import "primeicons/primeicons.css";                                  //icons
 import "../../App.css";
 import Header from '../../components/menu/Header';
 import SearchBar from '../../components/searchBar/SearchBar';
+import Footer from '../../components/menu/Footer';
 
 export default function Home() {
-    return (
+  return (
     <div>
-        <div>
-          <Header></Header>
-        </div>
-          <div className="App">
-            <SearchBar placeholder="O que deseja descobrir hoje?"></SearchBar>
-          </div>
+      <div>
+        <Header></Header>
       </div>
-    )
-  }
-
-
+      <div className="App">
+        <SearchBar placeholder="O que deseja descobrir hoje?"></SearchBar>
+      </div>
+      <div>
+        <Footer></Footer>
+      </div>
+    </div>
+  )
+}
