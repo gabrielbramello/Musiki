@@ -34,6 +34,38 @@ export default function Track() {
       });
   }, []);
 
+  useEffect(() => {
+
+    // Use the axios.get() method to make a GET request to the API endpoint
+    axios.get('/spotify/track/audiofeatures/' + trackId)
+      .then(response => {
+        // Update the data and loading flag state
+        console.log(response.data)
+      })
+      .catch(error => {
+        // Handle any errors that occurred during the request
+        console.error(error);
+        // Set the loading flag to false
+        setIsLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+
+    // Use the axios.get() method to make a GET request to the API endpoint
+    axios.get('/spotify/track/audioanalyses/' + trackId)
+      .then(response => {
+        // Update the data and loading flag state
+        console.log(response.data)
+      })
+      .catch(error => {
+        // Handle any errors that occurred during the request
+        console.error(error);
+        // Set the loading flag to false
+        setIsLoading(false);
+      });
+  }, []);
+
   if (isLoading) {
     return <p>Api do Spotify Carregando...</p>;
   }
