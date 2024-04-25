@@ -31,18 +31,28 @@ const Album = () => {
 			});
 	}, []);
 
-	function changeDateFormat(dateString) {
-		if (dateString != null) {
-		  const [year, month, day] = dateString.split("-");
+	function changeDateFormat(dateString, releaseDatePrecision) {
 
-		  if (year && month && day) {
-			const newDateFormat = `${day.padStart(2, "0")}-${month.padStart(2, "0")}-${year}`;
-			return newDateFormat;
+		if (dateString != null) {
+		  if (releaseDatePrecision === "YEAR") {
+			const [year] = dateString.split("-");
+			if (year) {
+			  return year;
+			}
+		  }
+
+		  if (releaseDatePrecision === "DAY") {
+			const [year, month, day] = dateString.split("-");
+			if (year && month && day) {
+			  const newDateFormat = `${day.padStart(2, "0")}-${month.padStart(2, "0")}-${year}`;
+			  return newDateFormat;
+			}
 		  }
 		}
 
 		return "Formato de data inválido!";
 	  }
+
 
 	if (isLoading) {
 		return <p>Api do Spotify Carregando...</p>;
@@ -85,7 +95,7 @@ const Album = () => {
 					<div>
 						<SimpleCard title="Gravadora:" width="12rem" bottom="2em" content={data.label} isRating={false}></SimpleCard>
 						<SimpleCard title="Popularidade:" width="12rem" bottom="2em" content={data.popularity} isRating={true}></SimpleCard>
-						<SimpleCard title="Data de Lançamento:" width="12rem" bottom="2em" content={changeDateFormat(data.releaseDate)} isRating={false}></SimpleCard>
+						<SimpleCard title="Lançamento:" width="12rem" bottom="2em" content={changeDateFormat(data.releaseDate, data.releaseDatePrecision)} isRating={false}></SimpleCard>
 					</div>
 				</div>
 				<div>
