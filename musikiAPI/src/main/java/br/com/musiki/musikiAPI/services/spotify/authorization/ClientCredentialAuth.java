@@ -1,13 +1,12 @@
 package br.com.musiki.musikiAPI.services.spotify.authorization;
 
 import java.io.IOException;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
+import java.time.Duration;
+import java.time.Instant;
 
 import org.apache.hc.core5.http.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.scheduling.annotation.Scheduled;
 
 import br.com.musiki.musikiAPI.configuration.PropertiesConfig;
 import se.michaelthelin.spotify.SpotifyApi;
@@ -17,64 +16,67 @@ import se.michaelthelin.spotify.requests.authorization.client_credentials.Client
 
 public class ClientCredentialAuth {
 
-	private String clientId;
-	private String clientSecret;
-	
-	@Autowired
-	public ClientCredentialAuth(PropertiesConfig properties) {
-		
-		this.clientId = properties.getClientId();
-		this.clientSecret = properties.getClientSecret();
-		System.out.println("SpotifyApi ClientId: "+properties.getClientId());
-		System.out.println("SpotifyApi ClientSecret: "+properties.getClientSecret());
-	}
+    private final String clientId;
+    private final String clientSecret;
+    private SpotifyApi spotifyApi;
+    private Instant tokenExpirationTime;
 
-	private SpotifyApi clientCredentials_Sync() throws IOException, SpotifyWebApiException, ParseException {
-		
-		
-		SpotifyApi spotifyApi = new SpotifyApi.Builder().setClientId(clientId)
-				.setClientSecret(clientSecret).build();
-		
-		ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials().build();
-		
-		ClientCredentials clientCredentials = clientCredentialsRequest.execute();
+    @Autowired
+    public ClientCredentialAuth(PropertiesConfig properties) {
+        this.clientId = properties.getClientId();
+        this.clientSecret = properties.getClientSecret();
+        this.spotifyApi = createSpotifyApi();
+    }
 
-		// Set access token for further "spotifyApi" object usage
-		spotifyApi.setAccessToken(clientCredentials.getAccessToken());
-		
-		System.out.println("Expires in: " + clientCredentials.getExpiresIn());
-		
-		return spotifyApi;
-		
-	}
+    public SpotifyApi getSpotifyApiWithToken() throws IOException, SpotifyWebApiException, ParseException {
+        if (isTokenExpired()) {
+            renewAccessToken();
+        }
+        return spotifyApi;
+    }
 
-	private void clientCredentials_Async() {
-		try {
-			SpotifyApi spotifyApi = new SpotifyApi.Builder().setClientId(clientId)
-					.setClientSecret(clientSecret).build();
-			
-			ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials().build();
-			final CompletableFuture<ClientCredentials> clientCredentialsFuture = clientCredentialsRequest
-					.executeAsync();
+    private SpotifyApi createSpotifyApi() {
+        return new SpotifyApi.Builder()
+                .setClientId(clientId)
+                .setClientSecret(clientSecret)
+                .build();
+    }
 
-			// Thread free to do other tasks...
+    private ClientCredentials fetchClientCredentials() throws IOException, SpotifyWebApiException, ParseException {
+        ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials().build();
+        return clientCredentialsRequest.execute();
+    }
 
-			// Example Only. Never block in production code.
-			final ClientCredentials clientCredentials = clientCredentialsFuture.join();
+    private boolean isTokenExpired() {
+        if (tokenExpirationTime == null || Instant.now().isAfter(tokenExpirationTime)) {
+            // Se o tempo de expiração não estiver definido ou se o tempo atual for posterior ao tempo de expiração, consideramos que está expirado
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-			// Set access token for further "spotifyApi" object usage
-			spotifyApi.setAccessToken(clientCredentials.getAccessToken());
+    private void renewAccessToken() {
+        try {
+            ClientCredentials clientCredentials = fetchClientCredentials();
+            spotifyApi.setAccessToken(clientCredentials.getAccessToken());
 
-			System.out.println("Expires in: " + clientCredentials.getExpiresIn());
-		} catch (CompletionException e) {
-			System.out.println("Error: " + e.getCause().getMessage());
-		} catch (CancellationException e) {
-			System.out.println("Async operation cancelled.");
-		}
-	}
-	
-	public SpotifyApi getSpotifyApiWithToken() throws IOException, SpotifyWebApiException, ParseException{	
-		return clientCredentials_Sync();
-	}
+            // Definir o tempo de expiração do token
+            int expiresIn = clientCredentials.getExpiresIn();
+            tokenExpirationTime = Instant.now().plusSeconds(expiresIn);
 
+            System.out.println("Token de acesso renovado....");
+        } catch (IOException | SpotifyWebApiException | ParseException e) {
+            // Lidar com exceções
+            System.err.println("Erro ao renovar o token de acesso " + e.getMessage());
+        }
+    }
+
+    @Scheduled(fixedDelay = 3600000) // Executa a cada 1 hora
+    public void renewAccessTokenScheduled() {
+        if (isTokenExpired()) {
+            renewAccessToken();
+            System.out.println("Token renovado...");
+        }
+    }
 }
