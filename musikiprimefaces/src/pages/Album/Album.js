@@ -8,6 +8,7 @@ import axios from "../../apis/api";
 import SimpleCard from '../../components/cards/SimpleCard';
 import CardWithList from '../../components/cards/CardWithList';
 import Header from '../../components/menu/Header';
+import { Link } from 'react-router-dom';
 
 const Album = () => {
 
@@ -48,6 +49,12 @@ const Album = () => {
 	  }
 	console.log(data)
 
+	function createLink(data, name) {
+		return (
+		  <a href={data.externalUrls.externalUrls.spotify ?? ''} target="_blank">{name}</a>
+		)
+	  }
+
 	return (
 		<div>
             <Header />
@@ -57,8 +64,22 @@ const Album = () => {
 				</div>
 				<div style={{ textAlign: 'center',display: 'flex', flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap', margin: '50px' }}>
 					<div>
-						<SimpleCard title="Nome do(a) Artista:" width="12rem" bottom="2em" content={((data.artists && data.artists[0]) && data.artists[0].name) ?? 'Não Classificado'} isRating={false}></SimpleCard>
-						<SimpleCard title="Nome do Album:" width="12rem" bottom="2em" content={data.name} isRating={false}></SimpleCard>
+					<SimpleCard
+						title="Nome do(a) Artista:"
+						width="12rem"
+						bottom="2em"
+						content={
+							data.artists && data.artists[0] ? (
+							<Link to={`/artist/${data.artists[0].id}`}>
+								{data.artists[0].name}
+							</Link>
+							) : (
+							'Não Classificado'
+							)
+						}
+						isRating={false}
+          			/>
+						<SimpleCard title="Nome do Album:" width="12rem" bottom="2em" content={createLink(data, data.name)} isRating={false}></SimpleCard>
 						<SimpleCard title="Numero de Faixas:" width="12rem" bottom="2em" content={data.tracks.total ?? 'Não Classificado'} isRating={false}></SimpleCard>
 					</div>
 					<div>

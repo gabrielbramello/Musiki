@@ -8,6 +8,7 @@ import axios from "../../apis/api";
 import { useParams } from 'react-router-dom';
 import SimpleCard from '../../components/cards/SimpleCard';
 import "/node_modules/primeflex/primeflex.css"
+import { Link } from 'react-router-dom';
 
 export default function Track() {
 
@@ -25,6 +26,7 @@ export default function Track() {
         // Update the data and loading flag state
         setData(response.data);
         setIsLoading(false);
+        console.log(response.data)
       })
       .catch(error => {
         // Handle any errors that occurred during the request
@@ -82,7 +84,7 @@ export default function Track() {
     return "" + minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
   }
 
-  function capitalizeEachWord(sentence) {
+  /*function capitalizeEachWord(sentence) {
     if (sentence && typeof sentence === 'string' && sentence.trim) {
       if (!sentence.trim()) {
         return sentence;
@@ -94,7 +96,7 @@ export default function Track() {
     } else {
       return sentence;
     }
-  }
+  }*/
 
   return (
     <div>
@@ -106,11 +108,38 @@ export default function Track() {
           <img alt="Sem foto Disponível" src={((data.album && data.album.images[1]) && data.album.images[1].url) ?? ''} ></img>
         </div>
         <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap' }}>
-          <SimpleCard title="Nome da Faixa:" width="12rem" bottom="2em" content={data.name} isRating={false}></SimpleCard>
-          <SimpleCard title="Nome do(a) Artista:" width="12rem" bottom="2em" content={((data.artists && data.artists[0]) && data.artists[0].name) ?? 'Não Classificado'} isRating={false}></SimpleCard>
+          <SimpleCard title="Nome da Faixa:" width="12rem" bottom="2em" content={createLink(data, data.name)} isRating={false}></SimpleCard>
+
+          <SimpleCard
+            title="Nome do(a) Artista:"
+            width="12rem"
+            bottom="2em"
+            content={
+              data.artists && data.artists[0] ? (
+                <Link to={`/artist/${data.artists[0].id}`}>
+                  {data.artists[0].name}
+                </Link>
+              ) : (
+                'Não Classificado'
+              )
+            }
+            isRating={false}
+          />
+
           <SimpleCard title="Duração da Faixa:" width="12rem" bottom="2em" content={convertMilliseconds(data.durationMs)} isRating={false}></SimpleCard>
-          <SimpleCard title="Nome do Album:" width="12rem" bottom="2em" content={capitalizeEachWord(data.album.name)} isRating={false}></SimpleCard>
+
+          <SimpleCard
+            title="Nome do Album:"
+            width="12rem"
+            bottom="2em"
+            content={
+              <Link to={`/album/${data.album.id}`}>
+                {data.album.name}
+              </Link>
+            } />
+
           <SimpleCard title="Links:" width="12rem" bottom="2em" content={createLink(data, "Spotify")} isRating={false}></SimpleCard>
+
           <SimpleCard title="Popularidade:" width="12rem" bottom="2em" content={data.popularity} isRating={true}></SimpleCard>
         </div>
       </div>
