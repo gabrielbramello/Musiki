@@ -65,7 +65,7 @@ function Artist() {
         <img alt="Sem foto Disponível" src={((data.images && data.images[1]) && data.images[1].url) ?? ''}></img>
         </div>
         <div style={{ textAlign: 'center', display: 'flex', flexDirection:'row', justifyContent:'space-around', flexWrap: 'wrap' }}>
-          <SimpleCard title="Nome do(a) Artista:" width="12rem" bottom="2em" content={createLink(data, data.name)} isRating={false}></SimpleCard>
+          <SimpleCard title="Nome do(a) Artista:" width="12rem" bottom="2em" content={data.name} isRating={false}></SimpleCard>
           <SimpleCard title="Links do(a) Artista:" width="12rem" bottom="2em" content={createLink(data, "Spotify")} isRating={false}></SimpleCard>
           <SimpleCard title="Número de Seguidores:" width="12rem" bottom="2em" content={data.followers.total.toLocaleString()} isRating={false}></SimpleCard>
           <SimpleCard title="Popularidade:" width="12rem" bottom="2em" content={data.popularity} isRating={true}></SimpleCard>
