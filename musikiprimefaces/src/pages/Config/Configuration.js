@@ -17,11 +17,11 @@ export default function Configuration() {
         <i className="pi pi-spin pi-spinner" style={{ 'fontSize': '2em' }}></i>
       </div> */}
       <div>
-      <GradientCircleChart />
+      <GradientCircleChart series={[75]} label={['daisjdoai']}/>
       <h1>Grafico1</h1>
       </div>
       <div>
-      <GradientCircleChart />
+      <GradientCircleChart series={[75]} label={['daisjdoai']}/>
       <h1>Grafico2</h1>
       </div>
     </div>

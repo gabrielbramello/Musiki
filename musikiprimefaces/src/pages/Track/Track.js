@@ -9,12 +9,14 @@ import { useParams } from 'react-router-dom';
 import SimpleCard from '../../components/cards/SimpleCard';
 import "/node_modules/primeflex/primeflex.css"
 import { Link } from 'react-router-dom';
+import GradientCircleChart from '../../components/GradientCircleChart';
 
 export default function Track() {
 
   const [data, setData] = useState({});
   const { trackId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const [audioFeatures, setAudioFeatures] =  useState({});
 
   useEffect(() => {
     // Set the loading flag to true
@@ -42,6 +44,7 @@ export default function Track() {
     axios.get('/spotify/track/audiofeatures/' + trackId)
       .then(response => {
         // Update the data and loading flag state
+        setAudioFeatures(response.data)
         console.log(response.data)
       })
       .catch(error => {
@@ -98,6 +101,13 @@ export default function Track() {
     }
   }*/
 
+  function returnEnergyFeature(value){
+    const arrayValue = []
+    const energyValue = value*100
+    arrayValue.push(energyValue)
+    return arrayValue
+  }
+
   return (
     <div>
       <div>
@@ -140,6 +150,16 @@ export default function Track() {
           <SimpleCard title="Links:" width="12rem" bottom="2em" content={createLink(data, "Spotify")} isRating={false}></SimpleCard>
 
           <SimpleCard title="Popularidade:" width="12rem" bottom="2em" content={data.popularity} isRating={true}></SimpleCard>
+        </div>
+        <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap' }}>
+          <GradientCircleChart series={returnEnergyFeature(audioFeatures.energy)} label={['Energia']}/>
+          <GradientCircleChart series={[75]} label={['Acústica']}/>
+          <GradientCircleChart series={[75]} label={['Dançabilidade']}/>
+          <GradientCircleChart series={[75]} label={['Instrumental']}/>
+          <GradientCircleChart series={[75]} label={['Ao vivo']}/>
+          <GradientCircleChart series={[75]} label={['Ruído']}/>
+          <GradientCircleChart series={[75]} label={['Fala']}/>
+          <GradientCircleChart series={[75]} label={['Valência']}/>
         </div>
       </div>
     </div>

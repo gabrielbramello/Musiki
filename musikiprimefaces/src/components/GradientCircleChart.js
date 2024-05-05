@@ -6,19 +6,18 @@ class GradientCircleChart extends React.Component {
     super(props);
 
     this.state = {
+          
+      series: [],
       options: {
         chart: {
-          type: 'radialBar',
-          offsetY: -20,
-          sparkline: {
-            enabled: true
-          }
+          height: 350,
+          type: 'radialBar'
         },
         plotOptions: {
           radialBar: {
             startAngle: -135,
-            endAngle: 135,
-            hollow: {
+            endAngle: 225,
+             hollow: {
               margin: 0,
               size: '70%',
               background: '#fff',
@@ -35,7 +34,7 @@ class GradientCircleChart extends React.Component {
               }
             },
             track: {
-              background: '#f2f2f2',
+              background: '#fff',
               strokeWidth: '67%',
               margin: 0, // margin is in pixels
               dropShadow: {
@@ -46,18 +45,22 @@ class GradientCircleChart extends React.Component {
                 opacity: 0.35
               }
             },
+        
             dataLabels: {
+              show: true,
               name: {
                 offsetY: -10,
-                show: false,
+                show: true,
                 color: '#888',
                 fontSize: '17px'
               },
               value: {
-                offsetY: 16,
+                formatter: function(val) {
+                  return parseInt(val);
+                },
                 color: '#111',
                 fontSize: '36px',
-                show: false,
+                show: true,
               }
             }
           }
@@ -75,17 +78,23 @@ class GradientCircleChart extends React.Component {
             stops: [0, 100]
           }
         },
+        stroke: {
+          lineCap: 'round'
+        },
       },
-      series: [90],
+    
+    
     };
   }
 
+
   render() {
-    const { options, series } = this.state;
+    const { options } = this.state;
+    options.labels = this.props.label;
 
     return (
       <div id="chart">
-        <ReactApexCharts options={options} series={this.state.series} type="radialBar" height={180} />
+        <ReactApexCharts options={options} series={this.props.series} type="radialBar" height={180} />
       </div>
     );
   }
