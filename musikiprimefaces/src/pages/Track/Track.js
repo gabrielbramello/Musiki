@@ -113,11 +113,18 @@ export default function Track() {
       <div>
         <Header></Header>
       </div>
-      <div style={{ background: 'linear-gradient(90deg, rgba(91,22,176,1) 22%, rgba(34,198,216,1) 66%)', minHeight: '90vh', display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
-        <div>
-          <img alt="Sem foto Disponível" src={((data.album && data.album.images[1]) && data.album.images[1].url) ?? ''} ></img>
+      <div style={{ background: 'linear-gradient(90deg, rgba(91,22,176,1) 22%, rgba(34,198,216,1) 66%)', minHeight: '90vh', display: 'flex', justifyContent: 'space-around', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+
+        <div style={{ textAlign: 'center', display: 'flex', alignItems:'flex-start' }}>
+          <div>
+            <img alt="Sem foto Disponível" src={((data.album && data.album.images[1]) && data.album.images[1].url) ?? ''} ></img>
+          </div>
+          <h1>Teste </h1>
+          <h2>Tesdfasd </h2>
         </div>
-        <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap' }}>
+        
+        style={{ textAlign: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap' }}
+        <div >
           <SimpleCard title="Nome da Faixa:" width="12rem" bottom="2em" content={data.name} isRating={false}></SimpleCard>
           <SimpleCard
             title="Nome do(a) Artista:"

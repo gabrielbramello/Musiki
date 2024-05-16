@@ -7,6 +7,7 @@ import Track from './pages/Track/Track';
 import UserPage from './pages/UserPage/UserPage';
 import Configuration from './pages/Config/Configuration';
 import LoginPage from './pages/Login/Login';
+import TrackNovo from './pages/Track/TrackNovo';
 
 export default function App() {
 
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/artist/:artistId" element={<Artist />} />
           <Route path="/album/:albumId" element={<Album />} />
           <Route path="/track/:trackId" element={<Track />} />
+          <Route path="/track2/:trackId" element={<TrackNovo />} />
           <Route path="/paginadousuario" element={<UserPage />} />
           <Route path="/configuracoes" element={<Configuration />} />
           <Route path="/login" element={<LoginPage />} />

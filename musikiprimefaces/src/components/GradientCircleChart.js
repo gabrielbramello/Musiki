@@ -10,7 +10,6 @@ class GradientCircleChart extends React.Component {
       series: [],
       options: {
         chart: {
-          height: 350,
           type: 'radialBar'
         },
         plotOptions: {
@@ -51,15 +50,15 @@ class GradientCircleChart extends React.Component {
               name: {
                 offsetY: -10,
                 show: true,
-                color: '#888',
-                fontSize: '17px'
+                color: '#000',
+                fontSize: '12px'
               },
               value: {
                 formatter: function(val) {
                   return parseInt(val);
                 },
                 color: '#111',
-                fontSize: '36px',
+                fontSize: '20px',
                 show: true,
               }
             }
@@ -93,8 +92,8 @@ class GradientCircleChart extends React.Component {
     options.labels = this.props.label;
 
     return (
-      <div id="chart">
-        <ReactApexCharts options={options} series={this.props.series} type="radialBar" height={180} />
+      <div id="chart" style={{width:'25%', margin:'0px'}}>
+        <ReactApexCharts style={{margin:'0px'}} options={options} series={this.props.series} type="radialBar" height={150} />
       </div>
     );
   }
