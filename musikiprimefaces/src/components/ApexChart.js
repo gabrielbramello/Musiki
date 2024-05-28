@@ -10,8 +10,8 @@ class ApexChart extends React.Component {
     this.state = {
 
       series: [{
-        name: 'Series 1',
-        data: [80, 50, 30, 40, 100, 20, 50, 35],
+        name: 'Valor',
+        data: this.props.values,
       }],
       options: {
         chart: {
@@ -22,7 +22,7 @@ class ApexChart extends React.Component {
           }
         },
         yaxis: {
-          stepSize: 20
+          stepSize: 10
         },
         xaxis: {
           categories: this.props.categories,

@@ -53,7 +53,7 @@ export default function TrackNovo() {
     axios.get('/spotify/track/audiofeatures/' + trackId)
       .then(response => {
         // Update the data and loading flag state
-        setAudioFeatures(response.data)
+        //setAudioFeatures(response.data)
         console.log(response.data)
       })
       .catch(error => {
@@ -70,6 +70,23 @@ export default function TrackNovo() {
     axios.get('/spotify/track/audioanalyses/' + trackId)
       .then(response => {
         // Update the data and loading flag state
+        console.log(response.data)
+      })
+      .catch(error => {
+        // Handle any errors that occurred during the request
+        console.error(error);
+        // Set the loading flag to false
+        setIsLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+
+    // Use the axios.get() method to make a GET request to the API endpoint
+    axios.get('/samm/track/audiofeatures/' + trackId)
+      .then(response => {
+        // Update the data and loading flag state
+        setAudioFeatures(response.data);
         console.log(response.data)
       })
       .catch(error => {
@@ -167,32 +184,45 @@ export default function TrackNovo() {
 
             <div id='features1' style={{ flex: 1 }}>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <GradientCircleChart series={returnEnergyFeature(audioFeatures.energy)} label={['Energia']} />
-                <GradientCircleChart series={[75]} label={['Acústica']} />
+                <GradientCircleChart series={[audioFeatures.energy]} label={['Energia']} />
+                <GradientCircleChart series={[audioFeatures.acousticness]} label={['Acústica']} />
               </div>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <GradientCircleChart series={[75]} label={['Dançabilidade']} />
-                <GradientCircleChart series={[75]} label={['Instrumental']} />
+                <GradientCircleChart series={[audioFeatures.danceability]} label={['Dançabilidade']} />
+                <GradientCircleChart series={[audioFeatures.instrumentalness]} label={['Instrumental']} />
               </div>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <GradientCircleChart series={[75]} label={['Ao vivo']} />
+                <GradientCircleChart series={[audioFeatures.liveness]} label={['Ao vivo']} />
                 <GradientCircleChart series={[75]} label={['Ruído']} />
               </div>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <GradientCircleChart series={[75]} label={['Fala']} />
-                <GradientCircleChart series={[75]} label={['Valência']} />
+                <GradientCircleChart series={[audioFeatures.speechiness]} label={['Falada']} />
+                <GradientCircleChart series={[audioFeatures.valence]} label={['Valência']} />
               </div>
             </div>
 
             <div id='features2' style={{ flex: 2 }}>
-              <ApexChart categories={['Energia', 'Acústica', 'Dançabilidade', 'Instrumental', 'Ao vivo', 'Ruído', 'Fala', 'Valência']} />
+              <ApexChart
+                categories={['Energia', 'Acústica', 'Dançabilidade', 'Instrumental', 'Ao vivo', 'Ruído', 'Falada', 'Valência']}
+                values={[
+                  audioFeatures.energy,
+                  audioFeatures.acousticness,
+                  audioFeatures.danceability,
+                  audioFeatures.instrumentalness,
+                  audioFeatures.liveness,
+                  75,
+                  audioFeatures.speechiness, 
+                  audioFeatures.valence
+                ]
+                }
+              />
             </div>
 
 
           </div>
 
           <div id='recomendations'>
-            <DataTableFilter/>
+            <DataTableFilter />
           </div>
 
         </div>

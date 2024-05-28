@@ -4,6 +4,8 @@ import se.michaelthelin.spotify.enums.Modality;
 import se.michaelthelin.spotify.enums.ModelObjectType;
 import se.michaelthelin.spotify.model_objects.specification.AudioFeatures;
 
+
+
 public class AudioFeaturesDTO {
 	
 	private Float acousticness;
@@ -13,38 +15,36 @@ public class AudioFeaturesDTO {
 	private Float energy;
 	private String id;
 	private Float instrumentalness;
-	private Integer key;
+	private String key;
 	private Float liveness;
 	private Float loudness;
-	private Modality mode;
+	private String mode;
 	private Float speechiness;
 	private Float tempo;
-	private Integer timeSignature;
+	private String timeSignature;
 	private String trackHref;
 	private ModelObjectType type;
 	private String uri;
 	private Float valence;
 	
+	public AudioFeaturesDTO() {}
+	
+	/**
+	 * Construtor para setar apenas os valores imutáveis da origem 
+	 * @param audioFeatures
+	 */
 	public AudioFeaturesDTO(AudioFeatures audioFeatures) {
-		this.acousticness = audioFeatures.getAcousticness();
+
 		this.analysisUrl = audioFeatures.getAnalysisUrl();
-		this.danceability = audioFeatures.getDanceability();
 		this.durationMs = audioFeatures.getDurationMs();
-		this.energy = audioFeatures.getEnergy();
 		this.id = audioFeatures.getId();
-		this.instrumentalness = audioFeatures.getInstrumentalness();
-		this.key = audioFeatures.getKey();
-		this.liveness = audioFeatures.getLiveness();
-		this.loudness = audioFeatures.getLoudness();
-		this.mode = audioFeatures.getMode();
-		this.speechiness = audioFeatures.getSpeechiness();
-		this.tempo = audioFeatures.getTempo();
-		this.timeSignature = audioFeatures.getTimeSignature();
 		this.trackHref = audioFeatures.getTrackHref();
 		this.type = audioFeatures.getType();
 		this.uri = audioFeatures.getUri();
-		this.valence = audioFeatures.getValence();
+		this.loudness = audioFeatures.getLoudness();
+		this.tempo = audioFeatures.getTempo();
 	}
+	
 	
 	public Float getAcousticness() {
 		return acousticness;
@@ -88,10 +88,10 @@ public class AudioFeaturesDTO {
 	public void setInstrumentalness(Float instrumentalness) {
 		this.instrumentalness = instrumentalness;
 	}
-	public Integer getKey() {
+	public String getKey() {
 		return key;
 	}
-	public void setKey(Integer key) {
+	public void setKey(String key) {
 		this.key = key;
 	}
 	public Float getLiveness() {
@@ -106,10 +106,10 @@ public class AudioFeaturesDTO {
 	public void setLoudness(Float loudness) {
 		this.loudness = loudness;
 	}
-	public Modality getMode() {
+	public String getMode() {
 		return mode;
 	}
-	public void setMode(Modality mode) {
+	public void setMode(String mode) {
 		this.mode = mode;
 	}
 	public Float getSpeechiness() {
@@ -124,10 +124,10 @@ public class AudioFeaturesDTO {
 	public void setTempo(Float tempo) {
 		this.tempo = tempo;
 	}
-	public Integer getTimeSignature() {
+	public String getTimeSignature() {
 		return timeSignature;
 	}
-	public void setTimeSignature(Integer timeSignature) {
+	public void setTimeSignature(String timeSignature) {
 		this.timeSignature = timeSignature;
 	}
 	public String getTrackHref() {
