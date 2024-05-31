@@ -4,14 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.musiki.musikiAPI.converter.AudioFeaturesToDTOConverter;
 import br.com.musiki.musikiAPI.dto.AudioFeaturesDTO;
+import br.com.musiki.musikiAPI.dto.RecommendationsFilterDTO;
 import br.com.musiki.musikiAPI.services.spotify.api.SearchTrack;
 import se.michaelthelin.spotify.model_objects.miscellaneous.AudioAnalysis;
 import se.michaelthelin.spotify.model_objects.specification.AudioFeatures;
+import se.michaelthelin.spotify.model_objects.specification.Recommendations;
 import se.michaelthelin.spotify.model_objects.specification.Track;
 
 @CrossOrigin(origins = "*")
@@ -45,4 +48,10 @@ public class TrackController {
 	public AudioAnalysis searchTracksAudioAnalysesFromSpotifyApi(@PathVariable String id) {
 		return searchTrack.getTracksAudioAnalyses(id);
 	}
+	
+	@PostMapping("/api/spotify/recommendations/")
+	public Recommendations searchRecommendationsFromSpotifyApi(@RequestBody RecommendationsFilterDTO recommendationsFilterDTO) {
+		return searchTrack.getTracksRecommendations(recommendationsFilterDTO);
+	}
+	
 }
