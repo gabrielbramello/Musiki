@@ -1,0 +1,41 @@
+/* MyComponent.css */
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.child {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.child1 {
+    flex: 0 0 20%; /* 1/6 da tela */
+    background-color: lightcoral;
+}
+
+.child2 {
+    flex: 1 1 auto; /* 5/6 da tela */
+    background-color: lightblue;
+}
+
+.input-container {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.input {
+    width: 30%;
+    padding: 5px; /* Opcional: para adicionar espaço interno nas divs filhos */
+    box-sizing: border-box; /* Inclui padding e border no cálculo do width */
+}
+
+.p-inputnumber-buttons-stacked .p-inputnumber-input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    width: 100%;
+}
+

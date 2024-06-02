@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import "primereact/resources/themes/mdc-light-deeppurple/theme.css";  //theme
+import 'primereact/resources/themes/lara-light-blue/theme.css';  //theme
 import "primereact/resources/primereact.min.css";                  //core css
 import "primeicons/primeicons.css";                                  //icons
-import "../../App.css";
-import "./Login.css"
 import Header from '../../components/menu/Header';
 
 function LoginPage() {

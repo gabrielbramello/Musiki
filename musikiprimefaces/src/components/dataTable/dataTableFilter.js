@@ -32,7 +32,7 @@ export default function DataTableFilter() {
         },
         balance: 70663
     },])
-    
+
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
         name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
@@ -42,7 +42,7 @@ export default function DataTableFilter() {
         verified: { value: null, matchMode: FilterMatchMode.EQUALS }
     });
 
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
     const [representatives] = useState([
         { name: 'Amy Elsner', image: 'amyelsner.png' },
@@ -56,37 +56,9 @@ export default function DataTableFilter() {
         { name: 'Stephen Shaw', image: 'stephenshaw.png' },
         { name: 'XuXue Feng', image: 'xuxuefeng.png' }
     ]);
-    const [statuses] = useState(['unqualified', 'qualified', 'new', 'negotiation', 'renewal']);
-
-    const getSeverity = (status) => {
-        switch (status) {
-            case 'unqualified':
-                return 'danger';
-
-            case 'qualified':
-                return 'success';
-
-            case 'new':
-                return 'info';
-
-            case 'negotiation':
-                return 'warning';
-
-            case 'renewal':
-                return null;
-        }
-    };
 
     useEffect(() => {
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-    const getCustomers = (data) => {
-        return [...(data || [])].map((d) => {
-            d.date = new Date(d.date);
-
-            return d;
-        });
-    };
 
     const onGlobalFilterChange = (e) => {
         const value = e.target.value;
@@ -138,18 +110,6 @@ export default function DataTableFilter() {
         );
     };
 
-    const statusBodyTemplate = (rowData) => {
-        return <Tag value={rowData.status} severity={getSeverity(rowData.status)} />;
-    };
-
-    const statusItemTemplate = (option) => {
-        return <Tag value={option} severity={getSeverity(option)} />;
-    };
-
-    const verifiedBodyTemplate = (rowData) => {
-        return <i className={classNames('pi', { 'true-icon pi-check-circle': rowData.verified, 'false-icon pi-times-circle': !rowData.verified })}></i>;
-    };
-
     const representativeRowFilterTemplate = (options) => {
         return (
             <MultiSelect
@@ -166,28 +126,29 @@ export default function DataTableFilter() {
         );
     };
 
-    const statusRowFilterTemplate = (options) => {
-        return (
-            <Dropdown value={options.value} options={statuses} onChange={(e) => options.filterApplyCallback(e.value)} itemTemplate={statusItemTemplate} placeholder="Select One" className="p-column-filter" showClear style={{ minWidth: '12rem' }} />
-        );
-    };
-
-    const verifiedRowFilterTemplate = (options) => {
-        return <TriStateCheckbox value={options.value} onChange={(e) => options.filterApplyCallback(e.value)} />;
-    };
-
     const header = renderHeader();
 
     return (
         <div className="card">
-            <DataTable value={customers} paginator rows={10} dataKey="id" filters={filters} filterDisplay="row" loading={loading}
-                globalFilterFields={['name', 'country.name', 'representative.name', 'status']} header={header} emptyMessage="No customers found.">
-                <Column field="name" header="Name" filter filterPlaceholder="Search by name" style={{ minWidth: '12rem' }} />
-                <Column header="Country" filterField="country.name" style={{ minWidth: '12rem' }} body={countryBodyTemplate} filter filterPlaceholder="Search by country" />
-                <Column header="Agent" filterField="representative" showFilterMenu={false} filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '14rem' }}
+            <DataTable 
+                value={customers} 
+                paginator rows={10} 
+                dataKey="id" 
+                filters={filters} 
+                filterDisplay="row" 
+                loading={loading}
+                globalFilterFields={['name', 'country.name', 'representative.name', 'status']} 
+                header={header} 
+                emptyMessage="Nenhuma música encontrada." 
+                selectionMode="single">
+
+                <Column field="id" header="Id" style={{ minWidth: '12rem' }} />
+                <Column header="Nome" filterField="track.name" style={{ minWidth: '12rem' }} body={countryBodyTemplate} filter filterPlaceholder="Search by country" />
+                <Column header="Album" filterField="track.album.name" showFilterMenu={false} filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '14rem' }}
                     body={representativeBodyTemplate} filter filterElement={representativeRowFilterTemplate} />
-                <Column field="status" header="Status" showFilterMenu={false} filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '12rem' }} body={statusBodyTemplate} filter filterElement={statusRowFilterTemplate} />
-                <Column field="verified" header="Verified" dataType="boolean" style={{ minWidth: '6rem' }} body={verifiedBodyTemplate} filter filterElement={verifiedRowFilterTemplate} />
+                <Column header="Artista" filterField="track.artists.name" showFilterMenu={false} filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '14rem' }}
+                    body={representativeBodyTemplate} filter filterElement={representativeRowFilterTemplate} />
+                <Column header="Gêneros" filterField="track.album.genres" style={{ minWidth: '12rem' }} body={countryBodyTemplate} filter filterPlaceholder="Search by country" />
             </DataTable>
         </div>
     );

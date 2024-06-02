@@ -11,12 +11,6 @@ import "/node_modules/primeflex/primeflex.css"
 import { Link } from 'react-router-dom';
 import GradientCircleChart from '../../components/GradientCircleChart';
 import ApexChart from '../../components/ApexChart';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
-import { FilterMatchMode, FilterOperator } from 'primereact/api';
-import { InputText } from 'primereact/inputtext';
-import { IconField } from 'primereact/iconfield';
-import { InputIcon } from 'primereact/inputicon';
 import DataTableFilter from '../../components/dataTable/dataTableFilter';
 
 

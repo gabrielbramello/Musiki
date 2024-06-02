@@ -16,6 +16,13 @@ export default function Header() {
             }
         },
         {
+            label: 'Recomendações',
+            icon: 'pi pi-fw pi-search',
+            command: (event) => {
+                window.location = "/recommendations/";
+            }
+        },
+        {
             label: 'Artista',
             icon: 'pi pi-fw pi-at',
             command: (event) => {
