@@ -11,19 +11,28 @@ import InputsNumberFilter from '../../components/forms/InputsNumberFilter';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import DataTableFilter from '../../components/dataTable/dataTableFilter';
+import axios from "../../apis/api";
 
 export default function Recommendations() {
 
-    const [selectedCities, setSelectedCities] = useState(null);
-    const cities = [
-        { name: 'New York', code: 'NY' },
-        { name: 'Rome', code: 'RM' },
-        { name: 'London', code: 'LDN' },
-        { name: 'Istanbul', code: 'IST' },
-        { name: 'Paris', code: 'PRS' }
-    ];
+    const [selectedGenres, setSelectedGenres] = useState(null);
+    const [genres, setGenres] = useState([]);
+
+    useEffect(() => {
+        axios.get('/spotify/genres/')
+            .then(response => {
+                console.log(response)
+                setGenres(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, [])
 
     const [selectedKeys, setSelectedKeys] = useState([]);
+    const [minKey, setMinKey] = useState(null);
+    const [maxKey, setMaxKey] = useState(null);
+    const [targetKey, setTargetKey] = useState(null);
     const keys = [
         { name: 'C', code: 0 },
         { name: 'C#/Db', code: 1 },
@@ -32,7 +41,11 @@ export default function Recommendations() {
         { name: 'E', code: 4 }
     ];
 
-    const [selectedTimeSignatues, setSelectedTimeSignatues] = useState([]);
+    const [selectedTimeSignatues, setSelectedTimeSignatures] = useState([]);
+    const [minTimeSignature, setMinTimeSignature] = useState(null);
+    const [maxTimeSignature, setMaxTimeSignature] = useState(null);
+    const [targetTimeSignature, setTargetTimeSignature] = useState(null);
+
     const timeSignatures = [
         { name: '3/4', code: 3 },
         { name: '4/4', code: 4 },
@@ -42,6 +55,7 @@ export default function Recommendations() {
     ];
 
     const [selectedMode, setSelectedMode] = useState(null);
+    const [targetMode, setTargetMode] = useState()
     const modes = [
         { name: 'Menor', code: 0 },
         { name: 'Maior', code: 1 }
@@ -65,10 +79,12 @@ export default function Recommendations() {
                 }
             });
 
-            console.log(newSelectedKeys)
+            setMinKey(objetoComMenorValue.code);
+            setMaxKey(objetoComMaiorValue.code);
             setSelectedKeys(newSelectedKeys);
         } else {
             setSelectedKeys(paramKeys);
+            setTargetKey(paramKeys[0].code)
         }
     }
 
@@ -90,10 +106,12 @@ export default function Recommendations() {
                 }
             });
 
-            console.log(newSelectedTimeSignatures)
-            setSelectedTimeSignatues(newSelectedTimeSignatures);
+            setMinTimeSignature(objetoComMenorValue.code);
+            setMaxTimeSignature(objetoComMaiorValue.code);
+            setSelectedTimeSignatures(newSelectedTimeSignatures);
         } else {
-            setSelectedTimeSignatues(paramTimeSignatures);
+            setTargetTimeSignature(paramTimeSignatures[0].code);
+            setSelectedTimeSignatures(paramTimeSignatures);
         }
     }
 
@@ -207,6 +225,68 @@ export default function Recommendations() {
         { name: 'valence-target', label: 'Valência Alvo', value: targetValence, onValueChange: setTargetValence, mode: 'decimal' },
     ]
 
+    function requestObjectBuilder() {
+        const recommendationsFilterDTO = {
+            limit: 20,
+            seedGenres: selectedGenres.join(','),
+            minAcousticness: minAcousticness.target.value,
+            maxAcousticness: maxAcousticness.target.value,
+            targetAcousticness: targetAcousticness.target.value,
+            minDanceability: minDanceability.target.value,
+            maxDanceability: maxDanceability.target.value,
+            targetDanceability: targetDanceability.target.value,
+            minDurationMs: minDuration.target.value,
+            maxDurationMs: maxDuration.target.value,
+            targetDurationMs: targetDuration.target.value,
+            minEnergy: minEnergy.target.value,
+            maxEnergy: maxEnergy.target.value,
+            targetEnergy: targetEnergy.target.value,
+            minInstrumentalness: minInstrumentalness.target.value,
+            maxInstrumentalness: maxInstrumentalness.target.value,
+            targetInstrumentalness: targetInstrumentalness.target.value,
+            minKey: minKey,
+            maxKey: maxKey,
+            targetKey: targetKey,
+            minLiveness: minLiveness.target.value,
+            maxLiveness: maxLiveness.target.value,
+            targetLiveness: targetLiveness.target.value,
+            minLoudness: minLoudness.target.value,
+            maxLoudness: maxLoudness.target.value,
+            targetLoudness: targetLoudness.target.value,
+            targetMode: targetMode,
+            minPopularity: minPopularity.target.value,
+            maxPopularity: maxPopularity.target.value,
+            targetPopularity: targetPopularity.target.value,
+            minSpeechiness: minSpeechiness.target.value,
+            maxSpeechiness: maxSpeechiness.target.value,
+            targetSpeechiness: targetSpeechiness.target.value,
+            minTempo: minTempo.target.value,
+            maxTempo: maxTempo.target.value,
+            targetTempo: targetTempo.target.value,
+            minTimeSignature: minTimeSignature,
+            maxTimeSignature: maxTimeSignature,
+            targetTimeSignature: targetTimeSignature,
+            minValence: minValence.target.value,
+            maxValence: maxValence.target.value,
+            targetValence: targetValence.target.value
+        };
+
+        return recommendationsFilterDTO;
+    }
+
+    function recommendationsRequest() {
+        console.log('Executei request')
+        const recommendationsFilterDTO = requestObjectBuilder();
+        console.log(recommendationsFilterDTO)
+        axios.post('/spotify/recommendations/', recommendationsFilterDTO)
+            .then(response => {
+                console.log(response)
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
     return (
         <div>
             <div>
@@ -218,8 +298,8 @@ export default function Recommendations() {
                         <Card title="Advanced Card" className="md:w-25rem">
                             <div className="m-0">
                                 <label htmlFor="genero" className="font-bold block mb-2">Genero(s)</label>
-                                <MultiSelect inputId="genero" value={selectedCities} onChange={(e) => setSelectedCities(e.value)} options={cities} optionLabel="name"
-                                    filter placeholder="Select Cities" maxSelectedLabels={3} className="w-full md:w-20rem" />
+                                <MultiSelect inputId="genero" value={selectedGenres} onChange={(e) => setSelectedGenres(e.value)} options={genres}
+                                    filter placeholder="Generos Selecionados" maxSelectedLabels={3} className="w-full md:w-20rem" />
                             </div>
                             <Divider />
                             <div className="m-0">
@@ -264,13 +344,13 @@ export default function Recommendations() {
                             <Divider />
                             <InputsNumberFilter itens={valenceFilds} />
                             <Divider />
-                            <div className="m-0" style={{display: 'flex', justifyContent: 'flex-end'}}>
-                                <Button label="Submit" />  
+                            <div className="m-0" style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                <Button label="Submit" onClick={recommendationsRequest}/>
                             </div>
                         </Card>
                     </div>
                     <div id="main" className="child child2">
-                        <DataTableFilter/>
+                        <DataTableFilter />
                     </div>
                 </div>
 
