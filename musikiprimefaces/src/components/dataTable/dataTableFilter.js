@@ -12,26 +12,7 @@ import { MultiSelect } from 'primereact/multiselect';
 import { Tag } from 'primereact/tag';
 import { TriStateCheckbox } from 'primereact/tristatecheckbox';
 
-export default function DataTableFilter() {
-
-    const [customers, setCustomers] = useState([{
-        id: 1000,
-        name: 'James Butt',
-        country: {
-            name: 'Algeria',
-            code: 'dz'
-        },
-        company: 'Benton, John B Jr',
-        date: '2015-09-13',
-        status: 'unqualified',
-        verified: true,
-        activity: 17,
-        representative: {
-            name: 'Ioni Bowcher',
-            image: 'ionibowcher.png'
-        },
-        balance: 70663
-    },])
+export default function DataTableFilter(props) {
 
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -58,6 +39,7 @@ export default function DataTableFilter() {
     ]);
 
     useEffect(() => {
+        console.log(props)
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const onGlobalFilterChange = (e) => {
@@ -81,25 +63,42 @@ export default function DataTableFilter() {
         );
     };
 
-    const countryBodyTemplate = (rowData) => {
+
+    /*     const albumBodyTemplate = (rowData) => {
+            const album = rowData.album;
+    
+            return (
+                <div className="flex align-items-center gap-2">
+                    <img alt={album.name} src={`https://primefaces.org/cdn/primereact/images/avatar/${representative.image}`} width="32" />
+                    <span>{album.name}</span>
+                </div>
+            );
+        }; */
+
+    const artistBodyTemplate = (rowData) => {
+        const artists = rowData.artists;
+
         return (
-            <div className="flex align-items-center gap-2">
-                <img alt="flag" src="https://primefaces.org/cdn/primereact/images/flag/flag_placeholder.png" className={`flag flag-${rowData.country.code}`} style={{ width: '24px' }} />
-                <span>{rowData.country.name}</span>
+            <div>
+                {artists.map((artist) => {
+                    return (
+                        <div className="flex align-items-center gap-2">
+                            <img alt={artist.name} src={`https://primefaces.org/cdn/primereact/images/avatar/ionibowcher.png `} width="32" />
+                            <span>{artist.name}</span>
+                        </div>
+                    )
+                })}
             </div>
+
         );
     };
 
-    const representativeBodyTemplate = (rowData) => {
-        const representative = rowData.representative;
+    const idBodyTemplate = (rowData, i ) => {
+        console.log(rowData)
+        console.log(i)
+        return i.rowIndex + 1;
+    }
 
-        return (
-            <div className="flex align-items-center gap-2">
-                <img alt={representative.name} src={`https://primefaces.org/cdn/primereact/images/avatar/${representative.image}`} width="32" />
-                <span>{representative.name}</span>
-            </div>
-        );
-    };
 
     const representativesItemTemplate = (option) => {
         return (
@@ -130,25 +129,25 @@ export default function DataTableFilter() {
 
     return (
         <div className="card">
-            <DataTable 
-                value={customers} 
-                paginator rows={10} 
-                dataKey="id" 
-                filters={filters} 
-                filterDisplay="row" 
+            <DataTable
+                value={props.tracks}
+                paginator rows={10}
+                dataKey="id"
+                filters={filters}
+                filterDisplay="row"
                 loading={loading}
-                globalFilterFields={['name', 'country.name', 'representative.name', 'status']} 
-                header={header} 
-                emptyMessage="Nenhuma música encontrada." 
+                globalFilterFields={['name', 'country.name', 'representative.name', 'status']}
+                header={header}
+                emptyMessage="Nenhuma música encontrada."
                 selectionMode="single">
 
-                <Column field="id" header="Id" style={{ minWidth: '12rem' }} />
-                <Column header="Nome" filterField="track.name" style={{ minWidth: '12rem' }} body={countryBodyTemplate} filter filterPlaceholder="Search by country" />
-                <Column header="Album" filterField="track.album.name" showFilterMenu={false} filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '14rem' }}
-                    body={representativeBodyTemplate} filter filterElement={representativeRowFilterTemplate} />
-                <Column header="Artista" filterField="track.artists.name" showFilterMenu={false} filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '14rem' }}
-                    body={representativeBodyTemplate} filter filterElement={representativeRowFilterTemplate} />
-                <Column header="Gêneros" filterField="track.album.genres" style={{ minWidth: '12rem' }} body={countryBodyTemplate} filter filterPlaceholder="Search by country" />
+                <Column field="id" body={idBodyTemplate} header="Id" style={{ minWidth: '12rem' }} />
+                <Column header="Nome" field="name" filterField="name" style={{ minWidth: '12rem' }} filter filterPlaceholder="Pesquisa por nome" />
+                <Column header="Album" field="album.name" filterField="album.name" showFilterMenu={false} filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '14rem' }}
+                    filter filterElement={representativeRowFilterTemplate} />
+                <Column header="Artista" body={artistBodyTemplate} filterField="artists[0].name" showFilterMenu={false} filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '14rem' }}
+                    filter filterElement={representativeRowFilterTemplate} />
+                {/* <Column header="Gêneros" filterField="track.album.genres" style={{ minWidth: '12rem' }} body={countryBodyTemplate} filter filterPlaceholder="Search by country" /> */}
             </DataTable>
         </div>
     );

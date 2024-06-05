@@ -15,6 +15,7 @@ import axios from "../../apis/api";
 
 export default function Recommendations() {
 
+    const [tracks, setTracks] = useState([])
     const [selectedGenres, setSelectedGenres] = useState(null);
     const [genres, setGenres] = useState([]);
 
@@ -280,7 +281,7 @@ export default function Recommendations() {
         console.log(recommendationsFilterDTO)
         axios.post('/spotify/recommendations/', recommendationsFilterDTO)
             .then(response => {
-                console.log(response)
+                setTracks(response.data.tracks);
             })
             .catch(error => {
                 console.error(error);
@@ -350,7 +351,7 @@ export default function Recommendations() {
                         </Card>
                     </div>
                     <div id="main" className="child child2">
-                        <DataTableFilter />
+                        <DataTableFilter tracks={tracks}/>
                     </div>
                 </div>
 
