@@ -11,8 +11,11 @@ import { Dropdown } from 'primereact/dropdown';
 import { MultiSelect } from 'primereact/multiselect';
 import { Tag } from 'primereact/tag';
 import { TriStateCheckbox } from 'primereact/tristatecheckbox';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function DataTableFilter(props) {
+
+    const navigate = useNavigate();
 
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -127,6 +130,14 @@ export default function DataTableFilter(props) {
 
     const header = renderHeader();
 
+    function linkTo(value){
+        //console.log(value)
+        const url = `/track2/${value.id}`;
+        window.open(url, '_blank', 'noopener,noreferrer');
+        //const url = navigate(`/track2/${value.id}`, { replace: false });
+        //console.log(url)
+        //indow.open(url, '_blank', 'noopener,noreferrer');
+    }
     return (
         <div className="card">
             <DataTable
@@ -139,7 +150,9 @@ export default function DataTableFilter(props) {
                 globalFilterFields={['name', 'country.name', 'representative.name', 'status']}
                 header={header}
                 emptyMessage="Nenhuma música encontrada."
-                selectionMode="single">
+                selectionMode="single"
+                onSelectionChange={(e) =>linkTo(e.value)}
+                >
 
                 <Column field="id" body={idBodyTemplate} header="Id" style={{ minWidth: '12rem' }} />
                 <Column header="Nome" field="name" filterField="name" style={{ minWidth: '12rem' }} filter filterPlaceholder="Pesquisa por nome" />
