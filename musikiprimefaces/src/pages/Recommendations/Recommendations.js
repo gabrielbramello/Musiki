@@ -161,115 +161,115 @@ export default function Recommendations() {
     const [targetValence, setTargetValence] = useState(0);
 
     const acousticnessFilds = [
-        { name: 'acousticness-min', label: 'Acústica Min.', value: minAcousticness, onValueChange: setMinAcousticness, mode: 'decimal' },
-        { name: 'acousticness-max', label: 'Acústica Max.', value: maxAcousticness, onValueChange: setMaxAcousticness, mode: 'decimal' },
-        { name: 'acousticness-target', label: 'Acústica Alvo', value: targetAcousticness, onValueChange: setTargetAcousticness, mode: 'decimal' },
+        { name: 'acousticness-min', label: 'Acústica Min.', value: minAcousticness, onValueChange: (e)=>setMinAcousticness(e.value), mode: 'decimal' },
+        { name: 'acousticness-max', label: 'Acústica Max.', value: maxAcousticness, onValueChange: (e)=>setMaxAcousticness(e.value), mode: 'decimal' },
+        { name: 'acousticness-target', label: 'Acústica Alvo', value: targetAcousticness, onValueChange: (e)=>setTargetAcousticness(e.value), mode: 'decimal' },
     ]
 
     const danceabilityFilds = [
-        { name: 'danceability-min', label: 'Dançabilidade Min.', value: minDanceability, onValueChange: setMinDanceability, mode: 'decimal' },
-        { name: 'danceability-max', label: 'Dançabilidade Max.', value: maxDanceability, onValueChange: setMaxDanceability, mode: 'decimal' },
-        { name: 'danceability-target', label: 'Dançabilidade Alvo', value: targetDanceability, onValueChange: setTargetDanceability, mode: 'decimal' },
+        { name: 'danceability-min', label: 'Dançabilidade Min.', value: minDanceability, onValueChange: (e)=>setMinDanceability(e.value), mode: 'decimal' },
+        { name: 'danceability-max', label: 'Dançabilidade Max.', value: maxDanceability, onValueChange: (e)=>setMaxDanceability(e.value), mode: 'decimal' },
+        { name: 'danceability-target', label: 'Dançabilidade Alvo', value: targetDanceability, onValueChange: (e)=>setTargetDanceability(e.value), mode: 'decimal' },
     ]
 
     const durationFilds = [
-        { name: 'duration-min', label: 'Duração Min.', value: minDuration, onValueChange: setMinDuration, mode: 'decimal' },
-        { name: 'duration-max', label: 'Duração Max.', value: maxDuration, onValueChange: setMaxDuration, mode: 'decimal' },
-        { name: 'duration-target', label: 'Duração Alvo', value: targetDuration, onValueChange: setTargetDuration, mode: 'decimal' },
+        { name: 'duration-min', label: 'Duração Min.', value: minDuration, onValueChange: (e)=>setMinDuration(e.value), mode: 'decimal' },
+        { name: 'duration-max', label: 'Duração Max.', value: maxDuration, onValueChange: (e)=>setMaxDuration(e.value), mode: 'decimal' },
+        { name: 'duration-target', label: 'Duração Alvo', value: targetDuration, onValueChange: (e)=>setTargetDuration(e.value), mode: 'decimal' },
     ]
 
     const energyFilds = [
-        { name: 'energy-min', label: 'Energia Min.', value: minEnergy, onValueChange: setMinEnergy, mode: 'decimal' },
-        { name: 'energyn-max', label: 'Energia Max.', value: maxEnergy, onValueChange: setMaxEnergy, mode: 'decimal' },
-        { name: 'energy-target', label: 'Energia Alvo', value: targetEnergy, onValueChange: setTargetEnergy, mode: 'decimal' },
+        { name: 'energy-min', label: 'Energia Min.', value: minEnergy, onValueChange: (e)=>setMinEnergy(e.value), mode: 'decimal' },
+        { name: 'energyn-max', label: 'Energia Max.', value: maxEnergy, onValueChange: (e)=>setMaxEnergy(e.value), mode: 'decimal' },
+        { name: 'energy-target', label: 'Energia Alvo', value: targetEnergy, onValueChange: (e)=>setTargetEnergy(e.value), mode: 'decimal' },
     ]
 
     const instrumentalnessFilds = [
-        { name: 'instrumentalness-min', label: 'Instrumental Min.', value: minInstrumentalness, onValueChange: setMinInstrumentalness, mode: 'decimal' },
-        { name: 'instrumentalness-max', label: 'Instrumental Max.', value: maxInstrumentalness, onValueChange: setMaxInstrumentalness, mode: 'decimal' },
-        { name: 'instrumentalness-target', label: 'Instrumental Alvo', value: targetInstrumentalness, onValueChange: setTargetInstrumentalness, mode: 'decimal' },
+        { name: 'instrumentalness-min', label: 'Instrumental Min.', value: minInstrumentalness, onValueChange: (e)=>setMinInstrumentalness(e.value), mode: 'decimal' },
+        { name: 'instrumentalness-max', label: 'Instrumental Max.', value: maxInstrumentalness, onValueChange: (e)=>setMaxInstrumentalness(e.value), mode: 'decimal' },
+        { name: 'instrumentalness-target', label: 'Instrumental Alvo', value: targetInstrumentalness, onValueChange: (e)=>setTargetInstrumentalness(e.value), mode: 'decimal' },
     ]
 
     const livenessFilds = [
-        { name: 'liveness-min', label: 'Ao Vivo Min.', value: minLiveness, onValueChange: setMinLiveness, mode: 'decimal' },
-        { name: 'liveness-max', label: 'Ao Vivo Max.', value: maxLiveness, onValueChange: setMaxLiveness, mode: 'decimal' },
-        { name: 'liveness-target', label: 'Ao Vivo Alvo', value: targetLiveness, onValueChange: setTargetLiveness, mode: 'decimal' },
+        { name: 'liveness-min', label: 'Ao Vivo Min.', value: minLiveness, onValueChange: (e)=>setMinLiveness(e.value), mode: 'decimal' },
+        { name: 'liveness-max', label: 'Ao Vivo Max.', value: maxLiveness, onValueChange: (e)=>setMaxLiveness(e.value), mode: 'decimal' },
+        { name: 'liveness-target', label: 'Ao Vivo Alvo', value: targetLiveness, onValueChange: (e)=>setTargetLiveness(e.value), mode: 'decimal' },
     ]
 
     const loudnessFilds = [
-        { name: 'loudness-min', label: 'Ruído Min.', value: minLoudness, onValueChange: setMinLoudness, mode: 'decimal' },
-        { name: 'loudness-max', label: 'Ruído Max.', value: maxLoudness, onValueChange: setMaxLoudness, mode: 'decimal' },
-        { name: 'loudness-target', label: 'Ruído Alvo', value: targetLoudness, onValueChange: setTargetLoudness, mode: 'decimal' },
+        { name: 'loudness-min', label: 'Ruído Min.', value: minLoudness, onValueChange: (e)=>setMinLoudness(e.value), mode: 'decimal' },
+        { name: 'loudness-max', label: 'Ruído Max.', value: maxLoudness, onValueChange: (e)=>setMaxLoudness(e.value), mode: 'decimal' },
+        { name: 'loudness-target', label: 'Ruído Alvo', value: targetLoudness, onValueChange: (e)=>setTargetLoudness(e.value), mode: 'decimal' },
     ]
 
     const popularityFilds = [
-        { name: 'popularity-min', label: 'Popularidade Min.', value: minPopularity, onValueChange: setMinPopularity, mode: 'decimal' },
-        { name: 'popularity-max', label: 'Popularidade Max.', value: maxPopularity, onValueChange: setMaxPopularity, mode: 'decimal' },
-        { name: 'popularity-target', label: 'Popularidade Alvo', value: targetPopularity, onValueChange: setTargetPopularity, mode: 'decimal' },
+        { name: 'popularity-min', label: 'Popularidade Min.', value: minPopularity, onValueChange: (e)=>setMinPopularity(e.value), mode: 'decimal' },
+        { name: 'popularity-max', label: 'Popularidade Max.', value: maxPopularity, onValueChange: (e)=>setMaxPopularity(e.value), mode: 'decimal' },
+        { name: 'popularity-target', label: 'Popularidade Alvo', value: targetPopularity, onValueChange: (e)=>setTargetPopularity(e.value), mode: 'decimal' },
     ]
 
     const speechinessFilds = [
-        { name: 'speechiness-min', label: 'Fala Min.', value: minSpeechiness, onValueChange: setMinSpeechiness, mode: 'decimal' },
-        { name: 'speechiness-max', label: 'Fala Max.', value: maxSpeechiness, onValueChange: setMaxSpeechiness, mode: 'decimal' },
-        { name: 'speechiness-target', label: 'Fala Alvo', value: targetSpeechiness, onValueChange: setTargetSpeechiness, mode: 'decimal' },
+        { name: 'speechiness-min', label: 'Fala Min.', value: minSpeechiness, onValueChange: (e)=>setMinSpeechiness(e.value), mode: 'decimal' },
+        { name: 'speechiness-max', label: 'Fala Max.', value: maxSpeechiness, onValueChange: (e)=>setMaxSpeechiness(e.value), mode: 'decimal' },
+        { name: 'speechiness-target', label: 'Fala Alvo', value: targetSpeechiness, onValueChange: (e)=>setTargetSpeechiness(e.value), mode: 'decimal' },
     ]
 
     const tempoFilds = [
-        { name: 'tempo-min', label: 'Tempo(BPM) Min.', value: minTempo, onValueChange: setMinTempo, mode: 'decimal' },
-        { name: 'tempo-max', label: 'Tempo(BPM) Max.', value: maxTempo, onValueChange: setMaxTempo, mode: 'decimal' },
-        { name: 'tempo-target', label: 'Tempo(BPM) Alvo', value: targetTempo, onValueChange: setTargetTempo, mode: 'decimal' },
+        { name: 'tempo-min', label: 'Tempo(BPM) Min.', value: minTempo, onValueChange: (e)=>setMinTempo(e.value), mode: 'decimal' },
+        { name: 'tempo-max', label: 'Tempo(BPM) Max.', value: maxTempo, onValueChange: (e)=>setMaxTempo(e.value), mode: 'decimal' },
+        { name: 'tempo-target', label: 'Tempo(BPM) Alvo', value: targetTempo, onValueChange: (e)=>setTargetTempo(e.value), mode: 'decimal' },
     ]
 
     const valenceFilds = [
-        { name: 'valence-min', label: 'Valência Min.', value: minValence, onValueChange: setMinValence, mode: 'decimal' },
-        { name: 'valence-max', label: 'Valência Max.', value: maxValence, onValueChange: setMaxValence, mode: 'decimal' },
-        { name: 'valence-target', label: 'Valência Alvo', value: targetValence, onValueChange: setTargetValence, mode: 'decimal' },
+        { name: 'valence-min', label: 'Valência Min.', value: minValence, onValueChange: (e)=>setMinValence(e.value), mode: 'decimal' },
+        { name: 'valence-max', label: 'Valência Max.', value: maxValence, onValueChange: (e)=>setMaxValence(e.value), mode: 'decimal' },
+        { name: 'valence-target', label: 'Valência Alvo', value: targetValence, onValueChange: (e)=>setTargetValence(e.value), mode: 'decimal' },
     ]
 
     function requestObjectBuilder() {
         const recommendationsFilterDTO = {
             limit: 20,
             seedGenres: selectedGenres.join(','),
-            minAcousticness: minAcousticness.target.value,
-            maxAcousticness: maxAcousticness.target.value,
-            targetAcousticness: targetAcousticness.target.value,
-            minDanceability: minDanceability.target.value,
-            maxDanceability: maxDanceability.target.value,
-            targetDanceability: targetDanceability.target.value,
-            minDurationMs: minDuration.target.value,
-            maxDurationMs: maxDuration.target.value,
-            targetDurationMs: targetDuration.target.value,
-            minEnergy: minEnergy.target.value,
-            maxEnergy: maxEnergy.target.value,
-            targetEnergy: targetEnergy.target.value,
-            minInstrumentalness: minInstrumentalness.target.value,
-            maxInstrumentalness: maxInstrumentalness.target.value,
-            targetInstrumentalness: targetInstrumentalness.target.value,
+            minAcousticness: minAcousticness/100,
+            maxAcousticness: maxAcousticness/100,
+            targetAcousticness: targetAcousticness/100,
+            minDanceability: minDanceability/100,
+            maxDanceability: maxDanceability/100,
+            targetDanceability: targetDanceability/100,
+            minDurationMs: minDuration,
+            maxDurationMs: maxDuration,
+            targetDurationMs: targetDuration,
+            minEnergy: minEnergy/100,
+            maxEnergy: maxEnergy/100,
+            targetEnergy: targetEnergy/100,
+            minInstrumentalness: minInstrumentalness/100,
+            maxInstrumentalness: maxInstrumentalness/100,
+            targetInstrumentalness: targetInstrumentalness/100,
             minKey: minKey,
             maxKey: maxKey,
             targetKey: targetKey,
-            minLiveness: minLiveness.target.value,
-            maxLiveness: maxLiveness.target.value,
-            targetLiveness: targetLiveness.target.value,
-            minLoudness: minLoudness.target.value,
-            maxLoudness: maxLoudness.target.value,
-            targetLoudness: targetLoudness.target.value,
+            minLiveness: minLiveness/100,
+            maxLiveness: maxLiveness/100,
+            targetLiveness: targetLiveness/100,
+            minLoudness: minLoudness,
+            maxLoudness: maxLoudness,
+            targetLoudness: targetLoudness,
             targetMode: targetMode,
-            minPopularity: minPopularity.target.value,
-            maxPopularity: maxPopularity.target.value,
-            targetPopularity: targetPopularity.target.value,
-            minSpeechiness: minSpeechiness.target.value,
-            maxSpeechiness: maxSpeechiness.target.value,
-            targetSpeechiness: targetSpeechiness.target.value,
-            minTempo: minTempo.target.value,
-            maxTempo: maxTempo.target.value,
-            targetTempo: targetTempo.target.value,
+            minPopularity: minPopularity/100,
+            maxPopularity: maxPopularity/100,
+            targetPopularity: targetPopularity/100,
+            minSpeechiness: minSpeechiness/100,
+            maxSpeechiness: maxSpeechiness/100,
+            targetSpeechiness: targetSpeechiness/100,
+            minTempo: minTempo,
+            maxTempo: maxTempo,
+            targetTempo: targetTempo,
             minTimeSignature: minTimeSignature,
             maxTimeSignature: maxTimeSignature,
             targetTimeSignature: targetTimeSignature,
-            minValence: minValence.target.value,
-            maxValence: maxValence.target.value,
-            targetValence: targetValence.target.value
+            minValence: minValence/100,
+            maxValence: maxValence/100,
+            targetValence: targetValence/100
         };
 
         return recommendationsFilterDTO;

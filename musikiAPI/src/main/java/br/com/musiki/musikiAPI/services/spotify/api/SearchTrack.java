@@ -99,173 +99,174 @@ public class SearchTrack extends ApiSpotify {
 			    getRecommendationsRequestBuilder.seed_tracks(recommendationsFilterDTO.getSeedTracks());
 			}
 
-			if (recommendationsFilterDTO.getMinAcousticness() != null) {
+			if (recommendationsFilterDTO.getMinAcousticness() != null && recommendationsFilterDTO.getMinAcousticness() > 0) {
 			    getRecommendationsRequestBuilder.min_acousticness(recommendationsFilterDTO.getMinAcousticness());
 			}
 
-			if (recommendationsFilterDTO.getMaxAcousticness() != null) {
+			if (recommendationsFilterDTO.getMaxAcousticness() != null && recommendationsFilterDTO.getMaxAcousticness() > 0) {
 			    getRecommendationsRequestBuilder.max_acousticness(recommendationsFilterDTO.getMaxAcousticness());
 			}
 
-			if (recommendationsFilterDTO.getTargetAcousticness() != null) {
+			if (recommendationsFilterDTO.getTargetAcousticness() != null && recommendationsFilterDTO.getTargetAcousticness() > 0) {
 			    getRecommendationsRequestBuilder.target_acousticness(recommendationsFilterDTO.getTargetAcousticness());
 			}
 
-			if (recommendationsFilterDTO.getMinDanceability() != null) {
+			if (recommendationsFilterDTO.getMinDanceability() != null && recommendationsFilterDTO.getMinDanceability() > 0) {
 			    getRecommendationsRequestBuilder.min_danceability(recommendationsFilterDTO.getMinDanceability());
 			}
 
-			if (recommendationsFilterDTO.getMaxDanceability() != null) {
+			if (recommendationsFilterDTO.getMaxDanceability() != null && recommendationsFilterDTO.getMaxDanceability() > 0) {
 			    getRecommendationsRequestBuilder.max_danceability(recommendationsFilterDTO.getMaxDanceability());
 			}
 
-			if (recommendationsFilterDTO.getTargetDanceability() != null) {
+			if (recommendationsFilterDTO.getTargetDanceability() != null && recommendationsFilterDTO.getTargetDanceability() > 0) {
 			    getRecommendationsRequestBuilder.target_danceability(recommendationsFilterDTO.getTargetDanceability());
 			}
 
-			if (recommendationsFilterDTO.getMinDurationMs() != null) {
+			if (recommendationsFilterDTO.getMinDurationMs() != null && recommendationsFilterDTO.getMinDurationMs() > 0) {
 			    getRecommendationsRequestBuilder.min_duration_ms(recommendationsFilterDTO.getMinDurationMs());
 			}
 
-			if (recommendationsFilterDTO.getMaxDurationMs() != null) {
+			if (recommendationsFilterDTO.getMaxDurationMs() != null && recommendationsFilterDTO.getMaxDurationMs() > 0) {
 			    getRecommendationsRequestBuilder.max_duration_ms(recommendationsFilterDTO.getMaxDurationMs());
 			}
 
-			if (recommendationsFilterDTO.getTargetDurationMs() != null) {
+			if (recommendationsFilterDTO.getTargetDurationMs() != null && recommendationsFilterDTO.getTargetDurationMs() > 0) {
 			    getRecommendationsRequestBuilder.target_duration_ms(recommendationsFilterDTO.getTargetDurationMs());
 			}
 
-			if (recommendationsFilterDTO.getMinEnergy() != null) {
+			if (recommendationsFilterDTO.getMinEnergy() != null && recommendationsFilterDTO.getMinEnergy() > 0) {
 			    getRecommendationsRequestBuilder.min_energy(recommendationsFilterDTO.getMinEnergy());
 			}
 
-			if (recommendationsFilterDTO.getMaxEnergy() != null) {
+			if (recommendationsFilterDTO.getMaxEnergy() != null && recommendationsFilterDTO.getMaxEnergy() > 0) {
 			    getRecommendationsRequestBuilder.max_energy(recommendationsFilterDTO.getMaxEnergy());
 			}
 
-			if (recommendationsFilterDTO.getTargetEnergy() != null) {
+			if (recommendationsFilterDTO.getTargetEnergy() != null && recommendationsFilterDTO.getTargetEnergy() > 0) {
 			    getRecommendationsRequestBuilder.target_energy(recommendationsFilterDTO.getTargetEnergy());
 			}
 
-			if (recommendationsFilterDTO.getMinInstrumentalness() != null) {
+			if (recommendationsFilterDTO.getMinInstrumentalness() != null && recommendationsFilterDTO.getMinInstrumentalness() > 0) {
 			    getRecommendationsRequestBuilder.min_instrumentalness(recommendationsFilterDTO.getMinInstrumentalness());
 			}
 
-			if (recommendationsFilterDTO.getMaxInstrumentalness() != null) {
+			if (recommendationsFilterDTO.getMaxInstrumentalness() != null && recommendationsFilterDTO.getMaxInstrumentalness() > 0) {
 			    getRecommendationsRequestBuilder.max_instrumentalness(recommendationsFilterDTO.getMaxInstrumentalness());
 			}
 
-			if (recommendationsFilterDTO.getTargetInstrumentalness() != null) {
+			if (recommendationsFilterDTO.getTargetInstrumentalness() != null && recommendationsFilterDTO.getTargetInstrumentalness() > 0) {
 			    getRecommendationsRequestBuilder.target_instrumentalness(recommendationsFilterDTO.getTargetInstrumentalness());
 			}
 
-			if (recommendationsFilterDTO.getMinKey() != null) {
+			if (recommendationsFilterDTO.getMinKey() != null && recommendationsFilterDTO.getMinKey() > 0) {
 			    getRecommendationsRequestBuilder.min_key(recommendationsFilterDTO.getMinKey());
 			}
 
-			if (recommendationsFilterDTO.getMaxKey() != null) {
+			if (recommendationsFilterDTO.getMaxKey() != null && recommendationsFilterDTO.getMaxKey() > 0) {
 			    getRecommendationsRequestBuilder.max_key(recommendationsFilterDTO.getMaxKey());
 			}
 
-			if (recommendationsFilterDTO.getTargetKey() != null) {
+			if (recommendationsFilterDTO.getTargetKey() != null && recommendationsFilterDTO.getTargetKey() > 0) {
 			    getRecommendationsRequestBuilder.target_key(recommendationsFilterDTO.getTargetKey());
 			}
 
-			if (recommendationsFilterDTO.getMinLiveness() != null) {
+			if (recommendationsFilterDTO.getMinLiveness() != null && recommendationsFilterDTO.getMinLiveness() > 0) {
 			    getRecommendationsRequestBuilder.min_liveness(recommendationsFilterDTO.getMinLiveness());
 			}
 
-			if (recommendationsFilterDTO.getMaxLiveness() != null) {
+			if (recommendationsFilterDTO.getMaxLiveness() != null && recommendationsFilterDTO.getMaxLiveness() > 0) {
 			    getRecommendationsRequestBuilder.max_liveness(recommendationsFilterDTO.getMaxLiveness());
 			}
 
-			if (recommendationsFilterDTO.getTargetLiveness() != null) {
+			if (recommendationsFilterDTO.getTargetLiveness() != null && recommendationsFilterDTO.getTargetLiveness() > 0) {
 			    getRecommendationsRequestBuilder.target_liveness(recommendationsFilterDTO.getTargetLiveness());
 			}
 
-			if (recommendationsFilterDTO.getMinLoudness() != null) {
+			if (recommendationsFilterDTO.getMinLoudness() != null && recommendationsFilterDTO.getMinLoudness() > 0) {
 			    getRecommendationsRequestBuilder.min_loudness(recommendationsFilterDTO.getMinLoudness());
 			}
 
-			if (recommendationsFilterDTO.getMaxLoudness() != null) {
+			if (recommendationsFilterDTO.getMaxLoudness() != null && recommendationsFilterDTO.getMaxLoudness() > 0) {
 			    getRecommendationsRequestBuilder.max_loudness(recommendationsFilterDTO.getMaxLoudness());
 			}
 
-			if (recommendationsFilterDTO.getTargetLoudness() != null) {
+			if (recommendationsFilterDTO.getTargetLoudness() != null && recommendationsFilterDTO.getTargetLoudness() > 0) {
 			    getRecommendationsRequestBuilder.target_loudness(recommendationsFilterDTO.getTargetLoudness());
 			}
 
-			if (recommendationsFilterDTO.getMinMode() != null) {
+			if (recommendationsFilterDTO.getMinMode() != null && recommendationsFilterDTO.getMinMode() > 0) {
 			    getRecommendationsRequestBuilder.min_mode(recommendationsFilterDTO.getMinMode());
 			}
 
-			if (recommendationsFilterDTO.getMaxMode() != null) {
+			if (recommendationsFilterDTO.getMaxMode() != null && recommendationsFilterDTO.getMaxMode() > 0) {
 			    getRecommendationsRequestBuilder.max_mode(recommendationsFilterDTO.getMaxMode());
 			}
 
-			if (recommendationsFilterDTO.getTargetMode() != null) {
+			if (recommendationsFilterDTO.getTargetMode() != null && recommendationsFilterDTO.getTargetMode() > 0) {
 			    getRecommendationsRequestBuilder.target_mode(recommendationsFilterDTO.getTargetMode());
 			}
 
-			if (recommendationsFilterDTO.getMinPopularity() != null) {
+			if (recommendationsFilterDTO.getMinPopularity() != null && recommendationsFilterDTO.getMinPopularity() > 0) {
 			    getRecommendationsRequestBuilder.min_popularity(recommendationsFilterDTO.getMinPopularity());
 			}
 
-			if (recommendationsFilterDTO.getMaxPopularity() != null) {
+			if (recommendationsFilterDTO.getMaxPopularity() != null && recommendationsFilterDTO.getMaxPopularity() > 0) {
 			    getRecommendationsRequestBuilder.max_popularity(recommendationsFilterDTO.getMaxPopularity());
 			}
 
-			if (recommendationsFilterDTO.getTargetPopularity() != null) {
+			if (recommendationsFilterDTO.getTargetPopularity() != null && recommendationsFilterDTO.getTargetPopularity() > 0) {
 			    getRecommendationsRequestBuilder.target_popularity(recommendationsFilterDTO.getTargetPopularity());
 			}
 
-			if (recommendationsFilterDTO.getMinSpeechiness() != null) {
+			if (recommendationsFilterDTO.getMinSpeechiness() != null && recommendationsFilterDTO.getMinSpeechiness() > 0) {
 			    getRecommendationsRequestBuilder.min_speechiness(recommendationsFilterDTO.getMinSpeechiness());
 			}
 
-			if (recommendationsFilterDTO.getMaxSpeechiness() != null) {
+			if (recommendationsFilterDTO.getMaxSpeechiness() != null && recommendationsFilterDTO.getMaxSpeechiness() > 0) {
 			    getRecommendationsRequestBuilder.max_speechiness(recommendationsFilterDTO.getMaxSpeechiness());
 			}
 
-			if (recommendationsFilterDTO.getTargetSpeechiness() != null) {
+			if (recommendationsFilterDTO.getTargetSpeechiness() != null && recommendationsFilterDTO.getTargetSpeechiness() > 0) {
 			    getRecommendationsRequestBuilder.target_speechiness(recommendationsFilterDTO.getTargetSpeechiness());
 			}
 
-			if (recommendationsFilterDTO.getMinTempo() != null) {
+			if (recommendationsFilterDTO.getMinTempo() != null && recommendationsFilterDTO.getMinTempo() > 0) {
 			    getRecommendationsRequestBuilder.min_tempo(recommendationsFilterDTO.getMinTempo());
 			}
 
-			if (recommendationsFilterDTO.getMaxTempo() != null) {
+			if (recommendationsFilterDTO.getMaxTempo() != null && recommendationsFilterDTO.getMaxTempo() > 0) {
 			    getRecommendationsRequestBuilder.max_tempo(recommendationsFilterDTO.getMaxTempo());
 			}
 
-			if (recommendationsFilterDTO.getTargetTempo() != null) {
+			if (recommendationsFilterDTO.getTargetTempo() != null && recommendationsFilterDTO.getTargetTempo() > 0) {
 			    getRecommendationsRequestBuilder.target_tempo(recommendationsFilterDTO.getTargetTempo());
 			}
 
-			if (recommendationsFilterDTO.getMinTimeSignature() != null) {
+			if (recommendationsFilterDTO.getMinTimeSignature() != null && recommendationsFilterDTO.getMinTimeSignature() > 0) {
 			    getRecommendationsRequestBuilder.min_time_signature(recommendationsFilterDTO.getMinTimeSignature());
 			}
 
-			if (recommendationsFilterDTO.getMaxTimeSignature() != null) {
+			if (recommendationsFilterDTO.getMaxTimeSignature() != null && recommendationsFilterDTO.getMaxTimeSignature() > 0) {
 			    getRecommendationsRequestBuilder.max_time_signature(recommendationsFilterDTO.getMaxTimeSignature());
 			}
 
-			if (recommendationsFilterDTO.getTargetTimeSignature() != null) {
+			if (recommendationsFilterDTO.getTargetTimeSignature() != null && recommendationsFilterDTO.getTargetTimeSignature() > 0) {
 			    getRecommendationsRequestBuilder.target_time_signature(recommendationsFilterDTO.getTargetTimeSignature());
 			}
 
-			if (recommendationsFilterDTO.getMinValence() != null) {
+			if (recommendationsFilterDTO.getMinValence() != null && recommendationsFilterDTO.getMinValence() > 0) {
 			    getRecommendationsRequestBuilder.min_valence(recommendationsFilterDTO.getMinValence());
 			}
 
-			if (recommendationsFilterDTO.getMaxValence() != null) {
+			if (recommendationsFilterDTO.getMaxValence() != null && recommendationsFilterDTO.getMaxValence() > 0) {
 			    getRecommendationsRequestBuilder.max_valence(recommendationsFilterDTO.getMaxValence());
 			}
 
-			if (recommendationsFilterDTO.getTargetValence() != null) {
+			if (recommendationsFilterDTO.getTargetValence() != null && recommendationsFilterDTO.getTargetValence() > 0) {
 			    getRecommendationsRequestBuilder.target_valence(recommendationsFilterDTO.getTargetValence());
 			}
+
 
 				    
 //				    .seed_artists("")
