@@ -2,6 +2,7 @@
   margin-top: 30vh;
   display: flex;
   align-items: flex-end;
+  min-width: 400px;
 }
 
 .search input {
@@ -12,8 +13,9 @@
   border-bottom-right-radius: 0px;
   font-size: 18px;
   padding: 17px;
+  min-height: none;
   height: 70px;
-  width: 300px;
+  width: 100%;
 }
 
 .searchIcon {
@@ -33,7 +35,7 @@ input:focus {
 
 .dataResult {
   margin-top: 5px;
-  width: 350px;
+  width: 100%;
   height: 200px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
