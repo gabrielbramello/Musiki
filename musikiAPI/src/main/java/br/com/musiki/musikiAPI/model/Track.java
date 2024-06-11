@@ -44,6 +44,9 @@ public class Track {
 	
 	@ManyToOne
 	private Valence valence;
+
+	@ManyToMany(mappedBy = "tracks")
+	private List<UserSamm> users;
 	
 	public Long getId() {
 		return id;
@@ -166,4 +169,11 @@ public class Track {
 	public void setValence(Valence valence) {
 		this.valence = valence;
 	}
+	public List<UserSamm> getUsers() {
+		return users;
+	}
+	public void setUsers(List<UserSamm> users) {
+		this.users = users;
+	}
+	
 }

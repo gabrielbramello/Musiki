@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -25,6 +28,24 @@ public class UserSamm {
 	private String login;
 	private String password;
 	private String email;
+	
+	@ManyToMany
+	@JoinTable(name = "user_artist", 
+				joinColumns = @JoinColumn(name = "user_id"), 
+				inverseJoinColumns = @JoinColumn(name = "artist_id"))
+	private List<Artist> artists;
+	
+	@ManyToMany
+	@JoinTable(name = "user_album", 
+				joinColumns = @JoinColumn(name = "user_id"), 
+				inverseJoinColumns = @JoinColumn(name = "album_id"))
+	private List<Album> albuns;
+	
+	@ManyToMany
+	@JoinTable(name = "user_track", 
+				joinColumns = @JoinColumn(name = "user_id"), 
+				inverseJoinColumns = @JoinColumn(name = "track_id"))
+	private List<Track> tracks;
 	
 	public UserSamm() {}
 	
@@ -84,4 +105,29 @@ public class UserSamm {
 	public void setAcessGroup(AcessGroup acessGroup) {
 		this.acessGroup = acessGroup;
 	}
+
+	public List<Artist> getArtists() {
+		return artists;
+	}
+
+	public void setArtists(List<Artist> artists) {
+		this.artists = artists;
+	}
+
+	public List<Album> getAlbuns() {
+		return albuns;
+	}
+
+	public void setAlbuns(List<Album> albuns) {
+		this.albuns = albuns;
+	}
+
+	public List<Track> getTracks() {
+		return tracks;
+	}
+
+	public void setTracks(List<Track> tracks) {
+		this.tracks = tracks;
+	}
+	
 }

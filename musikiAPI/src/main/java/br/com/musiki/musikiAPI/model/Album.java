@@ -47,6 +47,9 @@ public class Album {
 	private List<Track> tracks;
 	private String uriSpotify;
 	
+	@ManyToMany(mappedBy = "albuns")
+	private List<UserSamm> users;
+	
 	public Long getId() {
 		return id;
 	}
@@ -119,4 +122,11 @@ public class Album {
 	public void setUriSpotify(String uriSpotify) {
 		this.uriSpotify = uriSpotify;
 	}
+	public List<UserSamm> getUsers() {
+		return users;
+	}
+	public void setUsers(List<UserSamm> users) {
+		this.users = users;
+	}
+	
 }

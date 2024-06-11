@@ -35,6 +35,9 @@ public class Artist {
 		inverseJoinColumns = @JoinColumn(name = "genre_id"))
 	private List<Genre> genres;
 	
+	@ManyToMany(mappedBy = "artists")
+	private List<UserSamm> users;
+	
 	public Long getId() {
 		return id;
 	}
@@ -90,4 +93,14 @@ public class Artist {
 	public void setAlbuns(List<Album> albuns) {
 		this.albuns = albuns;
 	}
+
+	public List<UserSamm> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<UserSamm> users) {
+		this.users = users;
+	}
+	
+	
 }
