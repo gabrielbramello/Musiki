@@ -10,6 +10,7 @@ import Configuration from './pages/Config/Configuration';
 import LoginPage from './pages/Login/Login';
 import TrackNovo from './pages/Track/TrackNovo';
 import Recommendations from './pages/Recommendations/Recommendations';
+import Register from './pages/Register/Register';
 
 export default function App() {
 
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/paginadousuario" element={<UserPage />} />
           <Route path="/configuracoes" element={<Configuration />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<Register/>} />
           <Route path="/recommendations" element={<Recommendations />} />
         </Routes>
       </ BrowserRouter>
