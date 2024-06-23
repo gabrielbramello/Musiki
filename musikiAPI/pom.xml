@@ -3,12 +3,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.2.6.RELEASE</version>
-		<relativePath /> <!-- lookup parent from repository -->
-	</parent>
 	<groupId>br.com.musiki</groupId>
 	<artifactId>musikiAPI</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -16,7 +10,8 @@
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
+		<spring.boot.version>3.1.0</spring.boot.version>
 	</properties>
 
 	<repositories>
@@ -25,6 +20,18 @@
 			<url>https://jitpack.io</url>
 		</repository>
 	</repositories>
+	
+	<dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 	<dependencies>
 		<dependency>
@@ -73,6 +80,19 @@
 		    <artifactId>springdoc-openapi-ui</artifactId>
 		    <version>1.7.0</version>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
+		<dependency>
+		    <groupId>com.auth0</groupId>
+		    <artifactId>java-jwt</artifactId>
+		    <version>4.2.2</version>
+		</dependency>
 
 	</dependencies>
 
@@ -81,6 +101,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				 <version>${spring.boot.version}</version>
 			</plugin>
 		</plugins>
 	</build>
