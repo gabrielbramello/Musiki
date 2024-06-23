@@ -23,7 +23,7 @@ export default function App() {
           <Route path="/album/:albumId" element={<Album />} />
           <Route path="/track/:trackId" element={<Track />} />
           <Route path="/track2/:trackId" element={<TrackNovo />} />
-          <Route path="/paginadousuario" element={<UserPage />} />
+          <Route path="/user" element={<UserPage />} />
           <Route path="/configuracoes" element={<Configuration />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<Register/>} />

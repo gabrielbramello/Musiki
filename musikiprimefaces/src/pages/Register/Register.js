@@ -1,36 +1,78 @@
-import { Card } from 'primereact/card';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
+import 'primereact/resources/themes/lara-light-blue/theme.css';  //theme
+import "primereact/resources/primereact.min.css";                  //core css
+import "primeicons/primeicons.css";                                  //icons
 import Header from '../../components/menu/Header';
+import { InputText } from "primereact/inputtext";
+import { Password } from "primereact/password";
+import { Divider } from "primereact/divider";
+import { Button } from "primereact/button";
+import axios from "../../apis/api";
 
 export default function Register() {
+
+    const [nome, setNome] = useState('');
+    const [login, setLogin] = useState('');
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        // Aqui você pode adicionar a lógica para lidar com o envio do formulário
+
+        const newUser = {
+            name: nome,
+            login: login,
+            password: senha,
+            email: email
+        }
+
+        console.log(newUser)
+        
+        axios.post('/samm/user/create', newUser)
+            .then(response => {
+                console.log(response)
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
+
 
     return (
         <div>
             <div>
                 <Header></Header>
             </div>
-            <div style={{ background: 'linear-gradient(90deg, rgba(91,22,176,1) 22%, rgba(34,198,216,1) 66%)', minHeight: '90vh', display: 'flex', justifyContent: 'center', }}>
-                <div className="card flex justify-content-center">
-                    <Card title="Advanced Card" subTitle="Card subtitle" style={{height: 'auto', boxSizing: 'content-box'}}className="md:w-25rem">
-                        <div id="forms">
-                            <div id="name">
+            <div className="App">
 
+                <div className="p-d-flex p-jc-center p-mt-5" style={{ margin: '20px' }}>
+                    <div className="p-card p-shadow-3 p-p-4" style={{ width: '400px', padding: '10px' }}>
+                        <h2 className="p-text-center">Formulário de Cadastro</h2>
+                        <form onSubmit={handleSubmit}>
+                            <div className="p-field" style={{ margin: '15px' }}>
+                                <label htmlFor="nome" className="p-d-block" style={{ textAlign: 'left' }}>Nome</label>
+                                <InputText id="nome" value={nome} onChange={(e) => setNome(e.target.value)} className="p-d-block p-inputtext-sm" style={{ width: '100%' }} />
                             </div>
-                            <div id="username">
-
+                            <div className="p-field" style={{ margin: '15px' }}>
+                                <label htmlFor="login" className="p-d-block" style={{ textAlign: 'left' }}>Login</label>
+                                <InputText id="login" value={login} onChange={(e) => setLogin(e.target.value)} className="p-d-block p-inputtext-sm" style={{ width: '100%' }} />
                             </div>
-                            <div id="email">
-
+                            <div className="p-field" style={{ margin: '15px' }}>
+                                <label htmlFor="email" className="p-d-block" style={{ textAlign: 'left' }}>Email</label>
+                                <InputText id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="p-d-block p-inputtext-sm" style={{ width: '100%' }} />
                             </div>
-                            <div id="password">
-
+                            <div className="p-field" style={{ margin: '15px' }}>
+                                <label htmlFor="senha" className="p-d-block" style={{ textAlign: 'left' }}>Senha</label>
+                                <InputText id="senha" type="password" value={senha} onChange={(e) => setSenha(e.target.value)} className="p-d-block p-inputtext-sm" style={{ width: '100%' }} />
                             </div>
-                        </div>
-                    </Card>
+                            <Divider />
+                            <Button type="submit" label="Cadastrar" className="p-button-sm p-d-block p-mx-auto" />
+                        </form>
+                    </div>
                 </div>
+
             </div>
-
         </div>
-
-    )
+    );
 }
