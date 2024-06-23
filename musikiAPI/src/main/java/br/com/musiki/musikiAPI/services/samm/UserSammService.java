@@ -1,6 +1,7 @@
 package br.com.musiki.musikiAPI.services.samm;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,15 @@ public class UserSammService {
 			
 		} catch (NoSuchElementException e) {
 			throw new UserSammNotFoundException("Usuário com id "+id+" não encontrado!");
+		}
+	}
+	
+	public Optional<UserSamm> findUserByLogin(String login) {
+		try {
+			Optional<UserSamm> userSamm = userSammRepository.findByLogin(login);
+			return userSamm;
+		} catch (NoSuchElementException e) {
+			throw new UserSammNotFoundException("Usuário com login "+login+" não encontrado!");
 		}
 	}
 	

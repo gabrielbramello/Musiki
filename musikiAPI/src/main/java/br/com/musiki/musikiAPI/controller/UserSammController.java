@@ -28,7 +28,7 @@ public class UserSammController {
 	
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<UserSammDTO> findById(Long id) {
+	public ResponseEntity<UserSammDTO> findById(@PathVariable("id") Long id) {
 		try {
 			UserSammDTO user = userSammService.findUserSammById(id);
 			return ResponseEntity.status(200).body(user);

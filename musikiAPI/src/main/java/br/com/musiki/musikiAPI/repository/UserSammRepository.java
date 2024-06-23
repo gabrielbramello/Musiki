@@ -10,6 +10,7 @@ public interface UserSammRepository extends CrudRepository<UserSamm, Long>{
 	
 	
 	Optional<UserSamm> findById(Long id);
+	Optional<UserSamm> findByLogin(String login);
 	UserSamm save(UserSamm userSamm);
 	void deleteById(Long id);
 }
