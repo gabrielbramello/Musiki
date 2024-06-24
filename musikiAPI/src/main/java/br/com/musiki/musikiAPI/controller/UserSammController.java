@@ -84,4 +84,19 @@ public class UserSammController {
 	}
 	
 	
+	public void addUserFavoriteArtist() {
+		
+	}
+	
+	public void addUserFavoriteAlbum() {
+		
+	}
+	
+	public void addUserFavoriteTrack() {
+		
+	}
+	
+
+	
+	
 }
