@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import 'primereact/resources/themes/lara-light-blue/theme.css';  //theme
 import "primereact/resources/primereact.min.css";                  //core css
 import "primeicons/primeicons.css";                                  //icons
@@ -8,6 +8,8 @@ import { Password } from "primereact/password";
 import { Divider } from "primereact/divider";
 import { Button } from "primereact/button";
 import axios from "../../apis/api";
+import { Toast } from "primereact/toast";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
 
@@ -15,6 +17,10 @@ export default function Register() {
     const [login, setLogin] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+
+    const toast = useRef(null);
+
+    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -31,11 +37,28 @@ export default function Register() {
         
         axios.post('/samm/user/create', newUser)
             .then(response => {
+                showSuccess('Usuário Criado com Sucesso.')
+                redirectLogin();
                 console.log(response)
             })
             .catch(error => {
+                showError('Houve um erro no momento de criação do usuário.')
                 console.error(error);
             });
+    };
+
+    const showError = (msg) => {
+        toast.current.show({ severity: 'error', summary: 'Erro ao Criar Usuário', detail: msg, life: 3000 });
+    }
+
+    const showSuccess = (msg) => {
+        toast.current.show({ severity: 'success', summary: 'Sucesso', detail: msg, life: 3000 });
+    }
+
+    const redirectLogin = () => {
+        setTimeout(() => {
+            navigate('/login');
+        }, 3000);
     };
 
 
@@ -45,7 +68,7 @@ export default function Register() {
                 <Header></Header>
             </div>
             <div className="App">
-
+                <Toast ref={toast} />
                 <div className="p-d-flex p-jc-center p-mt-5" style={{ margin: '20px' }}>
                     <div className="p-card p-shadow-3 p-p-4" style={{ width: '400px', padding: '10px' }}>
                         <h2 className="p-text-center">Formulário de Cadastro</h2>
