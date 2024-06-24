@@ -2,6 +2,8 @@ package br.com.musiki.musikiAPI.model;
 
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -55,9 +57,9 @@ public class UserSamm {
 	public UserSamm() {}
 	
 	public UserSamm(UserSammDTO userSamm){
+		
 		this.name = userSamm.getName();
 		this.login = userSamm.getLogin();
-		this.password = userSamm.getPassword();
 		this.email = userSamm.getEmail();
 	}
 	
