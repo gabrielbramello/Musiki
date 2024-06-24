@@ -1,11 +1,14 @@
 package br.com.musiki.musikiAPI.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.musiki.musikiAPI.model.UserSamm;
 
 public class UserSammDTO {
 
 	private String name;
 	private String login;
+	@JsonIgnore
 	private String password;
 	private String email;
 	

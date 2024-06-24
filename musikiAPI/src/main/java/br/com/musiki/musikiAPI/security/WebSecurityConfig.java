@@ -38,7 +38,7 @@ public class WebSecurityConfig {
 		.and()
 		.formLogin().disable().securityMatcher("/api/**")
 		.authorizeHttpRequests(registry -> registry
-				.requestMatchers("/api/samm/user/create").authenticated()
+				.requestMatchers("/api/samm/user/update").authenticated()
 				.anyRequest().permitAll()
 				);	
 

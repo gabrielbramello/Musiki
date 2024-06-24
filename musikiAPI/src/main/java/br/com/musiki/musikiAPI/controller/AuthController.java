@@ -33,23 +33,29 @@ public class AuthController {
 	@PostMapping("/login")
 	public LoginResponseDTO login(@RequestBody LoginRequestDTO request) {
 		
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(request.getLogin(), request.getPassword())
-		);
-		
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
-		
-		List<String> roles = principal.getAuthorities().stream()
-								.map(GrantedAuthority::getAuthority)
-								.toList();
-		
-		String accessToken = jwtIssuer.issue(principal.getUserId(), principal.getLogin(), roles);
-		
-		LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
-		loginResponseDTO.setAccessToken(accessToken);
-		
-		return loginResponseDTO;
+		try {
+			Authentication authentication = authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(request.getLogin(), request.getPassword())
+			);
+			
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+			UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
+			
+			List<String> roles = principal.getAuthorities().stream()
+									.map(GrantedAuthority::getAuthority)
+									.toList();
+			
+			String accessToken = jwtIssuer.issue(principal.getUserId(), principal.getLogin(), roles);
+			
+			LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
+			loginResponseDTO.setAccessToken(accessToken);
+			
+			return loginResponseDTO;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+
 	}
 
 }
