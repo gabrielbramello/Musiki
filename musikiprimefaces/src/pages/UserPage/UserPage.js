@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "primereact/resources/themes/mdc-light-deeppurple/theme.css";  //theme
 import "primereact/resources/primereact.min.css";                  //core css
 import "primeicons/primeicons.css";                                //icons
@@ -11,10 +11,13 @@ import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { jwtDecode } from 'jwt-decode';
+import axios from "../../apis/api";
 
 export default function UserPage() {
 
     const [products, setProducts] = useState([]);
+    const [userInfo, setUserInfo] = useState({name: '', login: '', email:''});
 
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
@@ -33,6 +36,36 @@ export default function UserPage() {
             senha
         });
     };
+
+    useEffect(() => {
+        if (localStorage.getItem('authToken') != null && localStorage.getItem('authToken') != undefined && localStorage.getItem('authToken') != 'undefined') {
+            const decodedToken = decodeToken(localStorage.getItem('authToken'));
+            const userId = decodedToken.sub
+
+            axios.get('/samm/user/' + userId)
+                .then(response => {
+                    console.log(response)
+                    setUserInfo(response.data)
+                    setNome(response.data.name);
+                    setEmail(response.data.email)
+                    
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    }, [])
+
+        // Função para decodificar o token
+        const decodeToken = (token) => {
+            try {
+                const decoded = jwtDecode(token);
+                console.log(decoded)
+                return decoded;
+            } catch (error) {
+                console.error('Invalid token', error);
+            }
+        };
 
     const items = [
         {
