@@ -12,6 +12,11 @@ import { Link } from 'react-router-dom';
 import GradientCircleChart from '../../components/GradientCircleChart';
 import ApexChart from '../../components/ApexChart';
 import DataTableFilter from '../../components/dataTable/dataTableFilter';
+import { ToggleButton } from 'primereact/togglebutton';
+import { Button } from 'primereact/button';
+import { Tooltip } from 'primereact/tooltip';
+import { jwtDecode } from 'jwt-decode';
+import { decodeToken } from '../../utils/Utils';
 
 
 export default function TrackNovo() {
@@ -20,73 +25,88 @@ export default function TrackNovo() {
   const { trackId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [audioFeatures, setAudioFeatures] = useState({});
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [userId, setUserId] = useState();
+  const [favoriteTrack, setFavoriteTrack] =useState({});
 
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  //Lógicas inicias para verificar se o usuário está logado
   useEffect(() => {
-    // Set the loading flag to true
     setIsLoading(true);
 
-    // Use the axios.get() method to make a GET request to the API endpoint
+    setIsLoggedIn(false);
+    if (localStorage.getItem('authToken') != null && localStorage.getItem('authToken') != undefined && localStorage.getItem('authToken') != 'undefined') {
+      setIsLoggedIn(true);
+      const decodedToken = decodeToken(localStorage.getItem('authToken'));
+      const userId = decodedToken.sub
+      setUserId(userId);
+
+      axios.get('/samm/user/favorites/tracks/' + userId)
+        .then(response => {
+          //setAudioFeatures(response.data)
+          console.log(response.data)
+          const favoriteTracks = response.data.favoritesTracks;
+
+          const favoriteTrack = favoriteTracks.find(track => track.spotifyApiId == trackId)
+          if (favoriteTrack) {
+            setIsFavorite(true)
+            setFavoriteTrack(favoriteTrack);
+          }
+
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+  }, []);
+
+  useEffect(() => {
     axios.get('/spotify/track/' + trackId)
       .then(response => {
-        // Update the data and loading flag state
         setData(response.data);
         setIsLoading(false);
         console.log(response.data)
       })
       .catch(error => {
-        // Handle any errors that occurred during the request
         console.error(error);
-        // Set the loading flag to false
         setIsLoading(false);
       });
   }, []);
 
   useEffect(() => {
 
-    // Use the axios.get() method to make a GET request to the API endpoint
     axios.get('/spotify/track/audiofeatures/' + trackId)
       .then(response => {
-        // Update the data and loading flag state
         //setAudioFeatures(response.data)
         console.log(response.data)
       })
       .catch(error => {
-        // Handle any errors that occurred during the request
         console.error(error);
-        // Set the loading flag to false
         setIsLoading(false);
       });
   }, []);
 
   useEffect(() => {
-
-    // Use the axios.get() method to make a GET request to the API endpoint
     axios.get('/spotify/track/audioanalyses/' + trackId)
       .then(response => {
-        // Update the data and loading flag state
         console.log(response.data)
       })
       .catch(error => {
-        // Handle any errors that occurred during the request
         console.error(error);
-        // Set the loading flag to false
         setIsLoading(false);
       });
   }, []);
 
   useEffect(() => {
 
-    // Use the axios.get() method to make a GET request to the API endpoint
     axios.get('/samm/track/audiofeatures/' + trackId)
       .then(response => {
-        // Update the data and loading flag state
         setAudioFeatures(response.data);
         console.log(response.data)
       })
       .catch(error => {
-        // Handle any errors that occurred during the request
         console.error(error);
-        // Set the loading flag to false
         setIsLoading(false);
       });
   }, []);
@@ -128,6 +148,48 @@ export default function TrackNovo() {
     return arrayValue
   }
 
+
+  function renderFavoriteButton(isFavorite) {
+    if (isFavorite) {
+      return (<Button className="favorite-button" onClick={() => handleFavoriteClickButton(false)} icon="pi pi-heart" size="large" rounded severity="help" aria-label="Favorite" data-pr-tooltip="Favorito" />)
+    }
+    return (<Button className="favorite-button" onClick={() => handleFavoriteClickButton(true)} icon="pi pi-heart" size="large" style={{ backgroundColor: '#ffffff' }} rounded text raised severity="help" aria-label="Favorite" data-pr-tooltip="Favorito" />)
+  }
+
+  function handleFavoriteClickButton(isFavorite) {
+
+    const userFavoriteArtistRequest = {
+      userId: userId,
+      elementId: trackId
+    }
+
+    if (isFavorite) {
+      axios.post('/samm/user/favorite/track', userFavoriteArtistRequest)
+        .then(response => {
+          console.log(response.data)
+          const favoriteTracks = response.data.tracks;
+          const favoriteTrack = favoriteTracks.find(track => track.spotifyApiId == trackId)
+          if (favoriteTrack) {
+            setIsFavorite(true)
+            setFavoriteTrack(favoriteTrack);
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    } else {
+      axios.delete('/samm/user/favorite/track/'+userId+'/'+favoriteTrack.id, )
+        .then(response => {
+          console.log(response.data)
+          setIsFavorite(false)
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+
+  }
+
   return (
     <div>
       <div>
@@ -144,11 +206,18 @@ export default function TrackNovo() {
             </div>
 
             <div id='infos'>
+              <div id='subinfo' style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div id='titulos'>
+                  <h1 style={{ marginLeft: '40px' }}>{data.name} </h1>
+                  <h2 style={{ marginLeft: '40px' }}>{data.artists[0].name} </h2>
+                </div>
+                <div id='favorito' style={{ margin: '40px' }}>
+                  <Tooltip target=".favorite-button" />
+                  {isLoggedIn ? renderFavoriteButton(isFavorite) : ''}
 
-              <div id='titulos'>
-                <h1 style={{ marginLeft: '40px' }}>{data.name} </h1>
-                <h2 style={{ marginLeft: '40px' }}>{data.artists[0].name} </h2>
+                </div>
               </div>
+
 
               <div id='detalhes' style={{ display: 'flex' }}>
 
@@ -205,7 +274,7 @@ export default function TrackNovo() {
                   audioFeatures.instrumentalness,
                   audioFeatures.liveness,
                   75,
-                  audioFeatures.speechiness, 
+                  audioFeatures.speechiness,
                   audioFeatures.valence
                 ]
                 }

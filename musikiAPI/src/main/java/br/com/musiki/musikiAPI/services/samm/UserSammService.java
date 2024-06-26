@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.musiki.musikiAPI.dto.UserFavoritesTracksDTO;
 import br.com.musiki.musikiAPI.dto.UserSammDTO;
 import br.com.musiki.musikiAPI.exception.usersamm.UserSammNotFoundException;
 import br.com.musiki.musikiAPI.model.UserSamm;
@@ -116,6 +117,20 @@ public class UserSammService {
 		return userSammRepository.save(user);
 	}
 	
+	public UserFavoritesTracksDTO getUserFavoritesTracks(Long userId) {
+		
+		UserFavoritesTracksDTO userFavoritesTracksDTO = new UserFavoritesTracksDTO();
+		
+		UserSamm user = userSammRepository.findById(userId).get();
+		
+		UserSammDTO userSammDTO = new UserSammDTO(user);
+		
+		userFavoritesTracksDTO.setUserSamm(userSammDTO);
+		userFavoritesTracksDTO.getFavoritesTracks().addAll(user.getTracks());
+		
+		return userFavoritesTracksDTO;
+	}
+	
 	public UserSamm saveFavoriteTrack(Long userId, Track track) {
 		
 		UserSamm user = userSammRepository.findById(userId).get();
@@ -134,5 +149,20 @@ public class UserSammService {
 		
 		return userSammRepository.save(user);
 	}
+	
+	public UserSamm removeTrackFromFavorites(Long userId, Long trackId) {
+        UserSamm user = userSammRepository.findById(userId).get();
+
+        Optional<br.com.musiki.musikiAPI.model.Track> trackOptional = user.getTracks().stream()
+                .filter(track -> track.getId().equals(trackId))
+                .findFirst();
+
+        if (trackOptional.isPresent()) {
+            user.getTracks().remove(trackOptional.get());
+            return userSammRepository.save(user);
+        } else {
+            throw new RuntimeException("Track não encontrada nos favoritos do usuário");
+        }
+    }
 	
 }

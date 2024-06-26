@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.musiki.musikiAPI.dto.UserFavoriteRequest;
+import br.com.musiki.musikiAPI.dto.UserFavoritesTracksDTO;
 import br.com.musiki.musikiAPI.dto.UserSammDTO;
 import br.com.musiki.musikiAPI.exception.usersamm.UserSammNotFoundException;
 import br.com.musiki.musikiAPI.model.UserSamm;
@@ -136,4 +137,15 @@ public class UserSammController {
 		return ResponseEntity.status(200).body(userSamm);
 	}
 	
+	@GetMapping("/favorites/tracks/{id}")
+	public ResponseEntity<UserFavoritesTracksDTO> getFavoriteTrack(@PathVariable("id") Long id) {
+		
+		UserFavoritesTracksDTO userFavoritesTracks = userSammService.getUserFavoritesTracks(id);
+		return ResponseEntity.status(200).body(userFavoritesTracks);
+	}
+	
+	@DeleteMapping("/favorite/track/{userId}/{trackId}")
+    public UserSamm removeArtistFromFavorites(@PathVariable Long userId, @PathVariable Long trackId) {
+        return userSammService.removeTrackFromFavorites(userId, trackId);
+    }
 }
