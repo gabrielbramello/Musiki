@@ -28,7 +28,6 @@ export default function TrackNovo() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [userId, setUserId] = useState();
   const [favoriteTrack, setFavoriteTrack] =useState({});
-
   const [isFavorite, setIsFavorite] = useState(false);
 
   //Lógicas inicias para verificar se o usuário está logado
@@ -158,13 +157,13 @@ export default function TrackNovo() {
 
   function handleFavoriteClickButton(isFavorite) {
 
-    const userFavoriteArtistRequest = {
+    const userFavoriteTrackRequest = {
       userId: userId,
       elementId: trackId
     }
 
     if (isFavorite) {
-      axios.post('/samm/user/favorite/track', userFavoriteArtistRequest)
+      axios.post('/samm/user/favorite/track', userFavoriteTrackRequest)
         .then(response => {
           console.log(response.data)
           const favoriteTracks = response.data.tracks;

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.musiki.musikiAPI.dto.UserFavoriteRequest;
+import br.com.musiki.musikiAPI.dto.UserFavoritesAlbunsDTO;
+import br.com.musiki.musikiAPI.dto.UserFavoritesArtistsDTO;
 import br.com.musiki.musikiAPI.dto.UserFavoritesTracksDTO;
 import br.com.musiki.musikiAPI.dto.UserSammDTO;
 import br.com.musiki.musikiAPI.exception.usersamm.UserSammNotFoundException;
@@ -86,7 +88,7 @@ public class UserSammController {
 	}
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String> updateUserSamm(UserSammDTO userSamm, @PathVariable Long id) {
+	public ResponseEntity<String> updateUserSamm(@RequestBody UserSammDTO userSamm, @PathVariable Long id) {
 		try {
 			UserSamm user = userSammService.updateUserSamm(userSamm, id);
 			
@@ -111,6 +113,13 @@ public class UserSammController {
 		}
 	}
 	
+	@GetMapping("/favorites/artists/{id}")
+	public ResponseEntity<UserFavoritesArtistsDTO> getFavoriteArtist(@PathVariable("id") Long id) {
+		
+		UserFavoritesArtistsDTO userFavoritesArtists = userSammService.getUserFavoritesArtists(id);
+		return ResponseEntity.status(200).body(userFavoritesArtists);
+	}
+	
 	@PostMapping("/favorite/artist")
 	public ResponseEntity<UserSamm> addUserFavoriteArtist(@RequestBody UserFavoriteRequest userFavoriteArtistRequest) {
 		
@@ -120,12 +129,36 @@ public class UserSammController {
 		return ResponseEntity.status(200).body(userSamm);
 	}
 	
+	@DeleteMapping("/favorite/artist/{userId}/{artistId}")
+    public UserSamm removeArtistFromFavorites(@PathVariable Long userId, @PathVariable Long artistId) {
+        return userSammService.removeArtistFromFavorites(userId, artistId);
+    }
+	
+	@GetMapping("/favorites/albuns/{id}")
+	public ResponseEntity<UserFavoritesAlbunsDTO> getFavoriteAlbum(@PathVariable("id") Long id) {
+		
+		UserFavoritesAlbunsDTO userFavoritesAlbuns = userSammService.getUserFavoritesAlbuns(id);
+		return ResponseEntity.status(200).body(userFavoritesAlbuns);
+	}
+	
 	@PostMapping("/favorite/album")
 	public ResponseEntity<UserSamm> addUserFavoriteAlbum(@RequestBody UserFavoriteRequest userFavoriteAlbumRequest) {
 		Album album = searchAlbum.searchAlbumById(userFavoriteAlbumRequest.getElementId());
 		
 		UserSamm userSamm = userSammService.saveFavoriteAlbum(userFavoriteAlbumRequest.getUserId(), album);
 		return ResponseEntity.status(200).body(userSamm);
+	}
+	
+	@DeleteMapping("/favorite/album/{userId}/{albumId}")
+    public UserSamm removeAlbumFromFavorites(@PathVariable Long userId, @PathVariable Long albumId) {
+        return userSammService.removeAlbumFromFavorites(userId, albumId);
+    }
+	
+	@GetMapping("/favorites/tracks/{id}")
+	public ResponseEntity<UserFavoritesTracksDTO> getFavoriteTrack(@PathVariable("id") Long id) {
+		
+		UserFavoritesTracksDTO userFavoritesTracks = userSammService.getUserFavoritesTracks(id);
+		return ResponseEntity.status(200).body(userFavoritesTracks);
 	}
 	
 	@PostMapping("/favorite/track")
@@ -137,15 +170,10 @@ public class UserSammController {
 		return ResponseEntity.status(200).body(userSamm);
 	}
 	
-	@GetMapping("/favorites/tracks/{id}")
-	public ResponseEntity<UserFavoritesTracksDTO> getFavoriteTrack(@PathVariable("id") Long id) {
-		
-		UserFavoritesTracksDTO userFavoritesTracks = userSammService.getUserFavoritesTracks(id);
-		return ResponseEntity.status(200).body(userFavoritesTracks);
-	}
+
 	
 	@DeleteMapping("/favorite/track/{userId}/{trackId}")
-    public UserSamm removeArtistFromFavorites(@PathVariable Long userId, @PathVariable Long trackId) {
+    public UserSamm removeTrackFromFavorites(@PathVariable Long userId, @PathVariable Long trackId) {
         return userSammService.removeTrackFromFavorites(userId, trackId);
     }
 }

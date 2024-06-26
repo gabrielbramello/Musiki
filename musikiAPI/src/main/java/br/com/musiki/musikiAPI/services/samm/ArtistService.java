@@ -70,7 +70,7 @@ public class ArtistService {
 		artist.setName(apiArtist.getName());
 		artist.setSpotifyApiId(apiArtist.getId());
 		artist.setPopularity(apiArtist.getPopularity());
-		artist.setSimplifiedGenres(String.join(",", apiArtist.getGenres())); 
+		artist.setSimplifiedGenres(String.join(", ", apiArtist.getGenres())); 
 		
 		return artistRepository.save(artist);
 	}

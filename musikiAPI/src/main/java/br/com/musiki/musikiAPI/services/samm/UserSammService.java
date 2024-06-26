@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.musiki.musikiAPI.dto.UserFavoritesAlbunsDTO;
+import br.com.musiki.musikiAPI.dto.UserFavoritesArtistsDTO;
 import br.com.musiki.musikiAPI.dto.UserFavoritesTracksDTO;
 import br.com.musiki.musikiAPI.dto.UserSammDTO;
 import br.com.musiki.musikiAPI.exception.usersamm.UserSammNotFoundException;
@@ -66,9 +68,13 @@ public class UserSammService {
 	
 	public UserSamm updateUserSamm(UserSammDTO userSammDTO, Long id) {
 		
-		UserSamm userSamm = new UserSamm(userSammDTO);
+		Optional<UserSamm> userSammOptional = userSammRepository.findById(id);
 		
-		if (id!= null && userSammRepository.existsById(id)) {
+		if (!userSammOptional.isEmpty() && userSammOptional.isPresent()) {
+			
+			UserSamm userSamm = userSammOptional.get();
+			userSamm.setName(userSammDTO.getName());
+			userSamm.setEmail(userSammDTO.getEmail());
 			return userSammRepository.save(userSamm);
 		}else {
 			throw new UserSammNotFoundException("Usuário com id "+id+" não encontrado!");
@@ -131,6 +137,34 @@ public class UserSammService {
 		return userFavoritesTracksDTO;
 	}
 	
+	public UserFavoritesAlbunsDTO getUserFavoritesAlbuns(Long userId) {
+		
+		UserFavoritesAlbunsDTO userFavoritesAlbunsDTO = new UserFavoritesAlbunsDTO();
+		
+		UserSamm user = userSammRepository.findById(userId).get();
+		
+		UserSammDTO userSammDTO = new UserSammDTO(user);
+		
+		userFavoritesAlbunsDTO.setUserSamm(userSammDTO);
+		userFavoritesAlbunsDTO.getFavoritesAlbuns().addAll(user.getAlbuns());
+		
+		return userFavoritesAlbunsDTO;
+	}
+	
+	public UserFavoritesArtistsDTO getUserFavoritesArtists(Long userId) {
+		
+		UserFavoritesArtistsDTO userFavoritesArtistsDTO = new UserFavoritesArtistsDTO();
+		
+		UserSamm user = userSammRepository.findById(userId).get();
+		
+		UserSammDTO userSammDTO = new UserSammDTO(user);
+		
+		userFavoritesArtistsDTO.setUserSamm(userSammDTO);
+		userFavoritesArtistsDTO.getFavoritesArtists().addAll(user.getArtists());
+		
+		return userFavoritesArtistsDTO;
+	}
+	
 	public UserSamm saveFavoriteTrack(Long userId, Track track) {
 		
 		UserSamm user = userSammRepository.findById(userId).get();
@@ -162,6 +196,36 @@ public class UserSammService {
             return userSammRepository.save(user);
         } else {
             throw new RuntimeException("Track não encontrada nos favoritos do usuário");
+        }
+    }
+	
+	public UserSamm removeAlbumFromFavorites(Long userId, Long albumId) {
+        UserSamm user = userSammRepository.findById(userId).get();
+
+        Optional<br.com.musiki.musikiAPI.model.Album> albumOptional = user.getAlbuns().stream()
+                .filter(album -> album.getId().equals(albumId))
+                .findFirst();
+
+        if (albumOptional.isPresent()) {
+            user.getAlbuns().remove(albumOptional.get());
+            return userSammRepository.save(user);
+        } else {
+            throw new RuntimeException("Album não encontrada nos favoritos do usuário");
+        }
+    }
+	
+	public UserSamm removeArtistFromFavorites(Long userId, Long artistId) {
+        UserSamm user = userSammRepository.findById(userId).get();
+
+        Optional<br.com.musiki.musikiAPI.model.Artist> artistOptional = user.getArtists().stream()
+                .filter(artist -> artist.getId().equals(artistId))
+                .findFirst();
+
+        if (artistOptional.isPresent()) {
+            user.getArtists().remove(artistOptional.get());
+            return userSammRepository.save(user);
+        } else {
+            throw new RuntimeException("Album não encontrada nos favoritos do usuário");
         }
     }
 	

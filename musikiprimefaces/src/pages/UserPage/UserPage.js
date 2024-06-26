@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import "primereact/resources/themes/mdc-light-deeppurple/theme.css";  //theme
 import "primereact/resources/primereact.min.css";                  //core css
 import "primeicons/primeicons.css";                                //icons
@@ -13,27 +13,49 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { jwtDecode } from 'jwt-decode';
 import axios from "../../apis/api";
+import { decodeToken } from '../../utils/Utils';
+import { Toast } from 'primereact/toast';
 
 export default function UserPage() {
 
     const [products, setProducts] = useState([]);
-    const [userInfo, setUserInfo] = useState({name: '', login: '', email:''});
+    const [userInfo, setUserInfo] = useState({ name: '', login: '', email: '' });
 
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+
+    const [userId, setUserId] = useState();
+    const [favoritesArtists, setFavoritesArtists] = useState({});
+    const [favoritesAlbuns, setFavoritesAlbuns] = useState({});
+    const [favoritesTracks, setFavoritesTracks] = useState({});
 
     const [isRegistrationDataVisible, setIsRegistrationDataVisible] = useState(true)
     const [isUserFavoritesAlbunsVisible, setIsUserFavoritesAlbunsVisible] = useState(false)
     const [isUserFavortiesArtistsVisible, setIsUserFavortiesArtistsVisible] = useState(false)
     const [isUserFavoritesTracksVisible, setIsUserFavoritesTracksVisible] = useState(false)
 
-    const handleUpdate = () => {
-        // Lógica para atualizar os dados do usuário
+    const toast = useRef(null);
+
+    const handleUpdate = (e) => {
+        const userSammRequest = {
+            name: nome,
+            email: email
+        }
+
+        axios.put('/samm/user/update/' + userId, userSammRequest)
+            .then(response => {
+                console.log(response)
+                showSuccess('Usuário atualizado com sucesso')
+
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
         console.log({
             nome,
-            email,
-            senha
+            email
         });
     };
 
@@ -42,13 +64,15 @@ export default function UserPage() {
             const decodedToken = decodeToken(localStorage.getItem('authToken'));
             const userId = decodedToken.sub
 
+            setUserId(userId);
+
             axios.get('/samm/user/' + userId)
                 .then(response => {
                     console.log(response)
                     setUserInfo(response.data)
                     setNome(response.data.name);
                     setEmail(response.data.email)
-                    
+
                 })
                 .catch(error => {
                     console.error(error);
@@ -56,16 +80,64 @@ export default function UserPage() {
         }
     }, [])
 
-        // Função para decodificar o token
-        const decodeToken = (token) => {
-            try {
-                const decoded = jwtDecode(token);
-                console.log(decoded)
-                return decoded;
-            } catch (error) {
-                console.error('Invalid token', error);
-            }
-        };
+    //favorite artists request
+    useEffect(() => {
+        if (localStorage.getItem('authToken') != null && localStorage.getItem('authToken') != undefined && localStorage.getItem('authToken') != 'undefined') {
+            const decodedToken = decodeToken(localStorage.getItem('authToken'));
+            const userId = decodedToken.sub
+
+            axios.get('/samm/user/favorites/artists/' + userId)
+                .then(response => {
+                    //setAudioFeatures(response.data)
+                    const favoriteArtists = response.data.favoritesArtists;
+                    console.log(favoriteArtists)
+                    setFavoritesArtists(favoriteArtists);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    }, [])
+
+    //favorite album request
+    useEffect(() => {
+        if (localStorage.getItem('authToken') != null && localStorage.getItem('authToken') != undefined && localStorage.getItem('authToken') != 'undefined') {
+            const decodedToken = decodeToken(localStorage.getItem('authToken'));
+            const userId = decodedToken.sub
+
+            axios.get('/samm/user/favorites/albuns/' + userId)
+                .then(response => {
+                    //setAudioFeatures(response.data)
+                    const favoriteAlbuns = response.data.favoritesAlbuns;
+                    console.log(favoriteAlbuns)
+                    setFavoritesAlbuns(favoriteAlbuns);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    }, [])
+
+    //favorite track request
+    useEffect(() => {
+        if (localStorage.getItem('authToken') != null && localStorage.getItem('authToken') != undefined && localStorage.getItem('authToken') != 'undefined') {
+            const decodedToken = decodeToken(localStorage.getItem('authToken'));
+            const userId = decodedToken.sub
+
+            axios.get('/samm/user/favorites/tracks/' + userId)
+                .then(response => {
+                    //setAudioFeatures(response.data)
+
+                    const favoriteTracks = response.data.favoritesTracks;
+                    console.log(favoriteTracks)
+                    setFavoritesTracks(favoriteTracks);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    }, [])
+
 
     const items = [
         {
@@ -136,10 +208,6 @@ export default function UserPage() {
                                         <label htmlFor="email" className="p-d-block" style={{ textAlign: 'left' }}>Email</label>
                                         <InputText id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="p-d-block p-inputtext-sm" style={{ width: '100%' }} />
                                     </div>
-                                    <div className="p-field">
-                                        <label htmlFor="senha" className="p-d-block" style={{ textAlign: 'left' }}>Senha</label>
-                                        <Password id="senha" value={senha} onChange={(e) => setSenha(e.target.value)} className="p-password-sm p-d-block" style={{ width: '100%' }} />
-                                    </div>
                                 </form>
                             </Card>
                             <div className="p-d-flex p-jc-end" style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -160,16 +228,12 @@ export default function UserPage() {
                     isVisible ?
                         <div className="p-p-4">
                             <Card title="Albuns Favoritos" className="p-mb-4">
-                                <DataTable value={products} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
-                                    <Column field="code" header="Code"></Column>
-                                    <Column field="name" header="Name"></Column>
-                                    <Column field="category" header="Category"></Column>
-                                    <Column field="quantity" header="Quantity"></Column>
+                                <DataTable value={favoritesAlbuns} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
+                                    <Column field="id" header="ID"></Column>
+                                    <Column field="name" header="Nome Album"></Column>
+                                    <Column body={(e) => renderDetailButton(e, 'album')} header="Detalhes"></Column>
                                 </DataTable>
                             </Card>
-                            <div className="p-d-flex p-jc-end" style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                <Button label="Atualizar Dados" style={{ margin: '15px' }} className="p-button-sm" onClick={handleUpdate} />
-                            </div>
                         </div>
                         : ''
                 }
@@ -184,16 +248,13 @@ export default function UserPage() {
                     isVisible ?
                         <div className="p-p-4">
                             <Card title="Artistas Favoritos" className="p-mb-4">
-                                <DataTable value={products} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
-                                    <Column field="code" header="Code"></Column>
-                                    <Column field="name" header="Name"></Column>
-                                    <Column field="category" header="Category"></Column>
-                                    <Column field="quantity" header="Quantity"></Column>
+                                <DataTable value={favoritesArtists} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
+                                    <Column field="id" header="ID"></Column>
+                                    <Column field="name" header="Nome Artista"></Column>
+                                    <Column field="simplifiedGenres" header="Gênero(s)"></Column>
+                                    <Column body={(e) => renderDetailButton(e, 'artist')} header="Detalhes"></Column>
                                 </DataTable>
                             </Card>
-                            <div className="p-d-flex p-jc-end" style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                <Button label="Atualizar Dados" style={{ margin: '15px' }} className="p-button-sm" onClick={handleUpdate} />
-                            </div>
                         </div>
                         : ''
                 }
@@ -208,16 +269,12 @@ export default function UserPage() {
                     isVisible ?
                         <div className="p-p-4">
                             <Card title="Músicas Favoritas" className="p-mb-4">
-                                <DataTable value={products} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
-                                    <Column field="code" header="Code"></Column>
-                                    <Column field="name" header="Name"></Column>
-                                    <Column field="category" header="Category"></Column>
-                                    <Column field="quantity" header="Quantity"></Column>
+                                <DataTable value={favoritesTracks} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
+                                    <Column field="id" header="ID"></Column>
+                                    <Column field="name" header="Nome Música"></Column>
+                                    <Column body={(e) => renderDetailButton(e, 'track')} header="Detalhes"></Column>
                                 </DataTable>
                             </Card>
-                            <div className="p-d-flex p-jc-end" style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                <Button label="Atualizar Dados" style={{ margin: '15px' }} className="p-button-sm" onClick={handleUpdate} />
-                            </div>
                         </div>
                         : ''
                 }
@@ -225,10 +282,23 @@ export default function UserPage() {
         )
     }
 
+    function renderDetailButton(rowData, type) {
+        return <Button icon="pi pi-search" onClick={() => { linkTo(type, rowData) }} rounded outlined severity="success" aria-label="Search" />
+    }
+
+    function linkTo(type, value) {
+        const url = `/${type}/${value.spotifyApiId}`;
+        window.open(url, '_blank', 'noopener,noreferrer');
+    }
+
+    const showSuccess = (msg) => {
+        toast.current.show({ severity: 'success', summary: 'Success', detail: msg, life: 3000 });
+    }
     return (
         <div>
             <Header />
             <div style={{ background: 'linear-gradient(90deg, rgba(91,22,176,1) 22%, rgba(34,198,216,1) 66%)', minHeight: '90vh', display: 'flex' }}>
+                <Toast ref={toast} />
                 <div className="card" style={{ display: 'flex', flexDirection: 'column', padding: '20px', height: '100%' }}>
                     <Menu style={{ height: '100vh' }} model={items} />
                 </div>

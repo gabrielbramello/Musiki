@@ -9,6 +9,8 @@ import SimpleCard from '../../components/cards/SimpleCard';
 import CardWithList from '../../components/cards/CardWithList';
 import Header from '../../components/menu/Header';
 import { Link } from 'react-router-dom';
+import { Button } from 'primereact/button';
+import { decodeToken } from '../../utils/Utils';
 
 const Album = () => {
 
@@ -16,9 +18,43 @@ const Album = () => {
 	const { albumId } = useParams();
 	const [isLoading, setIsLoading] = useState(true);
 
-	useEffect(() => {
+	const [isLoggedIn, setIsLoggedIn] = useState(false)
+	const [userId, setUserId] = useState();
+	const [favoriteAlbum, setFavoriteAlbum] = useState({});
+	const [isFavorite, setIsFavorite] = useState(false);
 
+
+	  //Lógicas inicias para verificar se o usuário está logado
+	  useEffect(() => {
 		setIsLoading(true);
+	
+		setIsLoggedIn(false);
+		if (localStorage.getItem('authToken') != null && localStorage.getItem('authToken') != undefined && localStorage.getItem('authToken') != 'undefined') {
+		  setIsLoggedIn(true);
+		  const decodedToken = decodeToken(localStorage.getItem('authToken'));
+		  const userId = decodedToken.sub
+		  setUserId(userId);
+	
+		  axios.get('/samm/user/favorites/albuns/' + userId)
+			.then(response => {
+			  //setAudioFeatures(response.data)
+			  console.log(response.data)
+			  const favoriteAlbuns = response.data.favoritesAlbuns;
+	
+			  const favoriteAlbum = favoriteAlbuns.find(album => album.spotifyApiId == albumId)
+			  if (favoriteAlbum) {
+				setIsFavorite(true)
+				setFavoriteAlbum(favoriteAlbum);
+			  }
+	
+			})
+			.catch(error => {
+			  console.error(error);
+			});
+		}
+	  }, []);
+
+	useEffect(() => {
 
 		axios.get('/spotify/album/' + albumId)
 			.then(response => {
@@ -34,61 +70,103 @@ const Album = () => {
 	function changeDateFormat(dateString, releaseDatePrecision) {
 
 		if (dateString != null) {
-		  if (releaseDatePrecision === "YEAR") {
-			const [year] = dateString.split("-");
-			if (year) {
-			  return year;
+			if (releaseDatePrecision === "YEAR") {
+				const [year] = dateString.split("-");
+				if (year) {
+					return year;
+				}
 			}
-		  }
 
-		  if (releaseDatePrecision === "DAY") {
-			const [year, month, day] = dateString.split("-");
-			if (year && month && day) {
-			  const newDateFormat = `${day.padStart(2, "0")}-${month.padStart(2, "0")}-${year}`;
-			  return newDateFormat;
+			if (releaseDatePrecision === "DAY") {
+				const [year, month, day] = dateString.split("-");
+				if (year && month && day) {
+					const newDateFormat = `${day.padStart(2, "0")}-${month.padStart(2, "0")}-${year}`;
+					return newDateFormat;
+				}
 			}
-		  }
 		}
 
 		return "Formato de data inválido!";
-	  }
+	}
 
 
 	if (isLoading) {
 		return <p>Api do Spotify Carregando...</p>;
-	  }
+	}
 	console.log(data)
 
 	function createLink(data, name) {
 		return (
-		  <a href={data.externalUrls.externalUrls.spotify ?? ''} target="_blank">{name}</a>
+			<a href={data.externalUrls.externalUrls.spotify ?? ''} target="_blank">{name}</a>
 		)
+	}
+
+	function renderFavoriteButton(isFavorite) {
+		if (isFavorite) {
+			return (<Button className="favorite-button" onClick={() => handleFavoriteClickButton(false)} icon="pi pi-heart" size="large" rounded severity="help" aria-label="Favorite" data-pr-tooltip="Favorito" />)
+		}
+		return (<Button className="favorite-button" onClick={() => handleFavoriteClickButton(true)} icon="pi pi-heart" size="large" style={{ backgroundColor: '#ffffff' }} rounded text raised severity="help" aria-label="Favorite" data-pr-tooltip="Favorito" />)
+	}
+
+	function handleFavoriteClickButton(isFavorite) {
+
+		const userFavoriteAlbumRequest = {
+		  userId: userId,
+		  elementId: albumId
+		}
+	
+		if (isFavorite) {
+		  axios.post('/samm/user/favorite/album', userFavoriteAlbumRequest)
+			.then(response => {
+			  console.log(response.data)
+			  const favoriteAlbuns = response.data.albuns;
+			  const favoriteAlbum = favoriteAlbuns.find(album => album.spotifyApiId == albumId)
+			  if (favoriteAlbum) {
+				setIsFavorite(true)
+				setFavoriteAlbum(favoriteAlbum);
+			  }
+			})
+			.catch(error => {
+			  console.error(error);
+			});
+		} else {
+		  axios.delete('/samm/user/favorite/album/'+userId+'/'+favoriteAlbum.id, )
+			.then(response => {
+			  console.log(response.data)
+			  setIsFavorite(false)
+			})
+			.catch(error => {
+			  console.error(error);
+			});
+		}
+	
 	  }
 
 	return (
 		<div>
-            <Header />
+			<Header />
 			<div style={{ background: 'linear-gradient(90deg, rgba(91,22,176,1) 22%, rgba(34,198,216,1) 66%)', minHeight: '90vh', display: 'flex', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
-				<div style={{ margin: '50px' }}>
-					<img alt="Sem foto Disponível" src={((data.images && data.images[1]) && data.images[1].url) ?? ''} style={{ minHeight: '320px', minWidth: '320px' }}></img>
+				<div style={{ margin: '50px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+					<img alt="Sem foto Disponível" src={((data.images && data.images[1]) && data.images[1].url) ?? ''} style={{ minHeight: '320px', minWidth: '320px', margin: '30px' }}></img>
+					{isLoggedIn ? renderFavoriteButton(isFavorite) : ''}
 				</div>
-				<div style={{ textAlign: 'center',display: 'flex', flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap', margin: '50px' }}>
+				<div style={{ textAlign: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap', margin: '50px' }}>
 					<div>
-					<SimpleCard
-						title="Nome do(a) Artista:"
-						width="12rem"
-						bottom="2em"
-						content={
-							data.artists && data.artists[0] ? (
-							<Link to={`/artist/${data.artists[0].id}`}>
-								{data.artists[0].name}
-							</Link>
-							) : (
-							'Não Classificado'
-							)
-						}
-						isRating={false}
-          			/>
+						<SimpleCard
+							title="Nome do(a) Artista:"
+							width="12rem"
+							bottom="2em"
+							content={
+								data.artists && data.artists[0] ? (
+									<Link to={`/artist/${data.artists[0].id}`}>
+										{data.artists[0].name}
+									</Link>
+								) : (
+									'Não Classificado'
+								)
+							}
+							isRating={false}
+						/>
 						<SimpleCard title="Nome do Album:" width="12rem" bottom="2em" content={createLink(data, data.name)} isRating={false}></SimpleCard>
 						<SimpleCard title="Numero de Faixas:" width="12rem" bottom="2em" content={data.tracks.total ?? 'Não Classificado'} isRating={false}></SimpleCard>
 					</div>

@@ -84,9 +84,9 @@ export default function DataTableFilter(props) {
         return (
             <div>
                 {artists.map((artist) => {
+                    console.log(artist)
                     return (
                         <div className="flex align-items-center gap-2">
-                            <img alt={artist.name} src={`https://primefaces.org/cdn/primereact/images/avatar/ionibowcher.png `} width="32" />
                             <span>{artist.name}</span>
                         </div>
                     )
@@ -94,6 +94,12 @@ export default function DataTableFilter(props) {
             </div>
 
         );
+    };
+
+    const albumBodyTemplate = (rowData) => {
+       console.log(rowData)
+
+       
     };
 
     const idBodyTemplate = (rowData, i ) => {
@@ -131,13 +137,10 @@ export default function DataTableFilter(props) {
     const header = renderHeader();
 
     function linkTo(value){
-        //console.log(value)
-        const url = `/track2/${value.id}`;
+        const url = `/track/${value.id}`;
         window.open(url, '_blank', 'noopener,noreferrer');
-        //const url = navigate(`/track2/${value.id}`, { replace: false });
-        //console.log(url)
-        //indow.open(url, '_blank', 'noopener,noreferrer');
     }
+    
     return (
         <div className="card">
             <DataTable
@@ -156,7 +159,7 @@ export default function DataTableFilter(props) {
 
                 <Column field="id" body={idBodyTemplate} header="Id" style={{ minWidth: '12rem' }} />
                 <Column header="Nome" field="name" filterField="name" style={{ minWidth: '12rem' }} filter filterPlaceholder="Pesquisa por nome" />
-                <Column header="Album" field="album.name" filterField="album.name" showFilterMenu={false} filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '14rem' }}
+                <Column header="Album" body={albumBodyTemplate} field="album.name" filterField="album.name" showFilterMenu={false} filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '14rem' }}
                     filter filterElement={representativeRowFilterTemplate} />
                 <Column header="Artista" body={artistBodyTemplate} filterField="artists[0].name" showFilterMenu={false} filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '14rem' }}
                     filter filterElement={representativeRowFilterTemplate} />
