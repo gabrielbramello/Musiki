@@ -64,7 +64,7 @@ function LoginPage() {
     const redirectHome = () => {
         setTimeout(() => {
             navigate('/');
-        }, 2000);
+        }, 1000);
     };
 
     return (

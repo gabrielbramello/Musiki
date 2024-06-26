@@ -42,8 +42,7 @@ export default function Register() {
                 console.log(response)
             })
             .catch(error => {
-                showError('Houve um erro no momento de criação do usuário.')
-                console.error(error);
+                showError(error.response.data);
             });
     };
 
@@ -58,7 +57,7 @@ export default function Register() {
     const redirectLogin = () => {
         setTimeout(() => {
             navigate('/login');
-        }, 3000);
+        }, 1000);
     };
 
 
