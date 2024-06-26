@@ -228,7 +228,7 @@ export default function Recommendations() {
 
     function requestObjectBuilder() {
         const recommendationsFilterDTO = {
-            limit: 20,
+            limit: 100,
             seedGenres: selectedGenres.join(','),
             minAcousticness: minAcousticness/100,
             maxAcousticness: maxAcousticness/100,
