@@ -89,7 +89,7 @@ export default function Header() {
             label: 'Musica',
             icon: 'pi pi-fw pi-volume-up',
             command: (event) => {
-                window.location = "/track2/6SpLc7EXZIPpy0sVko0aoU";
+                window.location = "/track/6SpLc7EXZIPpy0sVko0aoU";
             }
         }
     ];

@@ -21,8 +21,8 @@ export default function App() {
           <Route path="/" exact={true} element={<Home />} />
           <Route path="/artist/:artistId" element={<Artist />} />
           <Route path="/album/:albumId" element={<Album />} />
-          <Route path="/track/:trackId" element={<Track />} />
-          <Route path="/track2/:trackId" element={<TrackNovo />} />
+          {/* <Route path="/track/:trackId" element={<Track />} /> */}
+          <Route path="/track/:trackId" element={<TrackNovo />} />
           <Route path="/user" element={<UserPage />} />
           <Route path="/configuracoes" element={<Configuration />} />
           <Route path="/login" element={<LoginPage />} />
