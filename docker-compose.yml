@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  musiki-db:
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: musiki
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+
+  spring-app:
+    image: musiki:latest
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://musiki-db:5432/musiki
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 12345
+    depends_on:
+      - musiki-db
+
+  spa-app:
+    build:
+      context: ./musikiprimefaces
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      - spring-app
