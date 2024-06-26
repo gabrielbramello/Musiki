@@ -3,6 +3,8 @@ package br.com.musiki.musikiAPI.model;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -48,6 +50,7 @@ public class Album {
 	private String uriSpotify;
 	
 	@ManyToMany(mappedBy = "albuns")
+	@JsonIgnore
 	private List<UserSamm> users;
 	
 	public Long getId() {

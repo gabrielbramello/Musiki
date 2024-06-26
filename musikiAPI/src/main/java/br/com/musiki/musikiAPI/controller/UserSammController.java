@@ -1,5 +1,7 @@
 package br.com.musiki.musikiAPI.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,11 +14,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.musiki.musikiAPI.dto.UserFavoriteRequest;
 import br.com.musiki.musikiAPI.dto.UserSammDTO;
-import br.com.musiki.musikiAPI.exception.usersamm.UserSammException;
 import br.com.musiki.musikiAPI.exception.usersamm.UserSammNotFoundException;
 import br.com.musiki.musikiAPI.model.UserSamm;
 import br.com.musiki.musikiAPI.services.samm.UserSammService;
+import br.com.musiki.musikiAPI.services.spotify.api.SearchAlbum;
+import br.com.musiki.musikiAPI.services.spotify.api.SearchArtist;
+import br.com.musiki.musikiAPI.services.spotify.api.SearchTrack;
+import se.michaelthelin.spotify.model_objects.specification.Album;
+import se.michaelthelin.spotify.model_objects.specification.Artist;
+import se.michaelthelin.spotify.model_objects.specification.Track;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -26,6 +34,14 @@ public class UserSammController {
 	@Autowired
 	private UserSammService userSammService;
 	
+	@Autowired
+	private SearchArtist searchArtist;
+	
+	@Autowired
+	private SearchAlbum searchAlbum;
+	
+	@Autowired
+	private SearchTrack searchTrack;
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<UserSammDTO> findById(@PathVariable("id") Long id) {
@@ -47,8 +63,19 @@ public class UserSammController {
 	@PostMapping("/create")
 	public ResponseEntity<String> createUserSamm(@RequestBody UserSammDTO userSamm) {
 		try {
-			UserSamm user = userSammService.saveUserSamm(userSamm);
 			
+			try {
+				Optional<UserSamm> usuarioExistente = userSammService.findUserByLogin(userSamm.getLogin());
+				
+				if(!usuarioExistente.isEmpty() && usuarioExistente.isPresent()) {
+					return ResponseEntity.status(500).body("Erro ao criar o usuário: usuário já existe.");
+				}
+				
+			} catch (UserSammNotFoundException e) {
+				
+			}
+			
+			UserSamm user = userSammService.saveUserSamm(userSamm);
 			return ResponseEntity.status(201).body("Usuário criado com sucesso.");
 			
 		} catch (Exception e) {
@@ -83,20 +110,30 @@ public class UserSammController {
 		}
 	}
 	
-	
-	public void addUserFavoriteArtist() {
+	@PostMapping("/favorite/artist")
+	public ResponseEntity<UserSamm> addUserFavoriteArtist(@RequestBody UserFavoriteRequest userFavoriteArtistRequest) {
 		
+		Artist artist = searchArtist.searchArtistById(userFavoriteArtistRequest.getElementId()); 
+		
+		UserSamm userSamm = userSammService.saveFavoriteArtist(userFavoriteArtistRequest.getUserId(), artist);
+		return ResponseEntity.status(200).body(userSamm);
 	}
 	
-	public void addUserFavoriteAlbum() {
+	@PostMapping("/favorite/album")
+	public ResponseEntity<UserSamm> addUserFavoriteAlbum(@RequestBody UserFavoriteRequest userFavoriteAlbumRequest) {
+		Album album = searchAlbum.searchAlbumById(userFavoriteAlbumRequest.getElementId());
 		
+		UserSamm userSamm = userSammService.saveFavoriteAlbum(userFavoriteAlbumRequest.getUserId(), album);
+		return ResponseEntity.status(200).body(userSamm);
 	}
 	
-	public void addUserFavoriteTrack() {
+	@PostMapping("/favorite/track")
+	public ResponseEntity<UserSamm> addUserFavoriteTrack(@RequestBody UserFavoriteRequest userFavoriteAlbumRequest) {
 		
+		Track track = searchTrack.searchTrackById(userFavoriteAlbumRequest.getElementId());
+		
+		UserSamm userSamm = userSammService.saveFavoriteTrack(userFavoriteAlbumRequest.getUserId(), track);
+		return ResponseEntity.status(200).body(userSamm);
 	}
-	
-
-	
 	
 }

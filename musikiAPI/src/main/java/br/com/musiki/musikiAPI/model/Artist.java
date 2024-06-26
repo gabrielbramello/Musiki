@@ -2,6 +2,8 @@ package br.com.musiki.musikiAPI.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,6 +24,7 @@ public class Artist {
 	private String name;
 	private Integer popularity;
 	private String uriSpotify;
+	private String simplifiedGenres;
 	
 	@ManyToMany(mappedBy = "artists")
 	private List<Album> albuns;
@@ -36,6 +39,7 @@ public class Artist {
 	private List<Genre> genres;
 	
 	@ManyToMany(mappedBy = "artists")
+	@JsonIgnore
 	private List<UserSamm> users;
 	
 	public Long getId() {
@@ -100,6 +104,14 @@ public class Artist {
 
 	public void setUsers(List<UserSamm> users) {
 		this.users = users;
+	}
+
+	public String getSimplifiedGenres() {
+		return simplifiedGenres;
+	}
+
+	public void setSimplifiedGenres(String simplifiedGenres) {
+		this.simplifiedGenres = simplifiedGenres;
 	}
 	
 	
