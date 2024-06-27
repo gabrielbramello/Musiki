@@ -5,9 +5,13 @@ import ReactApexChart from 'react-apexcharts';
 
 class ApexChart extends React.Component {
   constructor(props) {
-    super(props);
+    super(props); 
+  }
 
-    this.state = {
+
+  render() {
+
+    const apexChartInfos = {
 
       series: [{
         name: 'Valor',
@@ -16,7 +20,6 @@ class ApexChart extends React.Component {
       options: {
         chart: {
           height: 750,
-          type: 'radar',
           toolbar: {
             show: false
           }
@@ -29,7 +32,7 @@ class ApexChart extends React.Component {
           labels: {
             show: true,
             style: {
-              colors: ["#000", "#000","#000","#000","#000","#000","#000","#000"],
+              colors: ["#000", "#000", "#000", "#000", "#000", "#000", "#000", "#000"],
               fontSize: "11px",
               fontFamily: 'Arial',
             }
@@ -37,15 +40,11 @@ class ApexChart extends React.Component {
         }
       },
     };
-  }
 
-
-
-  render() {
     return (
       <div>
         <div id="chart">
-          <ReactApexChart options={this.state.options} series={this.state.series} type="radar" height={550} />
+          <ReactApexChart options={apexChartInfos.options} series={apexChartInfos.series} type="radar" height={550} />
         </div>
         <div id="html-dist"></div>
       </div>

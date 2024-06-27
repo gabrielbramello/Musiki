@@ -12,6 +12,7 @@ function SearchBar({ placeholder }) {
     if (wordEntered) {
       axios.get('/spotify/search/' + wordEntered)
         .then(response => {
+          console.log(response.data)
           setFilteredData(response.data);
         })
         .catch(error => console.log(error.message));
@@ -51,7 +52,7 @@ function SearchBar({ placeholder }) {
         <div className="dataResult">
           {filteredData.slice(0, 15).map((value, key) => (
             <Link className="dataItem" key={key} to={`${value.type}/${value.id}`}>
-              <p>{`${value.name} - (${value.type})`}</p>
+              <p>{`(${value.type}) - ${value.name}`}</p>
             </Link>
           ))}
         </div>

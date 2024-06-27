@@ -1,3 +1,4 @@
+import { Tooltip } from 'primereact/tooltip';
 import React from 'react';
 import ReactApexCharts from 'react-apexcharts';
 
@@ -93,7 +94,8 @@ class GradientCircleChart extends React.Component {
 
     return (
       <div id="chart" style={{width:'25%', margin:'0px'}}>
-        <ReactApexCharts style={{margin:'0px'}} options={options} series={this.props.series} type="radialBar" height={150} />
+        <Tooltip target={"#chart-"+this.props.id} position={this.props.tooltipPosition}/>
+        <ReactApexCharts id={'chart-'+this.props.id} data-pr-tooltip={this.props.toolTip} style={{margin:'0px'}} options={options} series={this.props.series} type="radialBar" height={150} />
       </div>
     );
   }

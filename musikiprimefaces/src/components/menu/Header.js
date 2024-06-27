@@ -91,6 +91,13 @@ export default function Header() {
             command: (event) => {
                 window.location = "/track/6SpLc7EXZIPpy0sVko0aoU";
             }
+        },
+        {
+            label: 'Página do Usuário',
+            icon: 'pi pi-fw pi-volume-up',
+            command: (event) => {
+                window.location = "/user";
+            }
         }
     ];
 

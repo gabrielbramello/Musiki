@@ -17,6 +17,10 @@ import { Button } from 'primereact/button';
 import { Tooltip } from 'primereact/tooltip';
 import { jwtDecode } from 'jwt-decode';
 import { decodeToken } from '../../utils/Utils';
+import { Panel } from 'primereact/panel';
+import { TabPanel, TabView } from 'primereact/tabview';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpotify } from '@fortawesome/free-brands-svg-icons';
 
 
 export default function TrackNovo() {
@@ -27,8 +31,25 @@ export default function TrackNovo() {
   const [audioFeatures, setAudioFeatures] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [userId, setUserId] = useState();
-  const [favoriteTrack, setFavoriteTrack] =useState({});
+  const [favoriteTrack, setFavoriteTrack] = useState({});
   const [isFavorite, setIsFavorite] = useState(false);
+
+  const keys = [
+    { name: 'C', code: 0 },
+    { name: 'C#/Db', code: 1 },
+    { name: 'D', code: 2 },
+    { name: 'D#/Eb', code: 3 },
+    { name: 'E', code: 4 },
+    { name: 'F', code: 5 },
+    { name: 'F#', code: 6 },
+    { name: 'G', code: 7 },
+    { name: 'G#', code: 8 },
+    { name: 'A', code: 9 },
+    { name: 'A#', code: 10 },
+    { name: 'B', code: 11 },
+];
+
+  const [tracks, setTracks] = useState([])
 
   //Lógicas inicias para verificar se o usuário está logado
   useEffect(() => {
@@ -74,19 +95,6 @@ export default function TrackNovo() {
   }, []);
 
   useEffect(() => {
-
-    axios.get('/spotify/track/audiofeatures/' + trackId)
-      .then(response => {
-        //setAudioFeatures(response.data)
-        console.log(response.data)
-      })
-      .catch(error => {
-        console.error(error);
-        setIsLoading(false);
-      });
-  }, []);
-
-  useEffect(() => {
     axios.get('/spotify/track/audioanalyses/' + trackId)
       .then(response => {
         console.log(response.data)
@@ -110,14 +118,19 @@ export default function TrackNovo() {
       });
   }, []);
 
+  useEffect(() => {
+    recommendationsRequest();
+  }, [])
+
   if (isLoading) {
     return <p>Api do Spotify Carregando...</p>;
   }
 
   function createLink(data, name) {
-    return (
-      <a href={data.externalUrls.externalUrls.spotify ?? ''} target="_blank">{name}</a>
-    )
+    console.log("teste")
+    console.log(data)
+    window.open(data.externalUrls.externalUrls.spotify, '_blank');
+
   }
 
   function convertMilliseconds(data) {
@@ -177,7 +190,7 @@ export default function TrackNovo() {
           console.error(error);
         });
     } else {
-      axios.delete('/samm/user/favorite/track/'+userId+'/'+favoriteTrack.id, )
+      axios.delete('/samm/user/favorite/track/' + userId + '/' + favoriteTrack.id,)
         .then(response => {
           console.log(response.data)
           setIsFavorite(false)
@@ -189,6 +202,40 @@ export default function TrackNovo() {
 
   }
 
+  function recommendationsRequest() {
+    const recommendationsFilterDTO = {
+      limit: 100,
+      seedTracks: trackId
+    }
+
+    console.log(recommendationsFilterDTO)
+    axios.post('/spotify/recommendations/', recommendationsFilterDTO)
+      .then(response => {
+        console.log(response.data)
+        setTracks(response.data.tracks);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
+  function returnKey(numKey){
+    console.log(keys)
+    console.log(numKey)
+    const key = keys.find((key)=> numKey == key.code);
+    console.log(key)
+  }
+
+  const featureDescription = {
+    energy: 'Energia representa uma medida\n perceptiva de intensidade e atividade.\n\n Normalmente, as faixas energéticas\n parecem rápidas, altas e barulhentas.\n\n Por exemplo, o death metal tem alta energia, \nenquanto um prelúdio de Bach tem baixa.',
+    instrumentalness: 'Prevê se uma faixa não contém vocais. Quanto mais próximo o valor da instrumentalidade estiver de 100, maior será a probabilidade de a faixa não conter conteúdo vocal.',
+    liveness: 'Detecta a presença de público na gravação. Valores mais altos representam uma probabilidade maior de que a faixa tenha sido tocada ao vivo. Um valor acima de 80 oferece forte probabilidade de que a música esteja ao vivo.',
+    loudness: 'O volume geral de uma faixa. Os valores variam entre 0 e 100.',
+    speechiness: 'Detecta a presença de palavras faladas em uma faixa. Quanto mais exclusivamente falada for a gravação (por exemplo, talk show, audiolivro, poesia), mais próximo de 100 será o valor do atributo.',
+    valence: 'Uma medida que descreve a positividade musical transmitida por uma faixa. Faixas com valência alta soam mais positivas (por exemplo, feliz, alegre, eufórica), enquanto faixas com valência baixa soam mais negativas (por exemplo, triste, deprimida, irritada).',
+    acousticness:'Uma medida de 0 a 100 para saber se a faixa é acústica. 100 representa alta confiança de que a faixa é acústica.',
+    danceability: 'Descreve o quão adequada uma faixa é para dançar. Um valor de 0 é menos dançante e 100 é mais dançante.'
+  }
   return (
     <div>
       <div>
@@ -201,14 +248,16 @@ export default function TrackNovo() {
           <div id='info' style={{ display: 'flex', justifyContent: 'flex-start', margin: '25px' }}>
 
             <div id='imagem'>
-              <img alt="Sem foto Disponível" src={((data.album && data.album.images[1]) && data.album.images[1].url) ?? ''} ></img>
+              <img alt="Sem foto Disponível" style={{ minHeight: '320px', minWidth: '320px', margin: '30px' }} src={((data.album && data.album.images[1]) && data.album.images[1].url) ?? ''} ></img>
             </div>
 
             <div id='infos'>
               <div id='subinfo' style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div id='titulos'>
                   <h1 style={{ marginLeft: '40px' }}>{data.name} </h1>
-                  <h2 style={{ marginLeft: '40px' }}>{data.artists[0].name} </h2>
+                  <h2 style={{ marginLeft: '40px' }}>{data.album.name} </h2>
+                  <h3 style={{ marginLeft: '40px' }}>{data.artists[0].name} </h3>
+                  <FontAwesomeIcon style={{ marginLeft: '40px', color: '#18d860', cursor: 'pointer' }} onClick={() => createLink(data, "Spotify")} size="2x" icon={faSpotify} />
                 </div>
                 <div id='favorito' style={{ margin: '40px' }}>
                   <Tooltip target=".favorite-button" />
@@ -218,23 +267,18 @@ export default function TrackNovo() {
               </div>
 
 
-              <div id='detalhes' style={{ display: 'flex' }}>
+              <div id='detalhes' style={{ display: 'flex', justifyContent: 'space-between' }}>
 
-                <SimpleCard title="Duração da Faixa:" width="12rem" bottom="2em" content={convertMilliseconds(data.durationMs)} isRating={false}></SimpleCard>
+                <SimpleCard title="Duração da Faixa" width="10rem" bottom="2em" content={convertMilliseconds(data.durationMs)} isRating={false}></SimpleCard>
 
-                <SimpleCard
-                  title="Nome do Album:"
-                  width="12rem"
-                  bottom="2em"
-                  content={
-                    <Link to={`/album/${data.album.id}`}>
-                      {data.album.name}
-                    </Link>
-                  } />
+                <SimpleCard title="BPM" width="10rem" content={audioFeatures.tempo} bottom="2em" />
 
-                <SimpleCard title="Links:" width="12rem" bottom="2em" content={createLink(data, "Spotify")} isRating={false}></SimpleCard>
+                <SimpleCard title="Compasso" width="10rem" bottom="2em" content={audioFeatures.timeSignature} isRating={false}></SimpleCard>
 
-                <SimpleCard title="Popularidade:" width="12rem" bottom="2em" content={data.popularity} isRating={true}></SimpleCard>
+                <SimpleCard title="Tonalidade" width="10rem" bottom="2em" content={audioFeatures.key}></SimpleCard>
+
+                <SimpleCard title="Popularidade" width="10rem" bottom="2em" content={data.popularity} isRating={true}></SimpleCard>
+
               </div>
 
             </div>
@@ -246,20 +290,20 @@ export default function TrackNovo() {
 
             <div id='features1' style={{ flex: 1 }}>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <GradientCircleChart series={[audioFeatures.energy]} label={['Energia']} />
-                <GradientCircleChart series={[audioFeatures.acousticness]} label={['Acústica']} />
+                <GradientCircleChart id={"energy"} toolTip={featureDescription.energy} tooltipPosition="left" series={[audioFeatures.energy]} label={['Energia']} />
+                <GradientCircleChart id={"accoustic"} toolTip={featureDescription.acousticness} tooltipPosition="left" series={[audioFeatures.acousticness]} label={['Acústica']} />
               </div>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <GradientCircleChart series={[audioFeatures.danceability]} label={['Dançabilidade']} />
-                <GradientCircleChart series={[audioFeatures.instrumentalness]} label={['Instrumental']} />
+                <GradientCircleChart id={"danceability"} toolTip={featureDescription.danceability} tooltipPosition="left" series={[audioFeatures.danceability]} label={['Dançabilidade']} />
+                <GradientCircleChart id={"instrumentalness"} toolTip={featureDescription.instrumentalness} tooltipPosition="left" series={[audioFeatures.instrumentalness]} label={['Instrumental']} />
               </div>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <GradientCircleChart series={[audioFeatures.liveness]} label={['Ao vivo']} />
-                <GradientCircleChart series={[75]} label={['Ruído']} />
+                <GradientCircleChart id={"liveness"} toolTip={featureDescription.liveness} tooltipPosition="left" series={[audioFeatures.liveness]} label={['Ao vivo']} />
+                <GradientCircleChart id={"loudness"} toolTip={featureDescription.loudness} tooltipPosition="left" series={[audioFeatures.loudness]} label={['Ruído']} />
               </div>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <GradientCircleChart series={[audioFeatures.speechiness]} label={['Falada']} />
-                <GradientCircleChart series={[audioFeatures.valence]} label={['Valência']} />
+                <GradientCircleChart id={"speechiness"} toolTip={featureDescription.speechiness} tooltipPosition="left" series={[audioFeatures.speechiness]} label={['Falada']} />
+                <GradientCircleChart id={"valence"} toolTip={featureDescription.valence} tooltipPosition="left" series={[audioFeatures.valence]} label={['Valência']} />
               </div>
             </div>
 
@@ -272,7 +316,7 @@ export default function TrackNovo() {
                   audioFeatures.danceability,
                   audioFeatures.instrumentalness,
                   audioFeatures.liveness,
-                  75,
+                  audioFeatures.loudness,
                   audioFeatures.speechiness,
                   audioFeatures.valence
                 ]
@@ -284,7 +328,11 @@ export default function TrackNovo() {
           </div>
 
           <div id='recomendations'>
-            <DataTableFilter />
+            <TabView style={{ borderRadius: '10px', marginBottom: '10px' }}>
+              <TabPanel header="Recomendações" headerStyle={{ fontSize: '30px' }}>
+                <DataTableFilter tracks={tracks} />
+              </TabPanel>
+            </TabView>
           </div>
 
         </div>
