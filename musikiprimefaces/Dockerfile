@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:14
 
 # Define o diretório de trabalho dentro do container
 WORKDIR /src
