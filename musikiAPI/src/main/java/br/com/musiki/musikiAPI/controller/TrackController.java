@@ -51,7 +51,13 @@ public class TrackController {
 	
 	@PostMapping("/api/spotify/recommendations/")
 	public Recommendations searchRecommendationsFromSpotifyApi(@RequestBody RecommendationsFilterDTO recommendationsFilterDTO) {
-		return searchTrack.getTracksRecommendations(recommendationsFilterDTO);
+		try {
+			Recommendations recommendations = searchTrack.getTracksRecommendations(recommendationsFilterDTO);
+			return recommendations;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;	
 	}
 	
 }

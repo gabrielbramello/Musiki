@@ -29,7 +29,7 @@ public class SearchDTO {
 	
 	public SearchDTO(Track track) {
 		this.id = track.getId();
-		this.name = track.getName();
+		this.name = track.getName() + " - "+track.getArtists()[0].getName();
 		this.type = track.getType().getType();
 	}
 	public String getId() {

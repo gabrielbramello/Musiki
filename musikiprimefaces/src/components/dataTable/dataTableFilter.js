@@ -12,6 +12,7 @@ import { MultiSelect } from 'primereact/multiselect';
 import { Tag } from 'primereact/tag';
 import { TriStateCheckbox } from 'primereact/tristatecheckbox';
 import { Link, useNavigate } from 'react-router-dom';
+import './dataTableFilter.css';
 
 export default function DataTableFilter(props) {
 
@@ -41,9 +42,6 @@ export default function DataTableFilter(props) {
         { name: 'XuXue Feng', image: 'xuxuefeng.png' }
     ]);
 
-    useEffect(() => {
-        console.log(props)
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const onGlobalFilterChange = (e) => {
         const value = e.target.value;
@@ -84,7 +82,6 @@ export default function DataTableFilter(props) {
         return (
             <div>
                 {artists.map((artist) => {
-                    console.log(artist)
                     return (
                         <div className="flex align-items-center gap-2">
                             <span>{artist.name}</span>
@@ -96,15 +93,8 @@ export default function DataTableFilter(props) {
         );
     };
 
-    const albumBodyTemplate = (rowData) => {
-       console.log(rowData)
-
-       
-    };
 
     const idBodyTemplate = (rowData, i ) => {
-        console.log(rowData)
-        console.log(i)
         return i.rowIndex + 1;
     }
 
@@ -142,27 +132,26 @@ export default function DataTableFilter(props) {
     }
     
     return (
-        <div className="card">
+        <div className="card" style={{width:'100%', height:'100%', borderRadius: '15px', backgroundColor:'#ffffff'}}>
             <DataTable
+                style={{width:'100%', height:'100%', borderRadius: '30px'}}
+                scrollable scrollHeight="700px"
                 value={props.tracks}
-                paginator rows={10}
+                paginator rows={15}
                 dataKey="id"
                 filters={filters}
                 filterDisplay="row"
                 loading={loading}
                 globalFilterFields={['name', 'country.name', 'representative.name', 'status']}
-                header={header}
                 emptyMessage="Nenhuma música encontrada."
                 selectionMode="single"
                 onSelectionChange={(e) =>linkTo(e.value)}
                 >
 
                 <Column field="id" body={idBodyTemplate} header="Id" style={{ minWidth: '12rem' }} />
-                <Column header="Nome" field="name" filterField="name" style={{ minWidth: '12rem' }} filter filterPlaceholder="Pesquisa por nome" />
-                <Column header="Album" body={albumBodyTemplate} field="album.name" filterField="album.name" showFilterMenu={false} filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '14rem' }}
-                    filter filterElement={representativeRowFilterTemplate} />
+                <Column header="Nome" field="name" filterField="name" style={{ minWidth: '12rem' }} filter filterPlaceholder="Pesquisa por nome da faixa" />
                 <Column header="Artista" body={artistBodyTemplate} filterField="artists[0].name" showFilterMenu={false} filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '14rem' }}
-                    filter filterElement={representativeRowFilterTemplate} />
+                    filter filterPlaceholder="Pesquisa por nome do artista" />
                 {/* <Column header="Gêneros" filterField="track.album.genres" style={{ minWidth: '12rem' }} body={countryBodyTemplate} filter filterPlaceholder="Search by country" /> */}
             </DataTable>
         </div>

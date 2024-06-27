@@ -12,6 +12,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import DataTableFilter from '../../components/dataTable/dataTableFilter';
 import axios from "../../apis/api";
+import { ScrollPanel } from 'primereact/scrollpanel';
 
 export default function Recommendations() {
 
@@ -39,7 +40,14 @@ export default function Recommendations() {
         { name: 'C#/Db', code: 1 },
         { name: 'D', code: 2 },
         { name: 'D#/Eb', code: 3 },
-        { name: 'E', code: 4 }
+        { name: 'E', code: 4 },
+        { name: 'F', code: 5 },
+        { name: 'F#', code: 6 },
+        { name: 'G', code: 7 },
+        { name: 'G#', code: 8 },
+        { name: 'A', code: 9 },
+        { name: 'A#', code: 10 },
+        { name: 'B', code: 11 },
     ];
 
     const [selectedTimeSignatues, setSelectedTimeSignatures] = useState([]);
@@ -161,115 +169,115 @@ export default function Recommendations() {
     const [targetValence, setTargetValence] = useState(0);
 
     const acousticnessFilds = [
-        { name: 'acousticness-min', label: 'Acústica Min.', value: minAcousticness, onValueChange: (e)=>setMinAcousticness(e.value), mode: 'decimal' },
-        { name: 'acousticness-max', label: 'Acústica Max.', value: maxAcousticness, onValueChange: (e)=>setMaxAcousticness(e.value), mode: 'decimal' },
-        { name: 'acousticness-target', label: 'Acústica Alvo', value: targetAcousticness, onValueChange: (e)=>setTargetAcousticness(e.value), mode: 'decimal' },
+        { name: 'acousticness-min', label: 'Acústica Min.', value: minAcousticness, onValueChange: (e) => setMinAcousticness(e.value), mode: 'decimal' },
+        { name: 'acousticness-max', label: 'Acústica Max.', value: maxAcousticness, onValueChange: (e) => setMaxAcousticness(e.value), mode: 'decimal' },
+        { name: 'acousticness-target', label: 'Acústica Alvo', value: targetAcousticness, onValueChange: (e) => setTargetAcousticness(e.value), mode: 'decimal' },
     ]
 
     const danceabilityFilds = [
-        { name: 'danceability-min', label: 'Dançabilidade Min.', value: minDanceability, onValueChange: (e)=>setMinDanceability(e.value), mode: 'decimal' },
-        { name: 'danceability-max', label: 'Dançabilidade Max.', value: maxDanceability, onValueChange: (e)=>setMaxDanceability(e.value), mode: 'decimal' },
-        { name: 'danceability-target', label: 'Dançabilidade Alvo', value: targetDanceability, onValueChange: (e)=>setTargetDanceability(e.value), mode: 'decimal' },
+        { name: 'danceability-min', label: 'Dançabilidade Min.', value: minDanceability, onValueChange: (e) => setMinDanceability(e.value), mode: 'decimal' },
+        { name: 'danceability-max', label: 'Dançabilidade Max.', value: maxDanceability, onValueChange: (e) => setMaxDanceability(e.value), mode: 'decimal' },
+        { name: 'danceability-target', label: 'Dançabilidade Alvo', value: targetDanceability, onValueChange: (e) => setTargetDanceability(e.value), mode: 'decimal' },
     ]
 
     const durationFilds = [
-        { name: 'duration-min', label: 'Duração Min.', value: minDuration, onValueChange: (e)=>setMinDuration(e.value), mode: 'decimal' },
-        { name: 'duration-max', label: 'Duração Max.', value: maxDuration, onValueChange: (e)=>setMaxDuration(e.value), mode: 'decimal' },
-        { name: 'duration-target', label: 'Duração Alvo', value: targetDuration, onValueChange: (e)=>setTargetDuration(e.value), mode: 'decimal' },
+        { name: 'duration-min', label: 'Duração Min.', value: minDuration, onValueChange: (e) => setMinDuration(e.value), mode: 'decimal' },
+        { name: 'duration-max', label: 'Duração Max.', value: maxDuration, onValueChange: (e) => setMaxDuration(e.value), mode: 'decimal' },
+        { name: 'duration-target', label: 'Duração Alvo', value: targetDuration, onValueChange: (e) => setTargetDuration(e.value), mode: 'decimal' },
     ]
 
     const energyFilds = [
-        { name: 'energy-min', label: 'Energia Min.', value: minEnergy, onValueChange: (e)=>setMinEnergy(e.value), mode: 'decimal' },
-        { name: 'energyn-max', label: 'Energia Max.', value: maxEnergy, onValueChange: (e)=>setMaxEnergy(e.value), mode: 'decimal' },
-        { name: 'energy-target', label: 'Energia Alvo', value: targetEnergy, onValueChange: (e)=>setTargetEnergy(e.value), mode: 'decimal' },
+        { name: 'energy-min', label: 'Energia Min.', value: minEnergy, onValueChange: (e) => setMinEnergy(e.value), mode: 'decimal' },
+        { name: 'energyn-max', label: 'Energia Max.', value: maxEnergy, onValueChange: (e) => setMaxEnergy(e.value), mode: 'decimal' },
+        { name: 'energy-target', label: 'Energia Alvo', value: targetEnergy, onValueChange: (e) => setTargetEnergy(e.value), mode: 'decimal' },
     ]
 
     const instrumentalnessFilds = [
-        { name: 'instrumentalness-min', label: 'Instrumental Min.', value: minInstrumentalness, onValueChange: (e)=>setMinInstrumentalness(e.value), mode: 'decimal' },
-        { name: 'instrumentalness-max', label: 'Instrumental Max.', value: maxInstrumentalness, onValueChange: (e)=>setMaxInstrumentalness(e.value), mode: 'decimal' },
-        { name: 'instrumentalness-target', label: 'Instrumental Alvo', value: targetInstrumentalness, onValueChange: (e)=>setTargetInstrumentalness(e.value), mode: 'decimal' },
+        { name: 'instrumentalness-min', label: 'Instrumental Min.', value: minInstrumentalness, onValueChange: (e) => setMinInstrumentalness(e.value), mode: 'decimal' },
+        { name: 'instrumentalness-max', label: 'Instrumental Max.', value: maxInstrumentalness, onValueChange: (e) => setMaxInstrumentalness(e.value), mode: 'decimal' },
+        { name: 'instrumentalness-target', label: 'Instrumental Alvo', value: targetInstrumentalness, onValueChange: (e) => setTargetInstrumentalness(e.value), mode: 'decimal' },
     ]
 
     const livenessFilds = [
-        { name: 'liveness-min', label: 'Ao Vivo Min.', value: minLiveness, onValueChange: (e)=>setMinLiveness(e.value), mode: 'decimal' },
-        { name: 'liveness-max', label: 'Ao Vivo Max.', value: maxLiveness, onValueChange: (e)=>setMaxLiveness(e.value), mode: 'decimal' },
-        { name: 'liveness-target', label: 'Ao Vivo Alvo', value: targetLiveness, onValueChange: (e)=>setTargetLiveness(e.value), mode: 'decimal' },
+        { name: 'liveness-min', label: 'Ao Vivo Min.', value: minLiveness, onValueChange: (e) => setMinLiveness(e.value), mode: 'decimal' },
+        { name: 'liveness-max', label: 'Ao Vivo Max.', value: maxLiveness, onValueChange: (e) => setMaxLiveness(e.value), mode: 'decimal' },
+        { name: 'liveness-target', label: 'Ao Vivo Alvo', value: targetLiveness, onValueChange: (e) => setTargetLiveness(e.value), mode: 'decimal' },
     ]
 
     const loudnessFilds = [
-        { name: 'loudness-min', label: 'Ruído Min.', value: minLoudness, onValueChange: (e)=>setMinLoudness(e.value), mode: 'decimal' },
-        { name: 'loudness-max', label: 'Ruído Max.', value: maxLoudness, onValueChange: (e)=>setMaxLoudness(e.value), mode: 'decimal' },
-        { name: 'loudness-target', label: 'Ruído Alvo', value: targetLoudness, onValueChange: (e)=>setTargetLoudness(e.value), mode: 'decimal' },
+        { name: 'loudness-min', label: 'Ruído Min.', value: minLoudness, onValueChange: (e) => setMinLoudness(e.value), mode: 'decimal' },
+        { name: 'loudness-max', label: 'Ruído Max.', value: maxLoudness, onValueChange: (e) => setMaxLoudness(e.value), mode: 'decimal' },
+        { name: 'loudness-target', label: 'Ruído Alvo', value: targetLoudness, onValueChange: (e) => setTargetLoudness(e.value), mode: 'decimal' },
     ]
 
     const popularityFilds = [
-        { name: 'popularity-min', label: 'Popularidade Min.', value: minPopularity, onValueChange: (e)=>setMinPopularity(e.value), mode: 'decimal' },
-        { name: 'popularity-max', label: 'Popularidade Max.', value: maxPopularity, onValueChange: (e)=>setMaxPopularity(e.value), mode: 'decimal' },
-        { name: 'popularity-target', label: 'Popularidade Alvo', value: targetPopularity, onValueChange: (e)=>setTargetPopularity(e.value), mode: 'decimal' },
+        { name: 'popularity-min', label: 'Popularidade Min.', value: minPopularity, onValueChange: (e) => setMinPopularity(e.value), mode: 'decimal' },
+        { name: 'popularity-max', label: 'Popularidade Max.', value: maxPopularity, onValueChange: (e) => setMaxPopularity(e.value), mode: 'decimal' },
+        { name: 'popularity-target', label: 'Popularidade Alvo', value: targetPopularity, onValueChange: (e) => setTargetPopularity(e.value), mode: 'decimal' },
     ]
 
     const speechinessFilds = [
-        { name: 'speechiness-min', label: 'Fala Min.', value: minSpeechiness, onValueChange: (e)=>setMinSpeechiness(e.value), mode: 'decimal' },
-        { name: 'speechiness-max', label: 'Fala Max.', value: maxSpeechiness, onValueChange: (e)=>setMaxSpeechiness(e.value), mode: 'decimal' },
-        { name: 'speechiness-target', label: 'Fala Alvo', value: targetSpeechiness, onValueChange: (e)=>setTargetSpeechiness(e.value), mode: 'decimal' },
+        { name: 'speechiness-min', label: 'Fala Min.', value: minSpeechiness, onValueChange: (e) => setMinSpeechiness(e.value), mode: 'decimal' },
+        { name: 'speechiness-max', label: 'Fala Max.', value: maxSpeechiness, onValueChange: (e) => setMaxSpeechiness(e.value), mode: 'decimal' },
+        { name: 'speechiness-target', label: 'Fala Alvo', value: targetSpeechiness, onValueChange: (e) => setTargetSpeechiness(e.value), mode: 'decimal' },
     ]
 
     const tempoFilds = [
-        { name: 'tempo-min', label: 'Tempo(BPM) Min.', value: minTempo, onValueChange: (e)=>setMinTempo(e.value), mode: 'decimal' },
-        { name: 'tempo-max', label: 'Tempo(BPM) Max.', value: maxTempo, onValueChange: (e)=>setMaxTempo(e.value), mode: 'decimal' },
-        { name: 'tempo-target', label: 'Tempo(BPM) Alvo', value: targetTempo, onValueChange: (e)=>setTargetTempo(e.value), mode: 'decimal' },
+        { name: 'tempo-min', label: 'Tempo(BPM) Min.', value: minTempo, onValueChange: (e) => setMinTempo(e.value), mode: 'decimal' },
+        { name: 'tempo-max', label: 'Tempo(BPM) Max.', value: maxTempo, onValueChange: (e) => setMaxTempo(e.value), mode: 'decimal' },
+        { name: 'tempo-target', label: 'Tempo(BPM) Alvo', value: targetTempo, onValueChange: (e) => setTargetTempo(e.value), mode: 'decimal' },
     ]
 
     const valenceFilds = [
-        { name: 'valence-min', label: 'Valência Min.', value: minValence, onValueChange: (e)=>setMinValence(e.value), mode: 'decimal' },
-        { name: 'valence-max', label: 'Valência Max.', value: maxValence, onValueChange: (e)=>setMaxValence(e.value), mode: 'decimal' },
-        { name: 'valence-target', label: 'Valência Alvo', value: targetValence, onValueChange: (e)=>setTargetValence(e.value), mode: 'decimal' },
+        { name: 'valence-min', label: 'Valência Min.', value: minValence, onValueChange: (e) => setMinValence(e.value), mode: 'decimal' },
+        { name: 'valence-max', label: 'Valência Max.', value: maxValence, onValueChange: (e) => setMaxValence(e.value), mode: 'decimal' },
+        { name: 'valence-target', label: 'Valência Alvo', value: targetValence, onValueChange: (e) => setTargetValence(e.value), mode: 'decimal' },
     ]
 
     function requestObjectBuilder() {
         const recommendationsFilterDTO = {
             limit: 100,
             seedGenres: selectedGenres.join(','),
-            minAcousticness: minAcousticness/100,
-            maxAcousticness: maxAcousticness/100,
-            targetAcousticness: targetAcousticness/100,
-            minDanceability: minDanceability/100,
-            maxDanceability: maxDanceability/100,
-            targetDanceability: targetDanceability/100,
+            minAcousticness: minAcousticness / 100,
+            maxAcousticness: maxAcousticness / 100,
+            targetAcousticness: targetAcousticness / 100,
+            minDanceability: minDanceability / 100,
+            maxDanceability: maxDanceability / 100,
+            targetDanceability: targetDanceability / 100,
             minDurationMs: minDuration,
             maxDurationMs: maxDuration,
             targetDurationMs: targetDuration,
-            minEnergy: minEnergy/100,
-            maxEnergy: maxEnergy/100,
-            targetEnergy: targetEnergy/100,
-            minInstrumentalness: minInstrumentalness/100,
-            maxInstrumentalness: maxInstrumentalness/100,
-            targetInstrumentalness: targetInstrumentalness/100,
+            minEnergy: minEnergy / 100,
+            maxEnergy: maxEnergy / 100,
+            targetEnergy: targetEnergy / 100,
+            minInstrumentalness: minInstrumentalness / 100,
+            maxInstrumentalness: maxInstrumentalness / 100,
+            targetInstrumentalness: targetInstrumentalness / 100,
             minKey: minKey,
             maxKey: maxKey,
             targetKey: targetKey,
-            minLiveness: minLiveness/100,
-            maxLiveness: maxLiveness/100,
-            targetLiveness: targetLiveness/100,
+            minLiveness: minLiveness / 100,
+            maxLiveness: maxLiveness / 100,
+            targetLiveness: targetLiveness / 100,
             minLoudness: minLoudness,
             maxLoudness: maxLoudness,
             targetLoudness: targetLoudness,
             targetMode: targetMode,
-            minPopularity: minPopularity/100,
-            maxPopularity: maxPopularity/100,
-            targetPopularity: targetPopularity/100,
-            minSpeechiness: minSpeechiness/100,
-            maxSpeechiness: maxSpeechiness/100,
-            targetSpeechiness: targetSpeechiness/100,
+            minPopularity: minPopularity / 100,
+            maxPopularity: maxPopularity / 100,
+            targetPopularity: targetPopularity / 100,
+            minSpeechiness: minSpeechiness / 100,
+            maxSpeechiness: maxSpeechiness / 100,
+            targetSpeechiness: targetSpeechiness / 100,
             minTempo: minTempo,
             maxTempo: maxTempo,
             targetTempo: targetTempo,
             minTimeSignature: minTimeSignature,
             maxTimeSignature: maxTimeSignature,
             targetTimeSignature: targetTimeSignature,
-            minValence: minValence/100,
-            maxValence: maxValence/100,
-            targetValence: targetValence/100
+            minValence: minValence / 100,
+            maxValence: maxValence / 100,
+            targetValence: targetValence / 100
         };
 
         return recommendationsFilterDTO;
@@ -296,62 +304,65 @@ export default function Recommendations() {
             <div style={{ background: 'linear-gradient(90deg, rgba(91,22,176,1) 22%, rgba(34,198,216,1) 66%)', minHeight: '90vh', display: 'flex', justifyContent: 'center', }}>
                 <div style={{ width: '90vw', display: 'flex' }} >
                     <div id="sidebar" className="child child1">
-                        <Card title="Advanced Card" className="md:w-25rem">
-                            <div className="m-0">
-                                <label htmlFor="genero" className="font-bold block mb-2">Genero(s)</label>
-                                <MultiSelect inputId="genero" value={selectedGenres} onChange={(e) => setSelectedGenres(e.value)} options={genres}
-                                    filter placeholder="Generos Selecionados" maxSelectedLabels={3} className="w-full md:w-20rem" />
-                            </div>
-                            <Divider />
-                            <div className="m-0">
-                                <label htmlFor="tonalidade" className="font-bold block mb-2">Tonalidade(s)</label>
-                                <MultiSelect inputId="tonalidade" value={selectedKeys} onChange={(e) => { changeKeys(e.value, e) }} options={keys} optionLabel="name"
-                                    placeholder="Selecione a tonalidade" maxSelectedLabels={5} className="w-full md:w-20rem" />
-                            </div>
-                            <Divider />
-                            <div className="m-0">
-                                <label htmlFor="modalidade" className="font-bold block mb-2">Modalidade</label>
-                                <Dropdown value={selectedMode} onChange={(e) => setSelectedMode(e.value)} options={modes} optionLabel="name"
-                                    placeholder="Selecione a modo" className="w-full md:w-20rem" />
-                            </div>
-                            <Divider />
-                            <div className="m-0">
-                                <label htmlFor="compasso" className="font-bold block mb-2">Compasso(s)</label>
-                                <MultiSelect inputId="compasso" value={selectedTimeSignatues} onChange={(e) => { changeTimeSignature(e.value, e) }} options={timeSignatures} optionLabel="name"
-                                    placeholder="Selecione o(s) compasso(s)" maxSelectedLabels={5} className="w-full md:w-20rem" />
-                            </div>
-                            <Divider />
-                            <InputsNumberFilter itens={acousticnessFilds} />
-                            <Divider />
-                            <InputsNumberFilter itens={danceabilityFilds} />
-                            <Divider />
-                            <InputsNumberFilter itens={durationFilds} />
-                            <Divider />
-                            <InputsNumberFilter itens={energyFilds} />
-                            <Divider />
-                            <InputsNumberFilter itens={instrumentalnessFilds} />
-                            <Divider />
-                            <InputsNumberFilter itens={livenessFilds} />
-                            <Divider />
-                            <InputsNumberFilter itens={instrumentalnessFilds} />
-                            <Divider />
-                            <InputsNumberFilter itens={loudnessFilds} />
-                            <Divider />
-                            <InputsNumberFilter itens={popularityFilds} />
-                            <Divider />
-                            <InputsNumberFilter itens={speechinessFilds} />
-                            <Divider />
-                            <InputsNumberFilter itens={tempoFilds} />
-                            <Divider />
-                            <InputsNumberFilter itens={valenceFilds} />
-                            <Divider />
-                            <div className="m-0" style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                <Button label="Submit" onClick={recommendationsRequest}/>
-                            </div>
-                        </Card>
+                        <ScrollPanel style={{ width: '100%', height: '85vh' }}>
+                            <Card title="Filtros" className="md:w-25rem">
+                                <div className="m-0">
+                                    <label htmlFor="genero" className="font-bold block mb-2">Genero(s)</label>
+                                    <MultiSelect inputId="genero" value={selectedGenres} onChange={(e) => setSelectedGenres(e.value)} options={genres}
+                                        filter placeholder="Generos Selecionados" maxSelectedLabels={3} className="w-full md:w-20rem" />
+                                </div>
+                                <Divider />
+                                <div className="m-0">
+                                    <label htmlFor="tonalidade" className="font-bold block mb-2">Tonalidade(s)</label>
+                                    <MultiSelect inputId="tonalidade" value={selectedKeys} onChange={(e) => { changeKeys(e.value, e) }} options={keys} optionLabel="name"
+                                        placeholder="Selecione a tonalidade" maxSelectedLabels={5} className="w-full md:w-20rem" />
+                                </div>
+                                <Divider />
+                                <div className="m-0">
+                                    <label htmlFor="modalidade" className="font-bold block mb-2">Modalidade</label>
+                                    <Dropdown value={selectedMode} onChange={(e) => setSelectedMode(e.value)} options={modes} optionLabel="name"
+                                        placeholder="Selecione a modo" className="w-full md:w-20rem" />
+                                </div>
+                                <Divider />
+                                <div className="m-0">
+                                    <label htmlFor="compasso" className="font-bold block mb-2">Compasso(s)</label>
+                                    <MultiSelect inputId="compasso" value={selectedTimeSignatues} onChange={(e) => { changeTimeSignature(e.value, e) }} options={timeSignatures} optionLabel="name"
+                                        placeholder="Selecione o(s) compasso(s)" maxSelectedLabels={5} className="w-full md:w-20rem" />
+                                </div>
+                                <Divider />
+                                <InputsNumberFilter itens={acousticnessFilds} />
+                                <Divider />
+                                <InputsNumberFilter itens={danceabilityFilds} />
+                                <Divider />
+                                <InputsNumberFilter itens={durationFilds} />
+                                <Divider />
+                                <InputsNumberFilter itens={energyFilds} />
+                                <Divider />
+                                <InputsNumberFilter itens={instrumentalnessFilds} />
+                                <Divider />
+                                <InputsNumberFilter itens={livenessFilds} />
+                                <Divider />
+                                <InputsNumberFilter itens={instrumentalnessFilds} />
+                                <Divider />
+                                <InputsNumberFilter itens={loudnessFilds} />
+                                <Divider />
+                                <InputsNumberFilter itens={popularityFilds} />
+                                <Divider />
+                                <InputsNumberFilter itens={speechinessFilds} />
+                                <Divider />
+                                <InputsNumberFilter itens={tempoFilds} />
+                                <Divider />
+                                <InputsNumberFilter itens={valenceFilds} />
+                                <Divider />
+                                <div className="m-0" style={{ width:'100%', display: 'flex', justifyContent: 'flex-end' }}>
+                                    <Button style={{width:'100%'}}label="Filtrar" onClick={recommendationsRequest} />
+                                </div>
+                            </Card>
+                        </ScrollPanel>
+
                     </div>
-                    <div id="main" className="child child2">
-                        <DataTableFilter tracks={tracks}/>
+                    <div id="main" className="child child2" style={{borderRadius: '30px'}}>
+                        <DataTableFilter tracks={tracks} />
                     </div>
                 </div>
 

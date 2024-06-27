@@ -41,7 +41,6 @@ public class AudioFeaturesDTO {
 		this.trackHref = audioFeatures.getTrackHref();
 		this.type = audioFeatures.getType();
 		this.uri = audioFeatures.getUri();
-		this.loudness = audioFeatures.getLoudness();
 		this.tempo = audioFeatures.getTempo();
 	}
 	

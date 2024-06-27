@@ -23,6 +23,7 @@ public class AudioFeaturesToDTOConverter implements Converter<AudioFeatures, Aud
 		audioFeaturesDTO.setSpeechiness(convertSpeechiness(audioFeatures.getSpeechiness()));
 		audioFeaturesDTO.setTimeSignature(convertTimeSignature(audioFeatures.getTimeSignature()));
 		audioFeaturesDTO.setValence(convertValence(audioFeatures.getValence()));
+		audioFeaturesDTO.setLoudness(convertLoudness(audioFeatures.getLoudness()));
 		
 		return audioFeaturesDTO;
 	}
@@ -65,6 +66,12 @@ public class AudioFeaturesToDTOConverter implements Converter<AudioFeatures, Aud
 	}
 	private String convertKey(int key) {
 		return Key.fromValue(key).getDisplayName();
+	}
+	
+	private float convertLoudness(float loudness) {
+		float positiveLoudness =  loudness + 60; 
+		float percentLoudness = (100 * positiveLoudness)/60;
+		return percentLoudness;
 	}
 
 }
