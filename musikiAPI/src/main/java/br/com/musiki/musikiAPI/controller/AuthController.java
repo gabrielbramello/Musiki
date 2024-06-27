@@ -1,8 +1,11 @@
 package br.com.musiki.musikiAPI.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.ParseException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,6 +21,8 @@ import br.com.musiki.musikiAPI.dto.LoginRequestDTO;
 import br.com.musiki.musikiAPI.dto.LoginResponseDTO;
 import br.com.musiki.musikiAPI.security.JwtIssuer;
 import br.com.musiki.musikiAPI.security.UserPrincipal;
+import br.com.musiki.musikiAPI.services.spotify.authorization.ClientCredentialAuth;
+import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -29,6 +34,9 @@ public class AuthController {
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	
+	@Autowired
+    private ClientCredentialAuth clientCredentialAuth;
 	
 	@PostMapping("/login")
 	public LoginResponseDTO login(@RequestBody LoginRequestDTO request) {
@@ -51,5 +59,15 @@ public class AuthController {
 		return loginResponseDTO;
 
 	}
+	
+	@PostMapping("/renew-token")
+    public ResponseEntity<String> renewToken() throws IOException, SpotifyWebApiException, org.apache.hc.core5.http.ParseException {
+        try {
+            clientCredentialAuth.renewAccessToken();
+            return ResponseEntity.ok("Token renovado com sucesso.");
+        } catch (ParseException e) {
+            return ResponseEntity.status(500).body("Erro ao renovar o token: " + e.getMessage());
+        }
+    }
 
 }

@@ -53,7 +53,7 @@ public class ClientCredentialAuth {
         return tokenExpirationTime == null || Instant.now().isAfter(tokenExpirationTime);
     }
 
-    private void renewAccessToken() throws ParseException {
+    public void renewAccessToken() throws ParseException {
         try {
             ClientCredentials clientCredentials = fetchClientCredentials();
             spotifyApi.setAccessToken(clientCredentials.getAccessToken());
@@ -62,7 +62,7 @@ public class ClientCredentialAuth {
             int expiresIn = clientCredentials.getExpiresIn();
             tokenExpirationTime = Instant.now().plusSeconds(expiresIn);
 
-            System.out.println("Token de acesso renovado....");
+            System.out.println("Token de acesso renovado!");
         } catch (IOException | SpotifyWebApiException e) {
             // Lidar com exceções
             System.err.println("Erro ao renovar o token de acesso " + e.getMessage());
@@ -73,7 +73,8 @@ public class ClientCredentialAuth {
     public void renewAccessTokenScheduled() throws ParseException {
         if (isTokenExpired()) {
             renewAccessToken();
-            System.out.println("Token renovado...");
+            System.out.println("Renovando token ...");
         }
     }
 }
+
