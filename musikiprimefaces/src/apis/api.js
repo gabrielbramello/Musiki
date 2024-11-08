@@ -1,7 +1,7 @@
 import axios from 'axios';
 //const BASE_URL = "https://musiki-api.onrender.com:8082/api"
 
-const BASE_URL = "http://localhost:8080/api"
+const BASE_URL = "http://18.222.217.56:8080/api"
 
 export default axios.create({
     baseURL:BASE_URL,
