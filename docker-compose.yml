@@ -8,12 +8,14 @@ services:
       POSTGRES_DB: musiki
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 12345
+    volumes:
+      - postgres-data:/var/lib/postgresql/data 
 
   spring-app:
     build:
-      context: ./musikiAPI  # Caminho para o diretório onde está o Dockerfile
-      dockerfile: Dockerfile  # Certifique-se de que o Dockerfile está nesse diretório
-    image: musiki:latest  # Nome da imagem, se você quiser que ela seja 'latest'
+      context: ./musikiAPI  
+      dockerfile: Dockerfile  
+    image: musiki:latest  
     ports:
       - "8080:8080"
     environment:
@@ -31,3 +33,7 @@ services:
       - "5000:5000"
     depends_on:
       - spring-app
+
+volumes:
+  postgres-data:  
+    driver: local  
