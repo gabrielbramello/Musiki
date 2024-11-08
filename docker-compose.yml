@@ -1,19 +1,21 @@
-version: '3.8'
 
 services:
   musiki-db:
     image: postgres:14
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       POSTGRES_DB: musiki
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 12345
 
   spring-app:
-    image: musiki:latest
+    build:
+      context: ./musikiAPI  # Caminho para o diretório onde está o Dockerfile
+      dockerfile: Dockerfile  # Certifique-se de que o Dockerfile está nesse diretório
+    image: musiki:latest  # Nome da imagem, se você quiser que ela seja 'latest'
     ports:
-      - "8082:8082"
+      - "8080:8080"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://musiki-db:5432/musiki
       SPRING_DATASOURCE_USERNAME: postgres
