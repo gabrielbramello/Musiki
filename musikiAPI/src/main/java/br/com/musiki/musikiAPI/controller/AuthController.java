@@ -2,6 +2,7 @@ package br.com.musiki.musikiAPI.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
@@ -48,8 +49,8 @@ public class AuthController {
 		UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
 		
 		List<String> roles = principal.getAuthorities().stream()
-								.map(GrantedAuthority::getAuthority)
-								.toList();
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
 		
 		String accessToken = jwtIssuer.issue(principal.getUserId(), principal.getLogin(), roles);
 		
