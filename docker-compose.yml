@@ -38,7 +38,7 @@ services:
       dockerfile: Dockerfile  # Caminho para o Dockerfile do React
     image: musiki-primefaces:latest  # Nome da imagem para o frontend React
     ports:
-      - "8080:80"  # Mapeando a porta 80 do container para a porta 8080 do host
+      - "80:5000"  # Mapeando a porta 5000 do container (onde o React é servido) para a porta 80 do host
     depends_on:
       - spring-app  # Garante que o backend esteja rodando antes de iniciar o frontend
     networks:
