@@ -1,11 +1,14 @@
+echo "Parando e removendo containers existentes..."
 docker-compose down
 
+echo "Atualizando o código do repositório..."
 git pull
 
-docker build -t musiki:latest ./musikiAPI
+echo "Construindo a imagem do Docker para a aplicação..."
+docker-compose build --no-cache
 
-docker build -t musiki-primefaces:latest ./musikiprimefaces
-
+echo "Subindo os containers com docker-compose..."
 docker-compose up --build --force-recreate --remove-orphans
 
-docker-compose logs --tail all -f spring-app
+echo "Exibindo logs do serviço Spring Boot..."
+docker-compose logs -f spring-app

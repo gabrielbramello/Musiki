@@ -17,6 +17,6 @@ WORKDIR /app
 # Copiar o JAR do build
 COPY --from=spring-build /app/target/musikiAPI-0.0.1-SNAPSHOT.jar /app/musiki-api.jar
 
-EXPOSE 8080
+EXPOSE 8081
 
 ENTRYPOINT ["java", "-jar", "/app/musiki-api.jar"]

@@ -21,7 +21,7 @@ services:
       dockerfile: Dockerfile  # Caminho para o Dockerfile do Spring Boot
     image: musiki-app:latest  # Nome da imagem para o backend
     ports:
-      - "8080:8080"  # Porta que o Spring Boot estará ouvindo
+      - "8081:8081"  # Porta que o Spring Boot estará ouvindo
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://musiki-db:5432/musiki
       SPRING_DATASOURCE_USERNAME: postgres
@@ -38,7 +38,7 @@ services:
       dockerfile: Dockerfile  # Caminho para o Dockerfile do React
     image: musiki-primefaces:latest  # Nome da imagem para o frontend React
     ports:
-      - "5000:5000"  # Porta que o React estará ouvindo
+      - "8080:80"  # Mapeando a porta 80 do container para a porta 8080 do host
     depends_on:
       - spring-app  # Garante que o backend esteja rodando antes de iniciar o frontend
     networks:
