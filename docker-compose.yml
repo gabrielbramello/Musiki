@@ -1,16 +1,15 @@
-
 services:
   # Serviço para o banco de dados PostgreSQL
   musiki-db:
     image: postgres:14
     ports:
-      - "5433:5432"  # Se não houver conflito, pode ser 5432:5432
+      - "5433:${DB_PORT}"  # Mapeando a porta do PostgreSQL (5433 no host para 5432 no container)
     environment:
-      POSTGRES_DB: musiki
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: ${DB_NAME}  # Usando a variável DB_NAME do .env
+      POSTGRES_USER: ${DB_USER}  # Usando a variável DB_USER do .env
+      POSTGRES_PASSWORD: ${DB_PASSWORD}  # Usando a variável DB_PASSWORD do .env
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data  # Persistência dos dados do banco
     networks:
       - musiki-network
 
@@ -18,16 +17,19 @@ services:
   spring-app:
     build:
       context: ./musikiAPI
-      dockerfile: Dockerfile  # Caminho para o Dockerfile do Spring Boot
-    image: musiki-app:latest  # Nome da imagem para o backend
+      dockerfile: Dockerfile
+    image: musiki-app:latest
     ports:
-      - "8081:8081"  # Porta que o Spring Boot estará ouvindo
+      - "8081:8081"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://musiki-db:5432/musiki
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: 12345
+      SPRING_DATASOURCE_URL: jdbc:postgresql://musiki-db:${DB_PORT}/${DB_NAME} # Usando as variáveis do .env
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}  # Usando a variável DB_USER do .env
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}  # Usando a variável DB_PASSWORD do .env
+      SPOTIFY_CLIENT_ID: ${SPOTIFY_CLIENT_ID}  # Usando a variável do .env
+      SPOTIFY_CLIENT_SECRET: ${SPOTIFY_CLIENT_SECRET}  # Usando a variável do .env
+      SERVER_PORT: ${SERVER_PORT}  # Carregar a variável do .env
     depends_on:
-      - musiki-db  # Garante que o banco de dados esteja rodando antes de iniciar o Spring Boot
+      - musiki-db
     networks:
       - musiki-network
 
@@ -35,19 +37,27 @@ services:
   spa-app:
     build:
       context: ./musikiprimefaces
-      dockerfile: Dockerfile  # Caminho para o Dockerfile do React
-    image: musiki-primefaces:latest  # Nome da imagem para o frontend React
+      dockerfile: Dockerfile
+    image: musiki-primefaces:latest
     ports:
-      - "80:5000"  # Mapeando a porta 5000 do container (onde o React é servido) para a porta 80 do host
+      - "80:5000"
+    env_file:
+      - .env   # Caminho para o arquivo .env que está fora da pasta do seu projeto
+    environment:
+      #NODE_ENV: production
+      #REACT_APP_API_URL: ${REACT_APP_API_URL}
+      #REACT_APP_PORTA: ${REACT_APP_PORTA}
     depends_on:
-      - spring-app  # Garante que o backend esteja rodando antes de iniciar o frontend
+      - spring-app
     networks:
       - musiki-network
 
-volumes:
-  postgres-data:  # Volume para persistir os dados do banco
-    driver: local
-
+# Definição da rede global (fora do bloco services)
 networks:
   musiki-network:
     driver: bridge
+
+# Definição dos volumes
+volumes:
+  postgres-data:
+    driver: local

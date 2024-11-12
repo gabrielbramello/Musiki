@@ -1,3 +1,5 @@
 #dependencias
 node_modules
 musikiprimefaces/package-lock.json
+/.metadata/
+.env
