@@ -44,7 +44,7 @@ services:
     env_file:
       - .env   # Caminho para o arquivo .env que está fora da pasta do seu projeto
     environment:
-      #NODE_ENV: production
+      NODE_ENV: production
       #REACT_APP_API_URL: ${REACT_APP_API_URL}
       #REACT_APP_PORTA: ${REACT_APP_PORTA}
     depends_on:
