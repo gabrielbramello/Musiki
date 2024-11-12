@@ -41,6 +41,8 @@ services:
     image: musiki-primefaces:latest
     ports:
       - "80:5000"
+    #env_file:
+      #- .env   # Caminho para o arquivo .env que está fora da pasta do seu projeto
     environment:
       NODE_ENV: production
       #REACT_APP_API_URL: ${REACT_APP_API_URL}

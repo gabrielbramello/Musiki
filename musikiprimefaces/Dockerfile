@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Copiar o arquivo .env para o container (Deve vir antes do 'npm install' e 'npm run build')
-COPY .env . 
+#COPY env . 
 
 # Copiar o restante dos arquivos do projeto, incluindo a pasta public (essencial para o build)
 COPY . .
