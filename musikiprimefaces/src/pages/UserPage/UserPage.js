@@ -23,7 +23,7 @@ export default function UserPage() {
 
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
-    const [senha, setSenha] = useState('');
+    const [login, setLogin] = useState('');
 
     const [userId, setUserId] = useState();
     const [favoritesArtists, setFavoritesArtists] = useState({});
@@ -47,8 +47,10 @@ export default function UserPage() {
             .then(response => {
                 console.log(response)
                 showSuccess('Usuário atualizado com sucesso')
-
-            })
+                setTimeout(() => {
+                    window.location.reload();  
+                }, 2000);
+            })            
             .catch(error => {
                 console.error(error);
             });
@@ -72,7 +74,7 @@ export default function UserPage() {
                     setUserInfo(response.data)
                     setNome(response.data.name);
                     setEmail(response.data.email)
-
+                    setLogin(response.data.login)
                 })
                 .catch(error => {
                     console.error(error);
@@ -200,14 +202,18 @@ export default function UserPage() {
                         <div className="p-p-4">
                             <Card title="Editar Configurações do Usuário" className="p-mb-4">
                                 <form>
-                                    <div className="p-field">
-                                        <label htmlFor="nome" className="p-d-block" style={{ textAlign: 'left' }}>Nome</label>
+                                    <div className="p-field"  style={{ margin: '15px' }}>
+                                        <label htmlFor="login" className="p-d-block" style={{ textAlign: 'left' }}>Login: </label>
+                                        <InputText id="login" type="login" value={login} className="p-d-block p-inputtext-sm" style={{ width: '100%' }} disabled />
+                                    </div> 
+                                    <div className="p-field"  style={{ margin: '15px' }}>
+                                        <label htmlFor="nome" className="p-d-block" style={{ textAlign: 'left' }}>Nome: </label>
                                         <InputText id="nome" value={nome} onChange={(e) => setNome(e.target.value)} className="p-d-block p-inputtext-sm" style={{ width: '100%' }} />
                                     </div>
-                                    <div className="p-field">
-                                        <label htmlFor="email" className="p-d-block" style={{ textAlign: 'left' }}>Email</label>
+                                    <div className="p-field"  style={{ margin: '15px' }}>
+                                        <label htmlFor="email" className="p-d-block" style={{ textAlign: 'left' }}>Email: </label>
                                         <InputText id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="p-d-block p-inputtext-sm" style={{ width: '100%' }} />
-                                    </div>
+                                    </div>                                                                     
                                 </form>
                             </Card>
                             <div className="p-d-flex p-jc-end" style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -228,9 +234,9 @@ export default function UserPage() {
                     isVisible ?
                         <div className="p-p-4">
                             <Card title="Albuns Favoritos" className="p-mb-4">
-                                <DataTable value={favoritesAlbuns} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
+                                <DataTable value={favoritesAlbuns} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }} emptyMessage="Ainda não favoritou nenhum album?">
                                     {/*<Column field="id" header="ID"></Column> */}
-                                    <Column field="name" header="Nome Album"></Column>
+                                    <Column field="name" header="Nome"></Column>
                                     <Column body={(e) => renderDetailButton(e, 'album')} header="Detalhes"></Column>
                                 </DataTable>
                             </Card>
@@ -248,9 +254,9 @@ export default function UserPage() {
                     isVisible ?
                         <div className="p-p-4">
                             <Card title="Artistas Favoritos" className="p-mb-4">
-                                <DataTable value={favoritesArtists} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
+                                <DataTable value={favoritesArtists} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }} emptyMessage="Ainda não favoritou nenhum artista?">
                                     {/*<Column field="id" header="ID"></Column> */}
-                                    <Column field="name" header="Nome Artista"></Column>
+                                    <Column field="name" header="Nome"></Column>
                                     <Column field="simplifiedGenres" header="Gênero(s)"></Column>
                                     <Column body={(e) => renderDetailButton(e, 'artist')} header="Detalhes"></Column>
                                 </DataTable>
@@ -269,9 +275,9 @@ export default function UserPage() {
                     isVisible ?
                         <div className="p-p-4">
                             <Card title="Músicas Favoritas" className="p-mb-4">
-                                <DataTable value={favoritesTracks} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
+                                <DataTable value={favoritesTracks} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }} emptyMessage="Ainda não favoritou nenhuma musica?">
                                     {/*<Column field="id" header="ID"></Column>*/}
-                                    <Column field="name" header="Nome Música"></Column>
+                                    <Column field="name" header="Título da Faixa"></Column>
                                     <Column body={(e) => renderDetailButton(e, 'track')} header="Detalhes"></Column>
                                 </DataTable>
                             </Card>
