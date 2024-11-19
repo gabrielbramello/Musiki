@@ -229,7 +229,7 @@ export default function UserPage() {
                         <div className="p-p-4">
                             <Card title="Albuns Favoritos" className="p-mb-4">
                                 <DataTable value={favoritesAlbuns} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
-                                    <Column field="id" header="ID"></Column>
+                                    {/*<Column field="id" header="ID"></Column> */}
                                     <Column field="name" header="Nome Album"></Column>
                                     <Column body={(e) => renderDetailButton(e, 'album')} header="Detalhes"></Column>
                                 </DataTable>
@@ -249,7 +249,7 @@ export default function UserPage() {
                         <div className="p-p-4">
                             <Card title="Artistas Favoritos" className="p-mb-4">
                                 <DataTable value={favoritesArtists} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
-                                    <Column field="id" header="ID"></Column>
+                                    {/*<Column field="id" header="ID"></Column> */}
                                     <Column field="name" header="Nome Artista"></Column>
                                     <Column field="simplifiedGenres" header="Gênero(s)"></Column>
                                     <Column body={(e) => renderDetailButton(e, 'artist')} header="Detalhes"></Column>
@@ -270,7 +270,7 @@ export default function UserPage() {
                         <div className="p-p-4">
                             <Card title="Músicas Favoritas" className="p-mb-4">
                                 <DataTable value={favoritesTracks} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
-                                    <Column field="id" header="ID"></Column>
+                                    {/*<Column field="id" header="ID"></Column>*/}
                                     <Column field="name" header="Nome Música"></Column>
                                     <Column body={(e) => renderDetailButton(e, 'track')} header="Detalhes"></Column>
                                 </DataTable>

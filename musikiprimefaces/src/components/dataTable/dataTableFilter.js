@@ -148,7 +148,7 @@ export default function DataTableFilter(props) {
                 onSelectionChange={(e) =>linkTo(e.value)}
                 >
 
-                <Column field="id" body={idBodyTemplate} header="Id" style={{ minWidth: '12rem' }} />
+                {/*<Column field="id" body={idBodyTemplate} header="Id" style={{ minWidth: '12rem' }} /> */}
                 <Column header="Nome" field="name" filterField="name" style={{ minWidth: '12rem' }} filter filterPlaceholder="Pesquisa por nome da faixa" />
                 <Column header="Artista" body={artistBodyTemplate} filterField="artists[0].name" showFilterMenu={false} filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '14rem' }}
                     filter filterPlaceholder="Pesquisa por nome do artista" />
