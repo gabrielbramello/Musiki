@@ -8,7 +8,7 @@ import axios from 'axios';
 
 //const BASE_URL = `http://${API_URL}:${PORTA_REACT}/api`;
 
-const BASE_URL = `http://ec2-3-147-126-64.us-east-2.compute.amazonaws.com:8081/api`;
+const BASE_URL = `http://localhost:8081/api`;
 
 console.log('BASE_URL:', BASE_URL); // Deve imprimir "8081"
 
