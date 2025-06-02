@@ -31,11 +31,11 @@ services:
       SPOTIFY_CLIENT_ID: ${SPOTIFY_CLIENT_ID}  # Usando a variável do .env
       SPOTIFY_CLIENT_SECRET: ${SPOTIFY_CLIENT_SECRET}  # Usando a variável do .env
       SERVER_PORT: ${SERVER_PORT}  # Carregar a variável do .env
-      SERVER_SSL_ENABLE: ${SSL_ENABLED}  # Carregar a variável do .env
-      SERVER_SSL_KEY_STORE: ${SPRING_SSL_KEY_STORE}  # Caminho do keystore no contêiner
-      SERVER_SSL_KEY_STORE_PASSWORD: ${SSL_KEY_STORE_PASSWORD}  # Senha do keystore do .env
-      SERVER_SSL_KEY_ALIAS: ${SSL_KEY_ALIAS}  # Alias do certificado no keystore
-      SERVER_SSL_KEY_STORE_TYPE: ${SSL_KEY_STORE_TYPE}  # Tipo de keystore (PKCS12)
+      SSL_ENABLE: ${SSL_ENABLED}  # Carregar a variável do .env
+      SSL_KEY_STORE: ${SSL_KEY_STORE}  # Caminho do keystore no contêiner
+      SSL_KEY_STORE_PASSWORD: ${SSL_KEY_STORE_PASSWORD}  # Senha do keystore do .env
+      SSL_KEY_ALIAS: ${SSL_KEY_ALIAS}  # Alias do certificado no keystore
+      SSL_KEY_STORE_TYPE: ${SSL_KEY_STORE_TYPE}  # Tipo de keystore (PKCS12)
     depends_on:
       - musiki-db
     networks:
