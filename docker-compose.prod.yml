@@ -31,7 +31,7 @@ services:
       SPOTIFY_CLIENT_ID: ${SPOTIFY_CLIENT_ID}  # Usando a variável do .env
       SPOTIFY_CLIENT_SECRET: ${SPOTIFY_CLIENT_SECRET}  # Usando a variável do .env
       SERVER_PORT: ${SERVER_PORT}  # Carregar a variável do .env
-      SSL_ENABLE: ${SSL_ENABLED}  # Carregar a variável do .env
+      #SSL_ENABLE: ${SSL_ENABLED}  # Carregar a variável do .env
       SSL_KEY_STORE: ${SSL_KEY_STORE}  # Caminho do keystore no contêiner
       SSL_KEY_STORE_PASSWORD: ${SSL_KEY_STORE_PASSWORD}  # Senha do keystore do .env
       SSL_KEY_ALIAS: ${SSL_KEY_ALIAS}  # Alias do certificado no keystore
@@ -51,7 +51,7 @@ services:
       dockerfile: Dockerfile
     image: musiki-primefaces:latest
     ports:
-      - "8080:5000"
+      - "80:5000"
     #env_file:
       #- .env   # Caminho para o arquivo .env que está fora da pasta do seu projeto
     environment:
