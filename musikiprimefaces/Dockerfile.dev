@@ -1,0 +1,20 @@
+# Etapa 1: Construção do React (Frontend)
+FROM node:18 AS development
+
+# Definir o diretório de trabalho dentro do container para a aplicação React
+WORKDIR /app
+
+# Copiar os arquivos de dependências do React (package.json e package-lock.json) para o container
+COPY package*.json ./
+
+# Instalar as dependências de desenvolvimento
+RUN npm install --production
+
+# Copiar o restante dos arquivos do projeto
+COPY . .
+
+# Expor a porta padrão do React (3000)
+EXPOSE 3000
+
+# Comando para iniciar o servidor de desenvolvimento com hot reload
+CMD ["npm", "start"]

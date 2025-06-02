@@ -24,6 +24,13 @@ WORKDIR /app
 # Copiar o JAR gerado do build
 COPY --from=spring-build /app/target/musikiAPI-0.0.1-SNAPSHOT.jar /app/musiki-api.jar
 
+# Copiar o keystore para dentro do contêiner
+#COPY ./keystore.p12 /app/keystore.p12
+
+# Expor a porta HTTPS (8443 por padrão para Spring Boot com SSL)
+#EXPOSE 8443
+
+# Expor a porta HTTP (8081 por padrão para API)
 EXPOSE 8081
 
 # Comando para rodar a aplicação Spring Boot

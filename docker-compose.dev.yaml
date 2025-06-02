@@ -1,0 +1,49 @@
+
+services:
+  # Banco de Dados (PostgreSQL) - Desenvolvimento
+  musiki-db:
+    image: postgres:14
+    ports:
+      - "5433:${DB_PORT}"  # Mapeando a porta do PostgreSQL (5433 no host para 5432 no container)
+    environment:
+      POSTGRES_DB: ${DB_NAME}  # Usando a variável DB_NAME do .env
+      POSTGRES_USER: ${DB_USER}  # Usando a variável DB_USER do .env
+      POSTGRES_PASSWORD: ${DB_PASSWORD}  # Usando a variável DB_PASSWORD do .env
+    volumes:
+      - postgres-data:/var/lib/postgresql/data  # Persistência dos dados do banco
+    networks:
+      - musiki-network
+
+  # Serviço para o backend (Spring Boot)
+  spring-app:
+    build:
+      context: ./musikiAPI
+      dockerfile: Dockerfile
+    image: musiki-app:latest
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://musiki-db:${DB_PORT}/${DB_NAME} # Usando as variáveis do .env
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}  # Usando a variável DB_USER do .env
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}  # Usando a variável DB_PASSWORD do .env
+      SPOTIFY_CLIENT_ID: ${SPOTIFY_CLIENT_ID}  # Usando a variável do .env
+      SPOTIFY_CLIENT_SECRET: ${SPOTIFY_CLIENT_SECRET}  # Usando a variável do .env
+      SERVER_PORT: ${SERVER_PORT}  # Carregar a variável do .env
+      SPRING_SSL_KEY_STORE: ${SPRING_SSL_KEY_STORE}  # Caminho do keystore no contêiner
+      #SPRING_SSL_KEY_STORE_PASSWORD: ${SSL_KEY_STORE_PASSWORD}  # Senha do keystore do .env
+      #SPRING_SSL_KEY_ALIAS: ${SSL_KEY_ALIAS}  # Alias do certificado no keystore
+      SPRING_SSL_KEY_STORE_TYPE: ${SPRING_SSL_KEY_STORE_TYPE}  # Tipo de keystore (PKCS12)
+    depends_on:
+      - musiki-db
+    networks:
+      - musiki-network
+
+# Definição da rede global
+networks:
+  musiki-network:
+    driver: bridge
+
+# Definição dos volumes
+volumes:
+  postgres-data:
+    driver: local

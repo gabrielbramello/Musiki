@@ -21,6 +21,7 @@ services:
     image: musiki-app:latest
     ports:
       - "8081:8081"
+      - "8443:8443"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://musiki-db:${DB_PORT}/${DB_NAME} # Usando as variáveis do .env
       SPRING_DATASOURCE_USERNAME: ${DB_USER}  # Usando a variável DB_USER do .env
@@ -28,10 +29,16 @@ services:
       SPOTIFY_CLIENT_ID: ${SPOTIFY_CLIENT_ID}  # Usando a variável do .env
       SPOTIFY_CLIENT_SECRET: ${SPOTIFY_CLIENT_SECRET}  # Usando a variável do .env
       SERVER_PORT: ${SERVER_PORT}  # Carregar a variável do .env
+      SPRING_SSL_KEY_STORE: ${SPRING_SSL_KEY_STORE}  # Caminho do keystore no contêiner
+      #SPRING_SSL_KEY_STORE_PASSWORD: ${SSL_KEY_STORE_PASSWORD}  # Senha do keystore do .env
+      #SPRING_SSL_KEY_ALIAS: ${SSL_KEY_ALIAS}  # Alias do certificado no keystore
+      SPRING_SSL_KEY_STORE_TYPE: ${SPRING_SSL_KEY_STORE_TYPE}  # Tipo de keystore (PKCS12)
     depends_on:
       - musiki-db
     networks:
       - musiki-network
+    volumes:
+      - ./keystore.p12:/app/keystore.p12  # Montando o keystore do host para dentro do contêiner
 
   # Serviço para o frontend (React)
   spa-app:
