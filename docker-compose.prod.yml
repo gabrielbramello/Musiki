@@ -40,7 +40,7 @@ services:
     networks:
       - musiki-network
     volumes:
-      - ./keystore.p12:/app/keystore.p12:ro  # Montando o keystore do host para dentro do contêiner,modo leitura
+      - ./keystore.p12:/app/keystore.p12  # Montando o keystore do host para dentro do contêiner,modo leitura
 
   # Serviço para o frontend (React)
   spa-app:
