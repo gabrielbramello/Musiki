@@ -31,7 +31,7 @@ WORKDIR /app
 COPY --from=spring-build /app/target/app.jar ./app.jar
 
 # Expor porta da aplicação
-EXPOSE 8081
+EXPOSE 443
 
 # Comando para executar a aplicação
 ENTRYPOINT ["dumb-init", "--"]
