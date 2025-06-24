@@ -21,27 +21,19 @@ services:
       context: ./musikiAPI
       dockerfile: Dockerfile
     image: musiki-app:latest
-    ports:
-      - "8081:8081"
-      - "8443:8443"
+    expose:
+      - "8080"  # Porta interna para NGINX
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://musiki-db:${DB_PORT}/${DB_NAME} # Usando as variáveis do .env
-      SPRING_DATASOURCE_USERNAME: ${DB_USER}  # Usando a variável DB_USER do .env
-      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}  # Usando a variável DB_PASSWORD do .env
-      SPOTIFY_CLIENT_ID: ${SPOTIFY_CLIENT_ID}  # Usando a variável do .env
-      SPOTIFY_CLIENT_SECRET: ${SPOTIFY_CLIENT_SECRET}  # Usando a variável do .env
-      SERVER_PORT: ${SERVER_PORT}  # Carregar a variável do .env
-      #SSL_ENABLE: ${SSL_ENABLED}  # Carregar a variável do .env
-      SSL_KEY_STORE: ${SSL_KEY_STORE}  # Caminho do keystore no contêiner
-      SSL_KEY_STORE_PASSWORD: ${SSL_KEY_STORE_PASSWORD}  # Senha do keystore do .env
-      SSL_KEY_ALIAS: ${SSL_KEY_ALIAS}  # Alias do certificado no keystore
-      SSL_KEY_STORE_TYPE: ${SSL_KEY_STORE_TYPE}  # Tipo de keystore (PKCS12)
+      SERVER_PORT: ${SERVER_PORT}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://musiki-db:${DB_PORT}/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPOTIFY_CLIENT_ID: ${SPOTIFY_CLIENT_ID}
+      SPOTIFY_CLIENT_SECRET: ${SPOTIFY_CLIENT_SECRET}
     depends_on:
       - musiki-db
     networks:
       - musiki-network
-    volumes:
-      - ./keystore.p12:/app/keystore.p12  # Montando o keystore do host para dentro do contêiner,modo leitura
 
   # Serviço para o frontend (React)
   spa-app:
@@ -50,20 +42,63 @@ services:
       context: ./musikiprimefaces
       dockerfile: Dockerfile
     image: musiki-primefaces:latest
-    ports:
-      - "80:5000"
-    #env_file:
-      #- .env   # Caminho para o arquivo .env que está fora da pasta do seu projeto
-    environment:
-      NODE_ENV: production
-      #REACT_APP_API_URL: ${REACT_APP_API_URL}
-      #REACT_APP_PORTA: ${REACT_APP_PORTA}
+    expose:
+      - "3000"
+    command: ["serve", "-s", "build", "-l", "3000"]
+    env_file:
+      - ./musikiprimefaces/.env
     depends_on:
       - spring-app
     networks:
       - musiki-network
 
-# Definição da rede global (fora do bloco services)
+  nginx:
+    image: nginx:latest
+    container_name: musiki-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/certbot/www:/var/www/certbot
+      - ./nginx/certbot/conf:/etc/letsencrypt
+    depends_on:
+      - spring-app
+      - spa-app
+    networks:
+      - musiki-network
+    restart: always
+  
+  certbot-init:
+    image: certbot/certbot
+    container_name: certbot-init
+    volumes:
+      - ./nginx/certbot/www:/var/www/certbot
+      - ./nginx/certbot/conf:/etc/letsencrypt
+    command: certonly --webroot \
+      --webroot-path=/var/www/certbot \
+      --email ${CERTBOT_EMAIL} \
+      --agree-tos \
+      --no-eff-email \
+      -d ${NGINX_HOSTNAME}
+    depends_on:
+      - nginx
+    networks:
+      - musiki-network
+    restart: "no"
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./nginx/certbot/www:/var/www/certbot
+      - ./nginx/certbot/conf:/etc/letsencrypt
+    entrypoint: >
+      /bin/sh -c 'trap exit TERM; while :; do sleep 6h & wait $${!}; certbot renew --webroot -w /var/www/certbot; done'
+    networks:
+      - musiki-network
+    restart: always
+
 networks:
   musiki-network:
     driver: bridge
