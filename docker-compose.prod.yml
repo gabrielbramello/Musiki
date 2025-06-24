@@ -6,13 +6,18 @@ services:
     ports:
       - "5433:${DB_PORT}"  # Mapeando a porta do PostgreSQL (5433 no host para 5432 no container)
     environment:
-      POSTGRES_DB: ${DB_NAME}  # Usando a variável DB_NAME do .env
-      POSTGRES_USER: ${DB_USER}  # Usando a variável DB_USER do .env
-      POSTGRES_PASSWORD: ${DB_PASSWORD}  # Usando a variável DB_PASSWORD do .env
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - postgres-data:/var/lib/postgresql/data  # Persistência dos dados do banco
+      - postgres-data:/var/lib/postgresql/data
     networks:
       - musiki-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   # Serviço para o backend (Spring Boot)
   spring-app:
@@ -31,9 +36,16 @@ services:
       SPOTIFY_CLIENT_ID: ${SPOTIFY_CLIENT_ID}
       SPOTIFY_CLIENT_SECRET: ${SPOTIFY_CLIENT_SECRET}
     depends_on:
-      - musiki-db
+      musiki-db:
+        condition: service_healthy
     networks:
       - musiki-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
 
   # Serviço para o frontend (React)
   spa-app:
@@ -48,10 +60,17 @@ services:
     env_file:
       - ./musikiprimefaces/.env
     depends_on:
-      - spring-app
+      spring-app:
+        condition: service_healthy
     networks:
       - musiki-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
+  # NGINX Reverse Proxy
   nginx:
     image: nginx:latest
     container_name: musiki-nginx
@@ -59,39 +78,46 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/certbot/www:/var/www/certbot
-      - ./nginx/certbot/conf:/etc/letsencrypt
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/certbot/www:/var/www/certbot:ro
+      - ./nginx/certbot/conf:/etc/letsencrypt:ro
     depends_on:
-      - spring-app
-      - spa-app
+      spa-app:
+        condition: service_healthy
+      spring-app:
+        condition: service_healthy
     networks:
       - musiki-network
-    restart: always
-  
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:80 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Certbot para obtenção inicial do certificado
   certbot-init:
     image: certbot/certbot
     container_name: certbot-init
     volumes:
       - ./nginx/certbot/www:/var/www/certbot
       - ./nginx/certbot/conf:/etc/letsencrypt
-    command:
-      - certonly
-      - --webroot
-      - -w
-      - /var/www/certbot
-      - --email
-      - ${CERTBOT_EMAIL}
-      - --agree-tos
-      - --no-eff-email
-      - -d
-      - ${NGINX_HOSTNAME}
+    command: >
+      certonly 
+      --webroot 
+      -w /var/www/certbot 
+      --email ${CERTBOT_EMAIL} 
+      --agree-tos 
+      --no-eff-email 
+      -d ${NGINX_HOSTNAME}
     depends_on:
       - nginx
     networks:
       - musiki-network
-    restart: "no"
+    profiles:
+      - ssl-init  # Só executa quando especificamente chamado
 
+  # Certbot para renovação automática
   certbot:
     image: certbot/certbot
     container_name: certbot
@@ -99,10 +125,19 @@ services:
       - ./nginx/certbot/www:/var/www/certbot
       - ./nginx/certbot/conf:/etc/letsencrypt
     entrypoint: >
-      /bin/sh -c 'trap exit TERM; while :; do sleep 6h & wait $${!}; certbot renew --webroot -w /var/www/certbot; done'
+      /bin/sh -c 'trap exit TERM; 
+      while :; do 
+        sleep 6h & wait $${!}; 
+        certbot renew --webroot -w /var/www/certbot --quiet; 
+        if [ $$? -eq 0 ]; then 
+          nginx -s reload; 
+        fi; 
+      done'
     networks:
       - musiki-network
-    restart: always
+    restart: unless-stopped
+    profiles:
+      - ssl-renewal  # Só executa quando especificamente chamado
 
 networks:
   musiki-network:
