@@ -348,6 +348,24 @@ log_step "FASE 4/6 - Configurando NGINX..."
 log_nginx "Iniciando NGINX Reverse Proxy..."
 log_nginx "Portas: 80 (HTTP), 443 (HTTPS)"
 
+# --- NOVO TRECHO PARA CRIAR CERTIFICADOS DUMMY SE NÃO EXISTIREM ---
+CERT_DIR="./nginx/certbot/conf/live/samm.dev.br"
+FULLCHAIN_PATH="${CERT_DIR}/fullchain.pem"
+PRIVKEY_PATH="${CERT_DIR}/privkey.pem"
+
+if [ ! -f "$FULLCHAIN_PATH" ] || [ ! -f "$PRIVKEY_PATH" ]; then
+    log_warn "Certificados SSL não encontrados. Criando certificados dummy para permitir o NGINX iniciar."
+    mkdir -p "${CERT_DIR}"
+    # Gerar chaves dummy (expiram em 1 dia)
+    openssl req -x509 -nodes -newkey rsa:2048 -days 1 \
+            -keyout "${PRIVKEY_PATH}" \
+            -out "${FULLCHAIN_PATH}" \
+            -subj "/CN=samm.dev.br" # Ou um CN mais genérico, já que são dummy
+    log_info "Certificados dummy criados. Certbot irá substituí-los."
+else
+    log_info "Certificados SSL já existem. Pulando criação de dummy."
+fi
+
 # Iniciar NGINX
 docker compose -f $COMPOSE_FILE up -d $NGINX_SERVICE
 
