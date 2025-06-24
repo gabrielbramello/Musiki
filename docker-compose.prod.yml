@@ -89,6 +89,7 @@ services:
       --agree-tos 
       --no-eff-email 
       -d ${NGINX_HOSTNAME}
+      --force-renewal
     depends_on:
       - nginx
     networks:
